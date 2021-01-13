@@ -1,6 +1,7 @@
+
 import React,{createContext, useCallback, useContext, useState} from 'react'
 import api from '../services/api'
-
+import jwt from 'jsonwebtoken'
 
 
 interface SignInCredentials {
@@ -20,6 +21,8 @@ interface AuthContext{
     user: User;
     signIn(credentials: SignInCredentials): Promise<any>;
     signOut(): void;
+    updateUser(user: User): void;
+
 
 } // oq ue vamos guardar
 
@@ -36,14 +39,34 @@ const authContext = createContext<AuthContext>({} as AuthContext);
  
 export const AuthProvider: React.FC = ({children}) =>{
 
+
+
+
+    
     const [data, setData] = useState<AuthState>(()=>{
 
-       const token = localStorage.getItem('@PraeMananger:token');
+        
+        
+        const token = localStorage.getItem('@PraeMananger:token');
+        
        const user =  localStorage.getItem('@PraeMananger:user');
 
-       if(token && user) {
-           return {token, user: JSON.parse(user) }
-       }
+       if (token && user) {
+
+        const decoded:any = jwt.decode(token) 
+        
+        if (decoded.exp * 1000 < Date.now()) {
+            localStorage.clear(); // this runs only when I refresh the page or reload on route change it dosent work
+        } else {
+            api.defaults.headers.authorization = `Bearer ${token}`;
+            return { token, user: JSON.parse(user) };
+        }
+      }
+
+      
+
+
+
        
        return {} as AuthState
 
@@ -67,26 +90,15 @@ export const AuthProvider: React.FC = ({children}) =>{
                 password,
             });
 
-           
-
             const {token, user} = response.data
-
-
 
             localStorage.setItem('@PraeMananger:token', token);
             localStorage.setItem('@PraeMananger:user', JSON.stringify(user));
-    
-    
+
+            api.defaults.headers.authorization = `Bearer ${token}`;
+
             setData({token, user})
-
-
-            return {
-                message: ''
-            }
-
-            
-    
-    
+            return {}
         }catch(err){
            return {
                message: 'Invalid Credentials'
@@ -97,10 +109,21 @@ export const AuthProvider: React.FC = ({children}) =>{
     },[])
     
 
+    const updateUser = useCallback(
+        (user: User) => {
+          localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+    
+          setData({
+            token: data.token,
+            user,
+          });
+        },
+        [setData, data.token],
+      );
 
 
     return (
-        <authContext.Provider value={{user: data.user, signIn, signOut}}>
+        <authContext.Provider value={{user: data.user, signIn, signOut, updateUser}}>
              {children}
         </authContext.Provider>
     )

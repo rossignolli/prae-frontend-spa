@@ -1,15 +1,14 @@
 import styled from 'styled-components';
-
+import signInBackgroundImg from '../../assets/temp_assets/girlit.jpg'
 export const Container = styled.div`
 display: flex;
 height: 100vh;
-align-items: stretch;
 `;
 
 
 
 export const Content = styled.section`
-    width: 60%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,11 +40,11 @@ export const Content = styled.section`
 
 export const ADBIG = styled.section`
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+
+    flex: 1;
+    background: url(${signInBackgroundImg}) no-repeat center;
+    background-size: cover;
+
 
 
     span {

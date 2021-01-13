@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 
  import {useAuth} from '../../hooks/AuthContext'
 import { Link, useHistory } from 'react-router-dom'
+import girlit from '../../assets/temp_assets/girlit.jpg'
 
 export default function SigninPage() {
 
@@ -32,12 +33,18 @@ export default function SigninPage() {
         email: values.login,
         password: values.password
       }).then(response =>{
-         setErrors({
-           invalidlogin: response.message
-         })
-         if(response.message === ''){
-          history.push('/dashboard');
+        if(response.message){
+          setErrors({
+            invalidlogin: response.message
+          })
+        }
+        else{
+           history.push('/dashboard');
          }
+
+
+         
+         
       })
       
       },
@@ -52,9 +59,10 @@ export default function SigninPage() {
     return (
        <Container>
         <ADBIG>
-          <span>Watch.</span>
+      
+          {/* <span>Watch.</span>
           <span>Prevent.</span>
-          <span>Fix.</span>
+          <span>Fix.</span> */}
         </ADBIG>
         <Content>
           <h1>Prae</h1>
