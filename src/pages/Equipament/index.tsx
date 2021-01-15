@@ -1,18 +1,54 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
-import { useAuth } from '../../hooks/AuthContext';
+// import { useAuth } from '../../hooks/AuthContext';
 import api from '../../services/api';
+
+interface Equipaments {
+    created_at: Date;
+    description: string;
+    id: string;
+    name: string;
+    expired: boolean;
+    updated_at: Date;
+  }
+  
+
+  
+
 
 const Equipament: React.FC = ()=>{
 
-    const {signOut, user } = useAuth();
+    // const hookAu = useAuth();
+  const [equipaments, setEquipaments] = useState<Equipaments[]>();
 
-    console.log(user)
+
+  
+  useEffect(()=>{
+    api.get(`/equipaments`).then(response =>{
+      setEquipaments(response.data)
+    })
+  },[equipaments])
+
+  
+  if (!equipaments){
+    return <p>Carregando....</p>
+  }
 
     return(
         <div className="">
-            <h1>Hello, {user.name}</h1>
-            <h1>Hello, {user.id}</h1>
+           {equipaments.map((equipament) => (
+          <div key={equipament.id} className="wrapper">
+              <h1>{equipament.name}</h1>
+              <h1>{equipament.description}</h1>
+               {equipament.expired ? (
+                 <h1>Vencida</h1>
+              ) : (
+                  <h1>OK</h1>
+              )}
+
+          </div>
+       ))}
+
 
         </div>
     )

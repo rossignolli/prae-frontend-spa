@@ -6,7 +6,6 @@ import * as Yup from 'yup'
 
  import {useAuth} from '../../hooks/AuthContext'
 import { Link, useHistory } from 'react-router-dom'
-import girlit from '../../assets/temp_assets/girlit.jpg'
 
 export default function SigninPage() {
 
