@@ -3,6 +3,7 @@ import React from 'react'
 import {Container, Content, ADBIG, Form} from './styles'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
+import logo from '../../assets/temp_assets/logo.svg'
 
  import {useAuth} from '../../hooks/AuthContext'
 import { Link, useHistory } from 'react-router-dom'
@@ -58,13 +59,9 @@ export default function SigninPage() {
     return (
        <Container>
         <ADBIG>
-      
-          {/* <span>Watch.</span>
-          <span>Prevent.</span>
-          <span>Fix.</span> */}
         </ADBIG>
         <Content>
-          <h1>Prae</h1>
+          <img src={logo} alt="IT Girl holding a laptop"/>
           <Form onSubmit={handleSubmit}>
             <input 
             onBlur={handleBlur}

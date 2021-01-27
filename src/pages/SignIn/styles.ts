@@ -1,18 +1,38 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import signInBackgroundImg from '../../assets/temp_assets/girlit.jpg'
 export const Container = styled.div`
 display: flex;
 height: 100vh;
+
+`;
+
+export const appearFromLeft = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-50px)
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0)
+  }
 `;
 
 
 
 export const Content = styled.section`
-    width: 40%;
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    animation: ${appearFromLeft} 2s;
+
+    img {
+        max-width: 300px;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
 
     a {
         text-decoration: none;
@@ -41,37 +61,34 @@ export const Content = styled.section`
 export const ADBIG = styled.section`
 
 
-    flex: 1;
+
+    width: 70%;
     background: url(${signInBackgroundImg}) no-repeat center;
     background-size: cover;
 
 
+    @media screen and (max-width: 930px) {
 
-    span {
-        font-family: Inter;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 180px;
-        line-height: 242px;
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-stroke-color: transparent;
-        background-image: linear-gradient(90deg, #007cf0, #00dfd8)
+    display: none;
     }
 
-    `;
+
+`
 
 export const Form = styled.form`
-
     display: flex;
+    width: 100%;
+    padding: 22px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 420px;
+
 
     input {
         margin-bottom: 16px;
-        width: 340px;
-        height: 30px;
+        width: 100%;
+        height: 62px;
         padding: 10px;
         background: #FFFFFF;
         border: 1px solid #A5A5A5;
@@ -79,9 +96,9 @@ export const Form = styled.form`
     }
 
     button{
-        width: 340px;
+        width: 100%;
         height: 72px;
-        background: #000000;
+        background: #7367F0;
         box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.25);
         border-radius: 8px;
         color: #FFFFFF;
