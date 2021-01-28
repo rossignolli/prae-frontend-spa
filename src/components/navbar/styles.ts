@@ -7,15 +7,26 @@ export const Container = styled.div`
 display: flex;
 height: 100vh;
 justify-items: center;
+position: fixed;
+
+
+@media screen and (max-width: 800px) {
+
+display: none;
+}
+
 
 `;
 
 
 export const Navbar = styled.div`
 display: flex;
+height: 100vh;
 flex-direction: column;
 min-width: 320px;
 background-color: #FFFFFF;
+
+
 
 
 a {
@@ -34,6 +45,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+
 
 `;
 
@@ -87,7 +99,7 @@ h2 {
 }
 
 h3 {
-    color: #707479;
+    color: #717479;
     font-size: 14px;
     margin-top: 6px;
     margin-left: 14px;
@@ -157,20 +169,32 @@ export const StyledNavLink = styled(NavLink).attrs({
     color: #7367F0;
     border-left: 5px solid #7367F0;
   }
+
+
+
+
+
 `
 
 
 
 
-export const Content = styled.div`
-display: flex;
-width: 100%;
-background-color: #E5E5E5;
+    export const Content = styled.div`
+    display: flex;
+    width: 100%;
+    background-color: #E5E5E5;
+    `;
 
 
 
 
-`;
 
 
 
+    export const NotificationCenter = styled.div`
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: red;
+        height: 120px;
+    `;

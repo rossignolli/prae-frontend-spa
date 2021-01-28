@@ -6,7 +6,7 @@ import manProfile from '../../assets/temp_assets/man-profile.jpg'
 import logosvg from '../../assets/temp_assets/logomin.png'
 
 // import { useAuth } from '../../hooks/AuthContext';
-import { Container, ImgLogo, Navbar, NavigationBarHeader, StyledNavLink, TitleMenu, Userdiv } from './styles';
+import { Container, ImgLogo, Navbar, NavigationBarHeader, NotificationCenter, StyledNavLink, TitleMenu, Userdiv } from './styles';
 
 
 
@@ -36,15 +36,10 @@ const NavigationBar: React.FC = ()=>{
             <StyledNavLink  to='/preventives'><FiEdit2/>Preventivas</StyledNavLink>
             <StyledNavLink  to='/corretives'><FiPocket/>Corretivas</StyledNavLink>
             <TitleMenu>Outros</TitleMenu>
-            <StyledNavLink  to='/dashawfawfawsboard' ><FiBarChart2/>Relatórios</StyledNavLink>
-            <StyledNavLink  to='/equipaments'><FiUsers/>Técnicos</StyledNavLink>
-            <StyledNavLink  to='/preventives'><FiCalendar/>Calendário</StyledNavLink>
-            <StyledNavLink  to='/corretives'><FiFileText/>Plano</StyledNavLink>
-
-            
-            
-
-
+            <StyledNavLink  to='/reports' ><FiBarChart2/>Relatórios</StyledNavLink>
+            <StyledNavLink  to='/technicians'><FiUsers/>Técnicos</StyledNavLink>
+            <StyledNavLink  to='/calendar'><FiCalendar/>Calendário</StyledNavLink>
+            <StyledNavLink  to='/plan'><FiFileText/>Plano</StyledNavLink>
             </Navbar>
         </Container>
     )

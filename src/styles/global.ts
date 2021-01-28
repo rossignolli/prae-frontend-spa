@@ -15,7 +15,12 @@ button {
     cursor: pointer;
 }
 
-input{box-sizing:border-box} 
+input{
+    box-sizing:border-box;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #707479;
+    } 
 
 * {
     margin: 0;
