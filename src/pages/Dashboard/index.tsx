@@ -1,14 +1,10 @@
-import React, {useEffect} from 'react'
-import {Link, useHistory, NavLink} from 'react-router-dom'
+import React from 'react'
+import {Link, useHistory} from 'react-router-dom'
 import { useAuth } from '../../hooks/AuthContext';
-import api from '../../services/api';
-import {Container, Navbar, HeadersContents, Userdiv, DashBoardContent} from './styles'
-import { FiAlertTriangle, FiAlignLeft, FiAlignRight, FiBell, FiHardDrive, FiSearch} from 'react-icons/fi'
-import { BsBellFill} from 'react-icons/bs'
-import logodash from '../../assets/temp_assets/logo.svg'
-import perfil from '../../assets/temp_assets/perfil.jpg'
+import {Container, HeadersContents, DashBoardContent} from './styles'
+import { FiAlertTriangle, FiAlignLeft, FiBell, FiHardDrive} from 'react-icons/fi'
 import NavigationBar from '../../components/navbar';
-
+import SmallCard from '../../components/card-small';
 
 
 
@@ -27,88 +23,33 @@ const Dashboard: React.FC = ()=>{
         <Container>
           <NavigationBar/>
             <HeadersContents>
-             <div>
-              <FiAlignLeft size={26} color='#000000'/>
-              <h3>Dashboard</h3>
-             </div>
-
-
-                <div>
-
+              <div>
+                <FiAlignLeft size={26} color='#000000'/>
+                <h3>Dashboard</h3>
+              </div>
+                  <div>
+                  <Link to=''>
+                  <FiAlertTriangle size={26} color='#000000' />
+                  <span>4</span>
+                </Link>
                 <Link to=''>
-                <FiAlertTriangle size={26} color='#000000' />
-                <span>4</span>
-              </Link>
-              <Link to=''>
-                <FiHardDrive size={26} color='#000000' />
-                <span>4</span>
-              </Link>
-              <Link to=''>
-                <FiBell size={26} color='#000000' />
-                <span>4</span>
-              </Link>
-
-                </div>
-              
-             
-              
-
-             
-
-
+                  <FiHardDrive size={26} color='#000000' />
+                  <span>4</span>
+                </Link>
+                <Link to=''>
+                  <FiBell size={26} color='#000000' />
+                  <span>4</span>
+                </Link>
+                  </div>                          
             </HeadersContents>
 
             <DashBoardContent>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3><h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3><h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3><h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3><h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3><h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-            <h3>Hello world</h3>
-
+              <SmallCard/>
+              <SmallCard/>
+              <SmallCard/>
+              <SmallCard/>
+              <SmallCard/>
+              <SmallCard/>
             </DashBoardContent>
 
         </Container>

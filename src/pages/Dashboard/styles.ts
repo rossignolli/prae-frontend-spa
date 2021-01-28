@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { appearFromLeft } from '../SignIn/styles';
 
     export const Container = styled.div`
         display: flex;
@@ -39,16 +38,23 @@ background-color: red;
 `;
 
 
+
+
 export const DashBoardContent = styled.div`
-margin-left: 320px;
-background-color: red;
-height: 100%;
+    margin-left: 320px;
+    background-color: red;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
 
 
-@media screen and (max-width: 800px) {
 
 
-margin-left: 0px;
+    @media screen and (max-width: 800px) {
+
+
+    margin-left: 0px;
 
 }
 
@@ -56,9 +62,8 @@ margin-left: 0px;
 
 
 
-// display: grid;
-// grid-template-columns: 1fr 1fr 1fr 1fr;
-// grid-gap: 20px;
+
+
 
 
 export const HeadersContents = styled.div`
@@ -128,15 +133,12 @@ export const HeadersContents = styled.div`
 
 
                 
-@media screen and (max-width: 800px) {
+            @media screen and (max-width: 800px) {
 
 
-    margin-left: 0px;
+                margin-left: 0px;
 
-}
-
-
-
+            }
 `;
 
 

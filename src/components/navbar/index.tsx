@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import { FiArrowDown, FiBarChart2, FiCalendar, FiEdit2, FiFileText, FiHardDrive, FiHome, FiPlusCircle, FiPocket, FiUsers } from 'react-icons/fi';
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
 import manProfile from '../../assets/temp_assets/man-profile.jpg'
 import logosvg from '../../assets/temp_assets/logomin.png'
 

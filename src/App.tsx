@@ -1,6 +1,5 @@
 import React from 'react';
 import GlobalStyle from './styles/global'
-import SignIn from './pages/SignIn';
 import {BrowserRouter as Router } from 'react-router-dom'
 
 import {AuthProvider} from './hooks/AuthContext'
