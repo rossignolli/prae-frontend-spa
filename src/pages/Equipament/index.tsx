@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import { FiArrowDown, FiHome } from 'react-icons/fi';
-import { NavLink } from 'react-router-dom';
+
 import NavigationBar from '../../components/navbar';
 
 // import { useAuth } from '../../hooks/AuthContext';
 import api from '../../services/api';
-import { Navbar, Userdiv } from '../Dashboard/styles';
 
 interface Equipaments {
     created_at: Date;

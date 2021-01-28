@@ -1,10 +1,10 @@
 import React from 'react'
-import { FiArrowDown, FiBarChart2, FiCalendar, FiEdit2, FiFileText, FiHardDrive, FiHome, FiPlusCircle, FiPocket, FiUsers } from 'react-icons/fi';
+import { FiArrowDown, FiBarChart2, FiCalendar, FiEdit2, FiFileText, FiHardDrive, FiHome, FiPocket, FiUsers } from 'react-icons/fi';
 import manProfile from '../../assets/temp_assets/man-profile.jpg'
 import logosvg from '../../assets/temp_assets/logomin.png'
 
 // import { useAuth } from '../../hooks/AuthContext';
-import { Container, ImgLogo, Navbar, NavigationBarHeader, NotificationCenter, StyledNavLink, TitleMenu, Userdiv } from './styles';
+import { Container, ImgLogo, Navbar, NavigationBarHeader, StyledNavLink, TitleMenu, Userdiv } from './styles';
 
 
 

@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
-import {appearFromLeft} from '../../pages/SignIn/styles'
+import styled from 'styled-components';
 
 
 export const Container = styled.div`
