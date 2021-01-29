@@ -4,7 +4,7 @@ import { useAuth } from '../../hooks/AuthContext';
 import {Container, HeadersContents, DashBoardContent} from './styles'
 import { FiAlertTriangle, FiAlignLeft, FiBell, FiHardDrive} from 'react-icons/fi'
 import NavigationBar from '../../components/navbar';
-import SmallCard from '../../components/card-small';
+// import SmallCard from '../../components/card-small';
 
 
 
