@@ -43,12 +43,11 @@ const Dashboard: React.FC = ()=>{
             </HeadersContents>
 
             <DashBoardContent>
-              <SmallCard/>
-              <SmallCard/>
-              <SmallCard/>
-              <SmallCard/>
-              <SmallCard/>
-              <SmallCard/>
+              <h3>WIP DASHBOARD</h3>
+              
+            <h1>{user.name}</h1>
+              <h1>{user.id}</h1>
+              <h1>{user.email}</h1>
             </DashBoardContent>
 
         </Container>
