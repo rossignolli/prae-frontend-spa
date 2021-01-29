@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:3333'
+    baseURL: 'https://api.vigarani.codes/'
 });
 
 export default api;
+
+//baseURL: 'http://localhost:3333'
