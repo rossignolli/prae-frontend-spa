@@ -41,7 +41,6 @@ export const Content = styled.section`
 
 
     h1 {
-        font-family: Inter;
         font-style: normal;
         font-weight: bold;
         font-size: 60px;
@@ -50,7 +49,6 @@ export const Content = styled.section`
         margin-bottom: 16px;
     }
 
-    font-family: Inter;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -105,7 +103,6 @@ export const Form = styled.form`
         border: none;
         outline: none;
         margin-bottom: 66px;
-        font-family: Inter;
         font-style: normal;
         font-weight: bold;
         font-size: 18px;
