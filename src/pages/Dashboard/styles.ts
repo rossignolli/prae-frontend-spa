@@ -41,21 +41,21 @@ background-color: red;
 
 
 export const DashBoardContent = styled.div`
-    margin-left: 320px;
-    background-color: red;
+
+    margin-left: 340px;
+    margin-top: 40px;
+    background-color: #E5E5E5;
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 20px;
-
-
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-area: auto;
+    grid-gap: 10px;
+    justify-items: center;
+    height: 100vh;
 
 
     @media screen and (max-width: 800px) {
-
-
-    margin-left: 0px;
-
+    margin-left: 20px;
 }
 
 `;

@@ -12,14 +12,11 @@ const SmallCard: React.FC = ()=>{
 
     return(
         <ContainerCard>
-
           <div>
             <h1>1,232</h1>
             <strong>Total de equipamentos</strong>
           </div>
-          <RiComputerLine/>
-       
-
+          <RiComputerLine size={56} />
         </ContainerCard>
     )
 }

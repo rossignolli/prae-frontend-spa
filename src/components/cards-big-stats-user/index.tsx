@@ -6,7 +6,7 @@ import { ContainerCard } from './styles';
 
 
 
-const SmallCard: React.FC = ()=>{
+const BigCard: React.FC = ()=>{
 
 
 
@@ -24,4 +24,4 @@ const SmallCard: React.FC = ()=>{
     )
 }
 
-export default SmallCard;
+export default BigCard;
