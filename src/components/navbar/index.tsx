@@ -2,15 +2,15 @@ import React from 'react'
 import { FiArrowDown, FiBarChart2, FiCalendar, FiEdit2, FiFileText, FiHardDrive, FiHome, FiPocket, FiUsers } from 'react-icons/fi';
 import manProfile from '../../assets/temp_assets/man-profile.jpg'
 import logosvg from '../../assets/temp_assets/logomin.png'
-
-// import { useAuth } from '../../hooks/AuthContext';
+ import { useAuth } from '../../hooks/AuthContext';
 import { Container, ImgLogo, Navbar, NavigationBarHeader, StyledNavLink, TitleMenu, Userdiv } from './styles';
-
 
 
 const NavigationBar: React.FC = ()=>{
 
-    // const hookAu = useAuth();
+
+
+     const {user} = useAuth();
 
     return(
         <Container>
@@ -22,7 +22,7 @@ const NavigationBar: React.FC = ()=>{
                   <Userdiv>
                     <img src={manProfile} alt=""/>
                     <div>
-                    <h2>Jeny Irland</h2>
+                    <h2>{user.name}</h2>
                     <h3>infra-supervisor</h3>
                     </div>
                     <FiArrowDown/>
