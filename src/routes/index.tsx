@@ -10,13 +10,16 @@ import Signin from '../pages/SignIn'
 import Signup from '../pages/Signup'
 import Dashboard from '../pages/Dashboard'
 import Equipaments from '../pages/Equipament'
+import NewEquipaments from '../pages/NewEquipament'
 import Route from './Route'
 const Routes: React.FC = () => (
     <Switch>
         <Route path="/" exact component={Signin} />
         <Route path="/signup"  component={Signup} />
         <Route path="/dashboard"  component={Dashboard} isPrivate />
-        <Route path="/equipaments"  component={Equipaments} isPrivate />
+        <Route path="/equipaments" exact  component={Equipaments} isPrivate />
+        <Route path="/newEquipaments"   component={NewEquipaments} isPrivate />
+
 
 
 

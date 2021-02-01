@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import { FiAlertTriangle, FiAlignLeft, FiBell, FiDelete, FiEdit2, FiHardDrive } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { FiAlertTriangle, FiAlignLeft, FiBarChart, FiBell, FiDelete, FiEdit2, FiHardDrive, FiPlus } from 'react-icons/fi';
+import { Link, useHistory } from 'react-router-dom';
 
+import { ButtonPurpleInverted, ButtonPurple } from '../../components/button/styles';
+import manProfile from '../../assets/temp_assets/man-profile.jpg'
 import NavigationBar from '../../components/navbar';
 
 // import { useAuth } from '../../hooks/AuthContext';
+
+
+
+
 import api from '../../services/api';
 import { HeadersContents } from '../Dashboard/styles';
 import { EquipamentsContent, Container } from './styles';
@@ -28,7 +34,11 @@ const Equipament: React.FC = ()=>{
   const [equipaments, setEquipaments] = useState<Equipaments[]>();
 
 
+  const history = useHistory();
+
   
+
+
   useEffect(()=>{
     api.get(`/equipaments`).then(response =>{
       setEquipaments(response.data)
@@ -65,11 +75,21 @@ const Equipament: React.FC = ()=>{
                   </div>                          
             </HeadersContents>
           <EquipamentsContent>
-            <div>
-            <input type="text"/>
-            <button type="button">Gerar relatório</button>
-            <button type="button">Adicionar Equipamento</button>
-            </div>
+            <section>
+           
+            <ButtonPurpleInverted >
+            <FiBarChart/>
+              Gerar relatório
+            </ButtonPurpleInverted>
+
+            <ButtonPurple onClick={()=>{
+              history.push('/newEquipaments')
+            }} >
+            <FiPlus/>
+              Adicionar
+            </ButtonPurple>
+
+            </section>
             
           <table>
               <tr>
@@ -92,7 +112,7 @@ const Equipament: React.FC = ()=>{
 
                       <td> <input type="checkbox" /> {equipament.name}</td>
                       <td>Estação de trabalho</td>
-                      <td>Jeny Irland</td>
+                      <td><img src={manProfile} alt=""/>Jeny Irland</td>
 
 
                       <td>{equipament.description}</td>
