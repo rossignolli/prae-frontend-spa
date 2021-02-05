@@ -3,6 +3,7 @@ import { FiAlertTriangle, FiAlignLeft, FiBarChart, FiBell, FiDelete, FiEdit2, Fi
 import { Link } from 'react-router-dom';
 
 import manProfile from '../../assets/temp_assets/man-profile.jpg'
+import { ButtonPurple, ButtonPurpleInverted } from '../../components/button/styles';
 import NavigationBar from '../../components/navbar';
 
 // import { useAuth } from '../../hooks/AuthContext';
@@ -23,27 +24,6 @@ const NewEquipament: React.FC = ()=>{
     return(
         <Container>
           <NavigationBar/>
-                     
-          <HeadersContents>
-              <div>
-                <FiAlignLeft size={26} color='#000000'/>
-                <h3>Adicionar Equipamento</h3>
-              </div>
-                  <div>
-                  <Link to=''>
-                  <FiAlertTriangle size={26} color='#000000' />
-                  <span>4</span>
-                </Link>
-                <Link to=''>
-                  <FiHardDrive size={26} color='#000000' />
-                  <span>4</span>
-                </Link>
-                <Link to=''>
-                  <FiBell size={26} color='#000000' />
-                  <span>4</span>
-                </Link>
-                  </div>                          
-            </HeadersContents>
           <NewEquipamentsContent>
 
             <p>Insira os dados do equipamento que será adicionado na base de dados de monitoramento. 
@@ -60,11 +40,6 @@ const NewEquipament: React.FC = ()=>{
               </div>   
 
 
-              <div className="input-block">
-              <label htmlFor="about">Sobre</label>
-              <input type="text"/>
-              </div>  
-
                <p className="warning">*Os tipos de equipamentos são importantes para atribuir os procedimentos corretos criado pelo administrador para cada tipo de equipamento
                  durante um eventual procedimento de preventiva ou corretiva.</p>   
 
@@ -72,10 +47,12 @@ const NewEquipament: React.FC = ()=>{
               <div className="input-select-block">
               <label htmlFor="brands">Escolha o tipo do equipamento</label>
                 <select name="brands" > 
-                <option value="apple">Apple</option>
-                <option value="dell">Dell Inc</option>
-                <option value="hp">HP</option>
-                <option value="lenovo">Lenovo</option>
+                <option value="apple">Refrigeração</option>
+                <option value="dell">Porteiro Eletronico</option>
+                <option value="hp">Câmera de Segurança</option>
+                <option value="hp">Switch de rede</option>
+                <option value="lenovo">Estação de Trabalho</option>
+                <option value="lenovo">Notebook</option>
                 </select>
               </div>   
 
@@ -89,9 +66,42 @@ const NewEquipament: React.FC = ()=>{
                 </select>
               </div>   
 
-              </form>
+              <label htmlFor="about">Prioridade do equipamento</label>
+
+              <p className="warning-equip">Equipamentos classificados como críticos recebem prioridades em exibição de lista,
+              classificação prioriatária em planejamentos de preventivas e alertas de vencimento em tempo real</p>  
+
+              <div className="input-block-check">
+              <input type="checkbox" id="checkbox-style"/>
+              <label htmlFor="checkbox-style">Crítico</label>
+              </div>  
               
 
+              <div className="input-select-block">
+              <input multiple type="file" id="image[]"/>
+              </div>   
+
+
+              <div className="input-select-block">
+              <label htmlFor="brands">Nível para gerenciar</label>
+                <select name="brands"> 
+                <option value="apple">Supervisor</option>
+                <option value="dell">Gerente</option>
+                <option value="hp">Técnico</option>
+                </select>
+              </div>   
+
+             
+
+
+              </form>
+            
+              <div className="button-holder">
+              <ButtonPurpleInverted>Voltar</ButtonPurpleInverted>
+              <ButtonPurple>Adicionar</ButtonPurple>
+              </div>
+              
+              
           
           </NewEquipamentsContent>
            

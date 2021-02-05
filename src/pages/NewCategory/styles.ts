@@ -3,26 +3,22 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
         display: flex;
-        height: 100%;
+        height: 100vh;
         background-color: #E5E5E5;
         flex-direction: column;
-
     `;
 
 
     
-export const NewEquipamentsContent = styled.div`
+export const NewCategoryContent = styled.div`
     margin-top: 20px;
     margin-left: 340px;
     background-color: #E5E5E5;
     display: flex;
-    padding: 50px;
+    padding: 20px;
     flex-direction: column;
-    height: 100%;
     margin-right: 20px;
     margin-bottom: 20px;
-
-
     background-color: #FFFFFF;
     border-radius: 15px;
 
@@ -98,17 +94,7 @@ export const NewEquipamentsContent = styled.div`
 
   }
 
-  
-  .button-holder{
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 40px;
 
-    button{
-        margin-left: 20px;
-    }
-
-  }
 
   .input-block-check{
 
@@ -127,6 +113,9 @@ export const NewEquipamentsContent = styled.div`
           margin-right: 10px;
       }
   }
+
+
+
 
 
     @media screen and (max-width: 800px) {

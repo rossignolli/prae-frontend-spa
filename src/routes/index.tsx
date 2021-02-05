@@ -11,6 +11,12 @@ import Signup from '../pages/Signup'
 import Dashboard from '../pages/Dashboard'
 import Equipaments from '../pages/Equipament'
 import NewEquipaments from '../pages/NewEquipament'
+import NewCategory from '../pages/NewCategory'
+import Category from '../pages/Category'
+import Preventive from '../pages/Preventive'
+
+
+
 import Route from './Route'
 const Routes: React.FC = () => (
     <Switch>
@@ -18,11 +24,10 @@ const Routes: React.FC = () => (
         <Route path="/signup"  component={Signup} />
         <Route path="/dashboard"  component={Dashboard} isPrivate />
         <Route path="/equipaments" exact  component={Equipaments} isPrivate />
-        <Route path="/newEquipaments"   component={NewEquipaments} isPrivate />
-
-
-
-
+        <Route path="/preventives" exact  component={Preventive} isPrivate />
+        <Route path="/equipaments/new"   component={NewEquipaments} isPrivate />
+        <Route path="/category" exact  component={Category} isPrivate />
+        <Route path="/category/new"   component={NewCategory} isPrivate />
         {/* <Route path="/repositories/:repository+" component={Repository} /> */}
     </Switch>
 );

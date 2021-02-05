@@ -1,5 +1,7 @@
 import React from 'react'
-import { FiArrowDown, FiBarChart2, FiCalendar, FiEdit2, FiFileText, FiHardDrive, FiHome, FiPocket, FiUsers } from 'react-icons/fi';
+import { FiArrowDown, FiBarChart2, FiCalendar, FiFileText, FiPocket, FiUsers } from 'react-icons/fi';
+import { FcMultipleDevices, FcHome,FcAreaChart,FcGenealogy, FcCalendar, FcSupport, FcHighPriority, FcPackage, FcDocument } from 'react-icons/fc';
+
 import manProfile from '../../assets/temp_assets/man-profile.jpg'
 import logosvg from '../../assets/temp_assets/logomin.png'
  import { useAuth } from '../../hooks/AuthContext';
@@ -29,15 +31,19 @@ const NavigationBar: React.FC = ()=>{
                 </Userdiv>
               </NavigationBarHeader>
               <TitleMenu>Principal</TitleMenu>
-            <StyledNavLink  to='/dashboard' ><FiHome/>Dashboard</StyledNavLink>
-            <StyledNavLink  to='/equipaments'><FiHardDrive/>Equipamentos</StyledNavLink>
-            <StyledNavLink  to='/preventives'><FiEdit2/>Preventivas</StyledNavLink>
-            <StyledNavLink  to='/corretives'><FiPocket/>Corretivas</StyledNavLink>
+            <StyledNavLink  to='/dashboard' ><FcHome/>Dashboard</StyledNavLink>
+            <StyledNavLink  to='/equipaments' ><FcMultipleDevices/>Equipamentos</StyledNavLink>
+            <StyledNavLink  to='/preventives'><FcSupport/>Preventivas</StyledNavLink>
+            <StyledNavLink  to='/category'><FcDocument/>Categorias</StyledNavLink>
+            <StyledNavLink  to='/supplies'><FcPackage/>Suprimentos</StyledNavLink>
+
+
             <TitleMenu>Outros</TitleMenu>
-            <StyledNavLink  to='/reports' ><FiBarChart2/>Relatórios</StyledNavLink>
+            <StyledNavLink  to='/reports' ><FcAreaChart/>Relatórios</StyledNavLink>
             <StyledNavLink  to='/technicians'><FiUsers/>Técnicos</StyledNavLink>
-            <StyledNavLink  to='/calendar'><FiCalendar/>Calendário</StyledNavLink>
-            <StyledNavLink  to='/plan'><FiFileText/>Plano</StyledNavLink>
+            <StyledNavLink  to='/calendar'><FcCalendar/>Calendário</StyledNavLink>
+            <StyledNavLink  to='/plan'><FcGenealogy/>Plano</StyledNavLink>
+            
             </Navbar>
         </Container>
     )
