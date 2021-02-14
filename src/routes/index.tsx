@@ -14,6 +14,13 @@ import NewEquipaments from '../pages/NewEquipament'
 import NewCategory from '../pages/NewCategory'
 import Category from '../pages/Category'
 import Preventive from '../pages/Preventive'
+import Supply from '../pages/Supply'
+import Job from '../pages/JobsPage'
+import EquipamentDetails from '../pages/EquipamentsDetails'
+import MonitorStart from '../pages/MonitorStart'
+
+
+
 
 
 
@@ -26,8 +33,16 @@ const Routes: React.FC = () => (
         <Route path="/equipaments" exact  component={Equipaments} isPrivate />
         <Route path="/preventives" exact  component={Preventive} isPrivate />
         <Route path="/equipaments/new"   component={NewEquipaments} isPrivate />
+        <Route path="/equipaments/details/:id" exact  component={EquipamentDetails} isPrivate />
+        <Route path="/monitor/:id" exact  component={MonitorStart} isPrivate />
         <Route path="/category" exact  component={Category} isPrivate />
         <Route path="/category/new"   component={NewCategory} isPrivate />
+        <Route path="/supply" exact  component={Supply} isPrivate />
+        <Route path="/job" exact  component={Job} isPrivate />
+
+
+
+        
         {/* <Route path="/repositories/:repository+" component={Repository} /> */}
     </Switch>
 );

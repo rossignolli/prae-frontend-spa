@@ -53,3 +53,55 @@ import styled from 'styled-components';
         `;
 
 
+export const GreenButton = styled.button`
+        width: auto;
+        height: 38px;
+        background: #28C76F;
+        border-radius: 8px;
+        padding: 10px;
+        color: #FFFFFF;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        line-height: 0px;
+        text-align: center;
+        display: inline-flex;
+        justify-content: center; 
+        align-items: center;   
+
+
+        svg {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+
+    `;
+
+export const SalmonButton = styled.button`
+width: auto;
+height: 38px;
+background: #FF6F71;
+border-radius: 8px;
+padding: 10px;
+color: #FFFFFF;
+border: none;
+outline: none;
+font-size: 16px;
+line-height: 0px;
+text-align: center;
+display: inline-flex;
+justify-content: center; 
+align-items: center;   
+
+
+svg {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+
+`;
+
+
+

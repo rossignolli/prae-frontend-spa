@@ -35,7 +35,9 @@ const NavigationBar: React.FC = ()=>{
             <StyledNavLink  to='/equipaments' ><FcMultipleDevices/>Equipamentos</StyledNavLink>
             <StyledNavLink  to='/preventives'><FcSupport/>Preventivas</StyledNavLink>
             <StyledNavLink  to='/category'><FcDocument/>Categorias</StyledNavLink>
-            <StyledNavLink  to='/supplies'><FcPackage/>Suprimentos</StyledNavLink>
+            <StyledNavLink  to='/job'><FcSupport/>Procedimentos</StyledNavLink>
+            <StyledNavLink  to='/supply'><FcPackage/>Suprimentos</StyledNavLink>
+
 
 
             <TitleMenu>Outros</TitleMenu>
