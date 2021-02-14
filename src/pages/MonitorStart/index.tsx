@@ -14,6 +14,7 @@ import { HeadersContents } from '../Dashboard/styles';
 import { MonitorContent, Container, ContenderHolder } from './styles';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css'
+import { differenceInDays } from 'date-fns';
 
 
 
@@ -37,21 +38,19 @@ const MonitorStart: React.FC = ()=>{
 
   const params = useParams<EquipamentParams>()
   const [equipament, setEquipament] = useState<Equipaments>();
-  const [value, onChange] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   const history = useHistory();
-
-
 
 
   useEffect(()=>{
     api.get(`equipaments/details/${params.id}`).then(response =>{
       setEquipament(response.data)
     })
+
+
   },[params.id])
 
 
-  console.log(params.id)
-  
 
 
     return(
@@ -65,7 +64,9 @@ const MonitorStart: React.FC = ()=>{
               <MdDevices fontSize={80}/>
             </div>
             <h1>{equipament?.name}</h1>
-            <DateTimePicker onChange={onChange}value={value}/>
+            <DateTimePicker onChange={setDate}value={date}/>
+            {differenceInDays(date, new Date())}
+
           </ContenderHolder>
           
           </MonitorContent>
