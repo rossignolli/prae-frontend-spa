@@ -14,14 +14,25 @@ import api from '../../services/api';
 import { HeadersContents } from '../Dashboard/styles';
 import { EquipamentsContent, Container } from './styles';
 import {ButtonPurple,ButtonPurpleInverted} from '../../components/button/styles'
+import Category from '../Category';
+import { differenceInDays, parseISO } from 'date-fns';
 
 interface Equipaments {
-    created_at: Date;
-    description: string;
     id: string;
     name: string;
-    expired: boolean;
+    description: string;
+    created_at: Date;
     updated_at: Date;
+    monitor: boolean;
+    critical: boolean;
+    levelToManage: number;
+    dateStartedMonitoring: Date;
+    dateOfExpiration: string;
+    dateLastStopMonitor: Date;
+    timesStopped: number;
+    expired: boolean;
+    technician: any;
+    category: any;
   }
   
 
@@ -76,10 +87,10 @@ const Equipament: React.FC = ()=>{
                 <th>Nome</th>
                 <th>Categoria</th>
                 <th>Criado por</th>
-                <th>Data de vencimento</th>
+                <th>Dias para expirar</th>
                 <th>Marca</th>
                 <th>Crítico</th>
-                <th>Expiração</th>
+                <th>Expirado</th>
 
 
 
@@ -97,18 +108,15 @@ const Equipament: React.FC = ()=>{
                        
                        
                        </td>
-                      <td>Estação de trabalho</td>
-                      <td><img src={manProfile} alt=""/>Jeny Irland</td>
+                      <td>{equipament.category.name}</td>
+                      <td><img src={manProfile} alt=""/>{equipament.technician.name}</td>
 
 
-                      <td>{equipament.description}</td>
-                      {equipament.expired ? (
-                        <td>Vencida</td>
-                      ) : (
-                          <td>OK</td>
-                      )}
-                      <td>Sim</td>
-                      <td>Expirado</td>
+                      <td>{equipament.dateOfExpiration ? `${differenceInDays(parseISO(equipament.dateOfExpiration), new Date())}`: `Não iniciado`}</td>
+                      <td>Apple</td>
+                      <td>{equipament.critical ? 'Sim': 'Não'}</td>
+
+                      <td>{equipament.expired ? 'Sim': 'Não'}</td>
 
                       <td><FiEdit2/><FiDelete/></td>
                   </tr>

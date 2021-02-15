@@ -50,6 +50,7 @@ export const EquipamentsContent = styled.div`
             height: 50px;
             vertical-align: middle;
             text-align: center;
+            font-weight: bold;
         }
 
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import { FiAlertTriangle, FiAlignLeft, FiBarChart, FiBell, FiDelete, FiEdit2, FiHardDrive, FiPlus } from 'react-icons/fi';
 import { MdDevices } from 'react-icons/md';
 
@@ -14,6 +14,7 @@ import { HeadersContents } from '../Dashboard/styles';
 import { MonitorContent, Container, ContenderHolder } from './styles';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css'
+import { differenceInDays } from 'date-fns';
 
 
 
@@ -37,10 +38,22 @@ const MonitorStart: React.FC = ()=>{
 
   const params = useParams<EquipamentParams>()
   const [equipament, setEquipament] = useState<Equipaments>();
-  const [value, onChange] = useState(new Date());
+  const [date, onChange] = useState(new Date());
   const history = useHistory();
 
 
+  async function handleSubmit(event: any){
+
+    const equipament = {
+      date,
+      equipamentId: params.id
+    }
+
+    await api.post('preventives/monitor', equipament);
+
+
+
+  }
 
 
   useEffect(()=>{
@@ -65,7 +78,9 @@ const MonitorStart: React.FC = ()=>{
               <MdDevices fontSize={80}/>
             </div>
             <h1>{equipament?.name}</h1>
-            <DateTimePicker onChange={onChange}value={value}/>
+            <DateTimePicker onChange={onChange}value={date}/>
+            {differenceInDays(date, new Date())}
+            <ButtonPurple onClick={handleSubmit}>Confirmar</ButtonPurple>
           </ContenderHolder>
           
           </MonitorContent>
