@@ -25,6 +25,8 @@ import MonitorStart from '../pages/MonitorStart'
 
 
 import Route from './Route'
+import NewBrand from '../pages/NewBrand';
+import Brands from '../pages/Brand';
 const Routes: React.FC = () => (
     <Switch>
         <Route path="/" exact component={Signin} />
@@ -39,6 +41,8 @@ const Routes: React.FC = () => (
         <Route path="/category/new"   component={NewCategory} isPrivate />
         <Route path="/supply" exact  component={Supply} isPrivate />
         <Route path="/job" exact  component={Job} isPrivate />
+        <Route path="/brands" exact  component={Brands} isPrivate />
+
 
 
 

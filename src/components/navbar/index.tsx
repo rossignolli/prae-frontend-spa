@@ -1,6 +1,6 @@
 import React from 'react'
-import { FiArrowDown, FiBarChart2, FiCalendar, FiFileText, FiPocket, FiUsers } from 'react-icons/fi';
-import { FcMultipleDevices, FcHome,FcAreaChart,FcGenealogy, FcCalendar, FcSupport, FcHighPriority, FcPackage, FcDocument } from 'react-icons/fc';
+import { FiArrowDown, FiUsers } from 'react-icons/fi';
+import { FcMultipleDevices, FcHome,FcAreaChart,FcGenealogy, FcCalendar, FcSupport, FcHighPriority, FcPackage, FcDocument, FcBookmark } from 'react-icons/fc';
 
 import manProfile from '../../assets/temp_assets/man-profile.jpg'
 import logosvg from '../../assets/temp_assets/logomin.png'
@@ -37,6 +37,8 @@ const NavigationBar: React.FC = ()=>{
             <StyledNavLink  to='/category'><FcDocument/>Categorias</StyledNavLink>
             <StyledNavLink  to='/job'><FcSupport/>Procedimentos</StyledNavLink>
             <StyledNavLink  to='/supply'><FcPackage/>Suprimentos</StyledNavLink>
+            <StyledNavLink  to='/brands'><FcBookmark/>Marcas</StyledNavLink>
+
 
 
 
