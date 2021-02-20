@@ -69,6 +69,10 @@ export const CategoryContent = styled.div`
 
     }
 
+    svg {
+        cursor: pointer;
+    }
+
     }
 
 

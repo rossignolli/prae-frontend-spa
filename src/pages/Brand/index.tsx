@@ -15,6 +15,9 @@ import NavigationBar from '../../components/navbar';
 import api from '../../services/api';
 
 import { CategoryContent, Container } from './styles';
+import Swal, { SweetAlertResult } from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content';
+const MySwal = withReactContent(Swal)
 
 interface Supplies {
     id: string;
@@ -41,10 +44,57 @@ const Brands: React.FC = ()=>{
 
 
   useEffect(()=>{
-    api.get(`/supplies`).then(response =>{
+    api.get(`/brands`).then(response =>{
       setEquipaments(response.data)
     })
   },[equipaments])
+
+
+  function handleclicl (id:number) {
+
+    if(equipaments){
+      const idToDelete = equipaments[id].id
+
+
+      MySwal.fire({
+        title: 'Você tem certeza?',
+        text: "Essa ação não poderá ser desfeita",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Sim, deletar'
+      }).then(async (result: SweetAlertResult) => {
+  
+
+        if (result.isConfirmed) {
+
+          await api.post(`brands/delete/${idToDelete}`).then((response)=>{
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          })
+          
+        }
+
+      
+      
+     
+  
+          
+        });
+
+
+    }
+
+
+   
+
+     
+  }
 
   
   // if (!equipaments){
@@ -64,7 +114,7 @@ const Brands: React.FC = ()=>{
             </ButtonPurpleInverted>
 
             <ButtonPurple onClick={()=>{
-              history.push('category/new')
+              history.push('brands/new')
             }} >
             <FiPlus/>
               Adicionar
@@ -75,15 +125,15 @@ const Brands: React.FC = ()=>{
           <table>
               <tr>
                 <th>Nome da Marca</th>
-                <th>Descrição</th>
                 <th>Criado por</th>
-
               </tr>
-              {equipaments?.map((equipament) => (
-                  <tr key={equipament.id}>
-                      <td> <input type="checkbox" /> {equipament.name}</td>
-                      <td>{equipament.pricePerJob}</td>
-                      <td><FiEdit2 size={22} /><AiOutlineDelete size={22}/></td>
+              {equipaments?.map((equipament, index) => (
+                  <tr  key={equipament.id} >
+                      <td  > <input type="checkbox" /> {equipament.name}</td>
+                      <td >   <Link to={`/brands/details/${equipament.id}`}>
+                      <FiEdit2 size={22} /></Link> <AiOutlineDelete  size={22} onClick={()=>{
+                    handleclicl(index);
+                  }}  /></td>
                   </tr>
               ))}
               </table>

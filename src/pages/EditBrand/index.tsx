@@ -1,47 +1,48 @@
-import React, {FormEvent, useEffect, useState} from 'react'
-import { FiAlertTriangle, FiAlignLeft, FiBarChart, FiBell, FiDelete, FiEdit2, FiHardDrive, FiPlus } from 'react-icons/fi';
-import { Link, useHistory } from 'react-router-dom';
-
-import manProfile from '../../assets/temp_assets/man-profile.jpg'
+import React, {useEffect, useState} from 'react'
+import { useHistory, useParams } from 'react-router-dom';
 import NavigationBar from '../../components/navbar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../../hooks/AuthContext';
+
+// import { useAuth } from '../../hooks/AuthContext';
 import api from '../../services/api';
-import { HeadersContents } from '../Dashboard/styles';
 import { NewCategoryContent, Container } from './styles';
 import {ButtonPurple,ButtonPurpleInverted} from '../../components/button/styles'
 import * as Yup from 'yup'
-import withReactContent from 'sweetalert2-react-content'
-import Swal, { SweetAlertResult } from 'sweetalert2'
 import { useFormik } from 'formik';
-import { isValid } from 'date-fns';
-const MySwal = withReactContent(Swal)
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+
+  
+interface Brand {
+  id: string;
+  name: string;
+  description: string;
+}
+
+interface BrandsParams{
+  id: string;
+}
+
 
 
 const NewBrand: React.FC = ()=>{
 
   const history = useHistory();
-  const { user } = useAuth();
+  
+  const params = useParams<BrandsParams>()
+  const [brand, setBrand] = useState<Brand>();
 
+  useEffect(()=>{
+    api.get(`brands/details/${params.id}`).then(response =>{
+      setBrand(response.data)
+    })
+  },[params.id])
 
 
   
-    
-
-
-
-
- 
-
-
-  
-
-  
-  const  {handleSubmit, handleChange, values, touched, errors, handleBlur, setErrors, isSubmitting, setSubmitting} = useFormik({
+  const  {handleSubmit, handleChange,setFieldValue,values, touched, errors, handleBlur, setErrors, isSubmitting, setSubmitting} = useFormik({
     initialValues: {
-      brandName: '',
-      description: '',
+      brandName: brand?.name,
+      description: brand?.description,
     },
     validationSchema: Yup.object({
       brandName: Yup.string().min(4, 'Nome da marca precisa ter no minimo 4 caracteres').required('Required'),
@@ -50,23 +51,36 @@ const NewBrand: React.FC = ()=>{
     onSubmit: async (values) =>{
     
       setSubmitting(true)
-  
+
+      
       const data = {
         name: values.brandName,
         description: values.description,
-        technician_id: user.id,
       }
 
-      await api.post('brands', data).then((response)=>{
-        setSubmitting(false)
+      console.log(data)
+  
 
-      });
+       await api.post(`brands/update/${params.id}`, data).then((response)=>{
+         setSubmitting(false)
+       });
       history.goBack()
   
       
       },
       
   })
+
+
+  
+  useEffect(()=>{
+   
+    setFieldValue('brandName', brand?.name)
+    setFieldValue('description', brand?.description)
+    
+  },[brand?.name, brand?.description, setFieldValue])
+
+
 
 
 
