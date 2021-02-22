@@ -3,21 +3,20 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
         display: flex;
-        height: 100vh;
         background-color: #E5E5E5;
         flex-direction: column;
+        height: 100vh;
     `;
 
 
     
-export const EquipamentsContent = styled.div`
+export const BrandlistContent = styled.div`
     margin-top: 20px;
     margin-left: 340px;
     background-color: #E5E5E5;
     display: flex;
     flex-direction: column;
     margin-right: 20px;
-
 
     section {
         display: flex;
@@ -50,7 +49,6 @@ export const EquipamentsContent = styled.div`
             height: 50px;
             vertical-align: middle;
             text-align: center;
-            font-weight: bold;
         }
 
 
@@ -60,6 +58,8 @@ export const EquipamentsContent = styled.div`
     padding: 10px;
     vertical-align: middle;
     text-align: center;
+
+
     img {
         display: inline-flex;
         width: 40px;
@@ -71,18 +71,17 @@ export const EquipamentsContent = styled.div`
 
     }
 
+    svg {
+        cursor: pointer;
     }
 
-    .button-holder{
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 40px;
-
-    button{
-        margin-left: 20px;
+    
+    a {
+        text-decoration: none;
     }
 
-  }
+
+    }
 
 
 @media screen and (max-width: 800px) {

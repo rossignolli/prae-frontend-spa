@@ -18,6 +18,7 @@ import Supply from '../pages/Supply'
 import Job from '../pages/JobsPage'
 import EquipamentDetails from '../pages/EquipamentsDetails'
 import MonitorStart from '../pages/MonitorStart'
+import EditBrand from '../pages/BrandsPages/EditBrand'
 
 
 
@@ -25,6 +26,11 @@ import MonitorStart from '../pages/MonitorStart'
 
 
 import Route from './Route'
+import NewBrand from '../pages/BrandsPages/NewBrand';
+import Brands from '../pages/BrandsPages/BrandList';
+import NotFound from '../pages/Notfound';
+
+
 const Routes: React.FC = () => (
     <Switch>
         <Route path="/" exact component={Signin} />
@@ -39,6 +45,12 @@ const Routes: React.FC = () => (
         <Route path="/category/new"   component={NewCategory} isPrivate />
         <Route path="/supply" exact  component={Supply} isPrivate />
         <Route path="/job" exact  component={Job} isPrivate />
+        <Route path="/brands" exact  component={Brands} isPrivate />
+        <Route path="/brands/new" exact  component={NewBrand} isPrivate />
+        <Route path="/brands/details/:id" exact  component={EditBrand} isPrivate />
+        <Route component={NotFound} />
+
+
 
 
 
