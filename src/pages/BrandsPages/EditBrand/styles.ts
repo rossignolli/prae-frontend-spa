@@ -10,7 +10,7 @@ export const Container = styled.div`
 
 
     
-export const NewCategoryContent = styled.div`
+export const EditBrandContent = styled.div`
     margin-top: 20px;
     margin-left: 340px;
     background-color: #E5E5E5;

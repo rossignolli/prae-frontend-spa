@@ -10,7 +10,7 @@ export const Container = styled.div`
 
 
     
-export const CategoryContent = styled.div`
+export const BrandlistContent = styled.div`
     margin-top: 20px;
     margin-left: 340px;
     background-color: #E5E5E5;
@@ -58,6 +58,8 @@ export const CategoryContent = styled.div`
     padding: 10px;
     vertical-align: middle;
     text-align: center;
+
+
     img {
         display: inline-flex;
         width: 40px;
@@ -72,6 +74,12 @@ export const CategoryContent = styled.div`
     svg {
         cursor: pointer;
     }
+
+    
+    a {
+        text-decoration: none;
+    }
+
 
     }
 

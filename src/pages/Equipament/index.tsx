@@ -83,6 +83,7 @@ const Equipament: React.FC = ()=>{
             </section>
             
           <table>
+            <tbody>
               <tr>
                 <th>Nome</th>
                 <th>Categoria</th>
@@ -121,6 +122,7 @@ const Equipament: React.FC = ()=>{
                       <td><FiEdit2/><FiDelete/></td>
                   </tr>
               ))}
+              </tbody>
               </table>
 
              
