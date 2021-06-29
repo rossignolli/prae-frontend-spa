@@ -50,7 +50,7 @@ const Jobs: React.FC = ()=>{
     api.get(`/jobs`).then(response =>{
       setEquipaments(response.data)
     })
-  },[equipaments])
+  },[])
 
   
   // if (!equipaments){

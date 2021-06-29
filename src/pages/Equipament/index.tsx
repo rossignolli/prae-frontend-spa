@@ -43,7 +43,7 @@ const Equipament: React.FC = ()=>{
     api.get(`/equipaments`).then(response =>{
       setEquipaments(response.data)
     })
-  },[equipaments])
+  },[])
 
   
   // if (!equipaments){

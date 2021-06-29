@@ -44,7 +44,7 @@ const Category: React.FC = ()=>{
     api.get(`/categories`).then(response =>{
       setEquipaments(response.data)
     })
-  },[equipaments])
+  },[])
 
   
   // if (!equipaments){
