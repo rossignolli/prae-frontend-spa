@@ -13,12 +13,6 @@ const Dashboard: React.FC = ()=>{
 
     const { user } = useAuth();
     
-
-    
-
-
-    console.log(user)
-
     return(
         <Container>
           <NavigationBar/>
