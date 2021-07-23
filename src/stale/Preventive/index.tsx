@@ -2,51 +2,38 @@ import React, { useEffect, useState } from "react";
 import { FiBarChart, FiEdit2, FiPlus } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import {
   ButtonPurpleInverted,
   ButtonPurple,
 } from "../../components/button/styles";
-import NavigationBar from "../../components/navbar";
+import manProfile from "../../assets/temp_assets/man-profile.jpg";
+import NavigationBar from "../../components/Navbar";
+
+// import { useAuth } from '../../hooks/AuthContext';
 
 import api from "../../services/api";
 import { CategoryContent, Container } from "./styles";
-import ModalConfirmation from "../Modals/ConfirmationModal";
 
-interface Supplies {
+interface Categories {
   id: string;
   name: string;
-  pricePerJob: number;
   created_at: Date;
   description: string;
   updated_at: Date;
 }
 
-export default function Supplies() {
-  const [supplies, setSupplies] = useState<Supplies[]>();
+const Category: React.FC = () => {
+  // const hookAu = useAuth();
+  const [equipaments, setEquipaments] = useState<Categories[]>();
 
   const history = useHistory();
 
-  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
-    useState(false);
-
-  function handleOpenNewTransactionsModal() {
-    setIsNewTransactionModalOpen(true);
-  }
-
-  function handlecloseNewTransactionsModal() {
-    setIsNewTransactionModalOpen(false);
-  }
-
-  const fetchData = async () => {
-    api.get(`/supplies`).then((response) => {
-      setSupplies(response.data);
-    });
-  };
-
   useEffect(() => {
-    fetchData();
+    api.get(`/categories`).then((response) => {
+      setEquipaments(response.data);
+    });
   }, []);
 
   // if (!equipaments){
@@ -56,10 +43,7 @@ export default function Supplies() {
   return (
     <Container>
       <NavigationBar />
-      <ModalConfirmation
-        isOpen={isNewTransactionModalOpen}
-        onRequestClose={handlecloseNewTransactionsModal}
-      />
+
       <CategoryContent>
         <section>
           <ButtonPurpleInverted>
@@ -80,22 +64,20 @@ export default function Supplies() {
         <table>
           <tr>
             <th>Nome da Categoria</th>
-            <th>Preço</th>
+            <th>Descrição</th>
             <th>Ações</th>
           </tr>
-          {supplies?.map((supply) => (
-            <tr key={supply.id}>
+          {equipaments?.map((equipament) => (
+            <tr key={equipament.id}>
               <td>
                 {" "}
-                <input type="checkbox" /> {supply.name}
+                <input type="checkbox" /> {equipament.name}
               </td>
-              <td>{supply.pricePerJob}</td>
+              <td>{equipament.description}</td>
+
               <td>
                 <FiEdit2 size={22} />
-                <AiOutlineDelete
-                  size={22}
-                  onClick={handleOpenNewTransactionsModal}
-                />
+                <AiOutlineDelete size={22} />
               </td>
             </tr>
           ))}
@@ -103,4 +85,6 @@ export default function Supplies() {
       </CategoryContent>
     </Container>
   );
-}
+};
+
+export default Category;

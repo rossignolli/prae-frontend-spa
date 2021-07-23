@@ -1,101 +1,92 @@
-
-import React from 'react'
-import {Container, Content, ADBIG, Form} from './styles'
-import {useFormik} from 'formik'
-import * as Yup from 'yup'
-import logo from '../../assets/temp_assets/logo.svg'
-
- import {useAuth} from '../../hooks/AuthContext'
-import { Link, useHistory } from 'react-router-dom'
+import { Container, Content, ADBIG, Form } from "./styles";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import logo from "../../assets/temp_assets/logo.svg";
+import { useAuth } from "../../hooks/AuthContext";
+import { Link, useHistory } from "react-router-dom";
 
 export default function SigninPage() {
+  const { signIn } = useAuth();
+  const history = useHistory();
 
-
-  const {signIn} = useAuth();
-  const history = useHistory()
-
-
-  
-
-
-  const  {handleSubmit, handleChange, values, touched, errors, handleBlur, setErrors} = useFormik({
+  const {
+    handleSubmit,
+    handleChange,
+    values,
+    touched,
+    errors,
+    handleBlur,
+    setErrors,
+  } = useFormik({
     initialValues: {
-      login: '',
-      password: '',
-      invalidlogin: '',
+      login: "",
+      password: "",
+      invalidlogin: "",
     },
     validationSchema: Yup.object({
-      login: Yup.string().min(10, 'Login Must be loger than 10 characters').required('Required'),
-      password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
+      login: Yup.string()
+        .min(10, "Login Must be loger than 10 characters")
+        .required("Required"),
+      password: Yup.string()
+        .min(6, "Password should be longer than 6 characters")
+        .required(),
     }),
-    onSubmit: async (values) =>{
+    onSubmit: async (values) => {
       signIn({
         email: values.login,
-        password: values.password
-      }).then(response =>{
-        if(response.message){
+        password: values.password,
+      }).then((response) => {
+        if (response.message) {
           setErrors({
-            invalidlogin: response.message
-          })
+            invalidlogin: response.message,
+          });
+        } else {
+          history.push("/dashboard");
         }
-        else{
-           history.push('/dashboard');
-         }
+      });
+    },
+  });
 
-
-         
-         
-      })
-      
-      },
-      
-  })
-
-
-
-
-
-
-    return (
-       <Container>
-        <ADBIG>
-        </ADBIG>
-        <Content>
-          <img src={logo} alt="IT Girl holding a laptop"/>
-          <Form onSubmit={handleSubmit}>
-            <input 
+  return (
+    <Container>
+      <ADBIG></ADBIG>
+      <Content>
+        <img src={logo} alt="IT Girl holding a laptop" />
+        <Form onSubmit={handleSubmit}>
+          <input
             onBlur={handleBlur}
             value={values.login}
             onChange={handleChange}
-             type="text"
-              name="login" 
-              placeholder="E-mail" />
-              {touched.login && errors.login ? (
-                <div>{errors.login}</div>
-              ): null}
-            <input
+            type="text"
+            name="login"
+            placeholder="E-mail"
+          />
+          {touched.login && errors.login ? <div>{errors.login}</div> : null}
+          <input
             onBlur={handleBlur}
             value={values.password}
-             onChange={handleChange}
-              type="password"
-               placeholder="password"
-                 name="password"/>
-                 {touched.password && errors.password ? (
-                <div>{errors.password}</div>
-              ): null}
-            <button type="submit" >Sign in</button>
-          </Form>
-          <div>{errors?.invalidlogin}</div>
-          <h3>Dont have an account?</h3>
-          <Link to="/signup">
-          <h3 style={{
-            color: "#0070F3",
-            }} >Register here</h3>
-          </Link>
-         
-        </Content>
-       </Container>
-    )
-  }
-  
-  
+            onChange={handleChange}
+            type="password"
+            placeholder="password"
+            name="password"
+          />
+          {touched.password && errors.password ? (
+            <div>{errors.password}</div>
+          ) : null}
+          <button type="submit">Sign in</button>
+        </Form>
+        <div>{errors?.invalidlogin}</div>
+        <h3>Dont have an account?</h3>
+        <Link to="/signup">
+          <h3
+            style={{
+              color: "#0070F3",
+            }}
+          >
+            Register here
+          </h3>
+        </Link>
+      </Content>
+    </Container>
+  );
+}

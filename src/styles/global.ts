@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import theme from "./theme";
 
 export default createGlobalStyle`
 
@@ -8,6 +9,8 @@ ${reset}
 
 body{
     font-family: 'Roboto', sans-serif;
+    padding-left: 360px;
+    background-color: ${theme.colors.backgroundBlue};
 }
 
 button {

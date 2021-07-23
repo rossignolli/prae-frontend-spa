@@ -23,6 +23,7 @@ import NavigationBar from "../../components/Navbar";
 // import { useAuth } from '../../hooks/AuthContext';
 
 import api from "../../services/api";
+import { HeadersContents } from "../../pages/Dashboard/styles";
 import { CategoryContent, Container } from "./styles";
 
 interface Categories {
@@ -31,16 +32,22 @@ interface Categories {
   created_at: Date;
   description: string;
   updated_at: Date;
+  technician_id: string;
+  category_id: string;
+  supply_id: string;
+  supply: any;
+  category: any;
+  user: any;
 }
 
-const Category: React.FC = () => {
+const Jobs: React.FC = () => {
   // const hookAu = useAuth();
   const [equipaments, setEquipaments] = useState<Categories[]>();
 
   const history = useHistory();
 
   useEffect(() => {
-    api.get(`/categories`).then((response) => {
+    api.get(`/jobs`).then((response) => {
       setEquipaments(response.data);
     });
   }, []);
@@ -72,8 +79,11 @@ const Category: React.FC = () => {
 
         <table>
           <tr>
-            <th>Nome da Categoria</th>
+            <th>Nome do procedimento</th>
             <th>Descrição</th>
+            <th>Adicionado por</th>
+            <th>Categoria</th>
+            <th>Suprimentos</th>
             <th>Ações</th>
           </tr>
           {equipaments?.map((equipament) => (
@@ -83,7 +93,9 @@ const Category: React.FC = () => {
                 <input type="checkbox" /> {equipament.name}
               </td>
               <td>{equipament.description}</td>
-
+              <td>{equipament.user.name}</td>
+              <td>{equipament.category.name}</td>
+              <td>{equipament.supply.name}</td>
               <td>
                 <FiEdit2 size={22} />
                 <AiOutlineDelete size={22} />
@@ -96,4 +108,4 @@ const Category: React.FC = () => {
   );
 };
 
-export default Category;
+export default Jobs;

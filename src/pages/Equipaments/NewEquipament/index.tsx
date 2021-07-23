@@ -15,22 +15,22 @@ import manProfile from "../../assets/temp_assets/man-profile.jpg";
 import {
   ButtonPurple,
   ButtonPurpleInverted,
-} from "../../components/button/styles";
-import NavigationBar from "../../components/navbar";
+} from "../../../components/button/styles";
+import NavigationBar from "../../../components/Navbar";
 
 // import { useAuth } from '../../hooks/AuthContext';
-import api from "../../services/api";
-import { HeadersContents } from "../Dashboard/styles";
+import api from "../../../services/api";
+import { HeadersContents } from "../../Dashboard/styles";
 import {
   NewEquipamentsContent,
-  Container,
+  ContainerNewEquipament,
   ProgressBarContainer,
   NewEquipamentsContent2,
 } from "./styles";
 
 const NewEquipament: React.FC = () => {
   return (
-    <Container>
+    <ContainerNewEquipament>
       <NavigationBar />
       <NewEquipamentsContent2>
         <ProgressBarContainer>
@@ -40,15 +40,15 @@ const NewEquipament: React.FC = () => {
           </div>
           <div>
             <h1>2</h1>
-            <span>Informações Basicas</span>
+            <span>Imagens</span>
           </div>
           <div>
             <h1>3</h1>
-            <span>Informações Basicas</span>
+            <span>Detalhes</span>
           </div>
           <div>
             <h1>4</h1>
-            <span>Informações Basicas</span>
+            <span>Informações Extras</span>
           </div>
         </ProgressBarContainer>
       </NewEquipamentsContent2>
@@ -71,7 +71,7 @@ const NewEquipament: React.FC = () => {
           <ButtonPurple>Adicionar</ButtonPurple>
         </div>
       </NewEquipamentsContent>
-    </Container>
+    </ContainerNewEquipament>
   );
 };
 

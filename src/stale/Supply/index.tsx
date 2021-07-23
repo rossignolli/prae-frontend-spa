@@ -2,39 +2,51 @@ import React, { useEffect, useState } from "react";
 import { FiBarChart, FiEdit2, FiPlus } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import {
   ButtonPurpleInverted,
   ButtonPurple,
 } from "../../components/button/styles";
-import manProfile from "../../assets/temp_assets/man-profile.jpg";
-import NavigationBar from "../../components/navbar";
-
-// import { useAuth } from '../../hooks/AuthContext';
+import NavigationBar from "../../components/Navbar";
 
 import api from "../../services/api";
-import { HeadersContents } from "../Dashboard/styles";
 import { CategoryContent, Container } from "./styles";
+import ModalConfirmation from "../Modals/ConfirmationModal";
 
-interface Categories {
+interface Supplies {
   id: string;
   name: string;
+  pricePerJob: number;
   created_at: Date;
   description: string;
   updated_at: Date;
 }
 
-const Category: React.FC = () => {
-  // const hookAu = useAuth();
-  const [equipaments, setEquipaments] = useState<Categories[]>();
+export default function Supplies() {
+  const [supplies, setSupplies] = useState<Supplies[]>();
 
   const history = useHistory();
 
-  useEffect(() => {
-    api.get(`/categories`).then((response) => {
-      setEquipaments(response.data);
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
+    useState(false);
+
+  function handleOpenNewTransactionsModal() {
+    setIsNewTransactionModalOpen(true);
+  }
+
+  function handlecloseNewTransactionsModal() {
+    setIsNewTransactionModalOpen(false);
+  }
+
+  const fetchData = async () => {
+    api.get(`/supplies`).then((response) => {
+      setSupplies(response.data);
     });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   // if (!equipaments){
@@ -44,7 +56,10 @@ const Category: React.FC = () => {
   return (
     <Container>
       <NavigationBar />
-
+      <ModalConfirmation
+        isOpen={isNewTransactionModalOpen}
+        onRequestClose={handlecloseNewTransactionsModal}
+      />
       <CategoryContent>
         <section>
           <ButtonPurpleInverted>
@@ -65,20 +80,22 @@ const Category: React.FC = () => {
         <table>
           <tr>
             <th>Nome da Categoria</th>
-            <th>Descrição</th>
+            <th>Preço</th>
             <th>Ações</th>
           </tr>
-          {equipaments?.map((equipament) => (
-            <tr key={equipament.id}>
+          {supplies?.map((supply) => (
+            <tr key={supply.id}>
               <td>
                 {" "}
-                <input type="checkbox" /> {equipament.name}
+                <input type="checkbox" /> {supply.name}
               </td>
-              <td>{equipament.description}</td>
-
+              <td>{supply.pricePerJob}</td>
               <td>
                 <FiEdit2 size={22} />
-                <AiOutlineDelete size={22} />
+                <AiOutlineDelete
+                  size={22}
+                  onClick={handleOpenNewTransactionsModal}
+                />
               </td>
             </tr>
           ))}
@@ -86,6 +103,4 @@ const Category: React.FC = () => {
       </CategoryContent>
     </Container>
   );
-};
-
-export default Category;
+}

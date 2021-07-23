@@ -1,19 +1,21 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 export const Container = styled.div`
   display: flex;
-  background-color: #e1e1e5;
-  flex-direction: column;
   height: 100vh;
+  background-color: #e5e5e5;
+  flex-direction: column;
 `;
 
-export const CategoryContent = styled.div`
+export const EquipamentsContent = styled.div`
   margin-top: 20px;
   margin-left: 340px;
-  background-color: #e1e1e5;
+  background-color: #e5e5e5;
   display: flex;
   flex-direction: column;
   margin-right: 20px;
+  height: 100%;
+  background-color: red;
 
   section {
     display: flex;
@@ -57,6 +59,16 @@ export const CategoryContent = styled.div`
       object-fit: cover;
       vertical-align: middle;
       margin-right: 10px;
+    }
+  }
+
+  .button-holder {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 40px;
+
+    button {
+      margin-left: 20px;
     }
   }
 

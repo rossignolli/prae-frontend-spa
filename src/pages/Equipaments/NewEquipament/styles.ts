@@ -1,8 +1,7 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
-export const Container = styled.div`
+export const ContainerNewEquipament = styled.div`
   display: flex;
-  height: 100vh;
   background-color: #f5f5fa;
   flex-direction: column;
 `;
@@ -136,6 +135,7 @@ export const NewEquipamentsContent = styled.div`
 
 export const ProgressBarContainer = styled.div`
   display: flex;
+  justify-content: center;
   div {
     display: flex;
     flex-direction: column;
