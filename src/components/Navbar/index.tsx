@@ -24,7 +24,7 @@ import {
 } from "react-icons/fc";
 
 import manProfile from "../../assets/temp_assets/man-profile.jpg";
-import logosvg from "../../assets/temp_assets/logomin.png";
+import logosvg from "../../assets/temp_assets/logomin.svg";
 import { useAuth } from "../../hooks/AuthContext";
 import {
   Container,

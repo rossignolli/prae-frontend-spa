@@ -21,19 +21,15 @@ import NavigationBar from "../../../components/Navbar";
 // import { useAuth } from '../../hooks/AuthContext';
 import api from "../../../services/api";
 import { HeadersContents } from "../../Dashboard/styles";
-import {
-  NewEquipamentsContent,
-  ContainerNewEquipament,
-  ProgressBarContainer,
-  NewEquipamentsContent2,
-} from "./styles";
+import * as S from "./styles";
+import InputTextField from "../../../components/TextField";
 
 const NewEquipament: React.FC = () => {
   return (
-    <ContainerNewEquipament>
+    <S.ContainerNewEquipament>
       <NavigationBar />
-      <NewEquipamentsContent2>
-        <ProgressBarContainer>
+      <S.NewEquipamentsContent2>
+        <S.ProgressBarContainer>
           <div>
             <h1>1</h1>
             <span>Informações Basicas</span>
@@ -50,9 +46,9 @@ const NewEquipament: React.FC = () => {
             <h1>4</h1>
             <span>Informações Extras</span>
           </div>
-        </ProgressBarContainer>
-      </NewEquipamentsContent2>
-      <NewEquipamentsContent>
+        </S.ProgressBarContainer>
+      </S.NewEquipamentsContent2>
+      <S.NewEquipamentsContent>
         <h1>Informações Básica do Equipamento</h1>
         <p>
           Insira os dados do equipamento que será adicionado na base de dados de
@@ -60,18 +56,15 @@ const NewEquipament: React.FC = () => {
           monitoramento desligado
         </p>
         <form action="">
-          <div className="input-block">
-            <label htmlFor="about">Nome do equipamento</label>
-            <input type="text" />
-          </div>
+          <InputTextField />
         </form>
 
-        <div className="button-holder">
+        <S.ButtonHolder>
           <ButtonPurpleInverted>Voltar</ButtonPurpleInverted>
           <ButtonPurple>Adicionar</ButtonPurple>
-        </div>
-      </NewEquipamentsContent>
-    </ContainerNewEquipament>
+        </S.ButtonHolder>
+      </S.NewEquipamentsContent>
+    </S.ContainerNewEquipament>
   );
 };
 

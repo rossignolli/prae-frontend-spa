@@ -11,6 +11,7 @@ body{
     font-family: 'Roboto', sans-serif;
     padding-left: 360px;
     background-color: ${theme.colors.backgroundBlue};
+    height: 100vh;
 }
 
 button {

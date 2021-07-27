@@ -2,22 +2,21 @@ import styled from "styled-components/macro";
 
 export const ContainerNewEquipament = styled.div`
   display: flex;
-  background-color: #f5f5fa;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   flex-direction: column;
 `;
 
 export const NewEquipamentsContent2 = styled.div`
-  margin-top: 20px;
-  margin-left: 340px;
   display: flex;
   flex-direction: column;
   background-color: #f5f5fa;
   border-radius: 15px;
+  margin-bottom: 32px;
 `;
 
 export const NewEquipamentsContent = styled.div`
-  margin-top: 20px;
-  margin-left: 340px;
   background-color: #e5e5e5;
   display: flex;
   padding: 50px;
@@ -27,10 +26,6 @@ export const NewEquipamentsContent = styled.div`
   background-color: #ffffff;
   border-radius: 15px;
 
-  div {
-    margin-bottom: 20px;
-  }
-
   h1 {
     text-align: center;
     font-size: 18px;
@@ -39,98 +34,24 @@ export const NewEquipamentsContent = styled.div`
     color: #8257e5;
   }
 
-  // FAZER COMPONENTES DESSES INPUTS PARA USAR EM OUTROS LUGARES
-
-  input {
-    width: 100%;
-    background: #f1f1f1;
-    border-radius: 15px;
-    outline: none;
-    color: #95979a;
-    height: 58px;
-    padding: 10px;
-    border: 1px solid #dddddd;
-  }
-  textarea {
-    width: 100%;
-    background: #f1f1f1;
-    border-radius: 15px;
-    outline: none;
-    color: #95979a;
-    height: 58px;
-    padding: 10px;
-    border: 1px solid #dddddd;
-    height: 120px;
-  }
-
-  label {
-    display: flex;
-    color: #000000;
-    margin-bottom: 10px;
-    font-size: 16px;
-    font-weight: bold;
-  }
-
   p {
     color: #95979a;
     margin-bottom: 20px;
   }
+`;
 
-  select {
-    background: #f1f1f1;
-    border-radius: 15px;
-    outline: none;
-    width: 100%;
-    color: #95979a;
-    height: 58px;
-    padding: 10px;
-    border: 1px solid #dddddd;
+export const ButtonHolder = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
 
-    option {
-      color: black;
-      background: #f1f1f1;
-    }
-  }
-
-  .warning {
-    color: #ea5455;
-  }
-
-  .warning-equip {
-    color: #95979a;
-    margin-bottom: 0px;
-  }
-
-  .button-holder {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 40px;
-
-    button {
-      margin-left: 20px;
-    }
-  }
-
-  .input-block-check {
-    display: flex;
-    align-items: center;
-
-    label {
-      display: inline-block;
-      color: #95979a;
-      font-weight: normal;
-    }
-
-    input {
-      width: auto;
-      margin-bottom: 10px;
-      margin-right: 10px;
-    }
-  }
-
-  @media screen and (max-width: 800px) {
+  button {
     margin-left: 20px;
   }
+`;
+
+export const Progressbar = styled.div`
+  // PROGRESS BAR
 `;
 
 export const ProgressBarContainer = styled.div`

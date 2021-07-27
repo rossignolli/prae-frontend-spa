@@ -47,14 +47,14 @@ export const ImgLogo = styled.div`
   justify-content: center;
 
   img {
-    width: 132px;
+    width: 206px;
     margin-top: 40px;
   }
 `;
 
 export const Userdiv = styled.div`
   ${({ theme }) => css`
-    border: 2px solid ${theme.colors.grayBorder};
+    border: 1px solid ${theme.colors.grayBorder};
   `}
 
   display: flex;

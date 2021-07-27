@@ -22,7 +22,6 @@ interface Equipaments {
 }
 
 export default function Equipament() {
-  // const hookAu = useAuth();
   const [equipaments, setEquipaments] = useState<Equipaments[]>();
 
   const history = useHistory();
