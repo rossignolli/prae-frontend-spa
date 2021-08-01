@@ -1,10 +1,30 @@
+import { useCallback, useState } from "react";
 import * as S from "./styles";
 
-export default function InputTextField() {
+interface InputTextProps {
+  name: string;
+}
+
+export default function InputTextField({ name }: InputTextProps) {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleInputBlur = useCallback(() => {
+    setIsFocused(false);
+  }, []);
+
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
   return (
     <S.ContainerInput>
-      <S.LabelForm htmlFor="name">Apelido</S.LabelForm>
-      <S.Input type="text" />
+      <S.LabelForm>{name}</S.LabelForm>
+      <S.Input
+        type="text"
+        isFocused={isFocused}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+      />
     </S.ContainerInput>
   );
 }

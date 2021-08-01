@@ -11,6 +11,7 @@ export const ContainerNewEquipament = styled.div`
 export const NewEquipamentsContent2 = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   background-color: #f5f5fa;
   border-radius: 15px;
   margin-bottom: 32px;
@@ -21,8 +22,7 @@ export const NewEquipamentsContent = styled.div`
   display: flex;
   padding: 50px;
   flex-direction: column;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  margin: 16px;
   background-color: #ffffff;
   border-radius: 15px;
 
@@ -50,38 +50,52 @@ export const ButtonHolder = styled.div`
   }
 `;
 
-export const Progressbar = styled.div`
-  // PROGRESS BAR
+export const ProgressbarContainer = styled.div`
+  width: 100%;
+`;
+
+export const Internalbar = styled.div`
+  position: absolute;
+  height: 20px;
+  border-radius: 16px;
+  background-color: #28c76f;
+  top: 16px;
+  left: 85px;
+  z-index: 1;
+  width: 350px;
+`;
+
+export const NumberContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: #8257e5;
+    color: white;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  span {
+    color: #8257e5;
+    font-size: 16px;
+    font-weight: 700;
+  }
 `;
 
 export const ProgressBarContainer = styled.div`
   display: flex;
   justify-content: center;
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-
-    h1 {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      background-color: #8257e5;
-      color: white;
-      margin-bottom: 10px;
-      font-size: 24px;
-      font-weight: 700;
-    }
-
-    span {
-      color: #8257e5;
-      font-size: 16px;
-      font-weight: 700;
-    }
-  }
+  position: relative;
+  z-index: 2;
 `;

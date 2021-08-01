@@ -11,17 +11,6 @@ import {
   FiCalendar,
   FiTrello,
 } from "react-icons/fi";
-import {
-  FcMultipleDevices,
-  FcHome,
-  FcAreaChart,
-  FcGenealogy,
-  FcCalendar,
-  FcSupport,
-  FcHighPriority,
-  FcPackage,
-  FcDocument,
-} from "react-icons/fc";
 
 import manProfile from "../../assets/temp_assets/man-profile.jpg";
 import logosvg from "../../assets/temp_assets/logomin.svg";

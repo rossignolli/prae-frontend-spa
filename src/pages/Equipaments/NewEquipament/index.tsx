@@ -1,51 +1,46 @@
-import React, { useEffect, useState } from "react";
-import {
-  FiAlertTriangle,
-  FiAlignLeft,
-  FiBarChart,
-  FiBell,
-  FiDelete,
-  FiEdit2,
-  FiHardDrive,
-  FiPlus,
-} from "react-icons/fi";
-import { Link } from "react-router-dom";
+import React from "react";
 
-import manProfile from "../../assets/temp_assets/man-profile.jpg";
 import {
   ButtonPurple,
   ButtonPurpleInverted,
 } from "../../../components/button/styles";
 import NavigationBar from "../../../components/Navbar";
 
-// import { useAuth } from '../../hooks/AuthContext';
-import api from "../../../services/api";
-import { HeadersContents } from "../../Dashboard/styles";
 import * as S from "./styles";
 import InputTextField from "../../../components/TextField";
+import Select from "react-select";
 
-const NewEquipament: React.FC = () => {
+export default function NewEquipament() {
+  const options = [
+    { value: "chocolate", label: "Desktops" },
+    { value: "strawberry", label: "Maquinas de analises Clinicas" },
+    { value: "vanilla", label: "Refrigeradores" },
+  ];
+
   return (
     <S.ContainerNewEquipament>
       <NavigationBar />
       <S.NewEquipamentsContent2>
         <S.ProgressBarContainer>
-          <div>
+          <S.Internalbar />
+        </S.ProgressBarContainer>
+        <S.ProgressBarContainer>
+          <S.NumberContainer>
             <h1>1</h1>
             <span>Informações Basicas</span>
-          </div>
-          <div>
+          </S.NumberContainer>
+          <S.NumberContainer>
             <h1>2</h1>
             <span>Imagens</span>
-          </div>
-          <div>
+          </S.NumberContainer>
+          <S.NumberContainer>
             <h1>3</h1>
             <span>Detalhes</span>
-          </div>
-          <div>
+          </S.NumberContainer>
+          <S.NumberContainer>
             <h1>4</h1>
             <span>Informações Extras</span>
-          </div>
+          </S.NumberContainer>
         </S.ProgressBarContainer>
       </S.NewEquipamentsContent2>
       <S.NewEquipamentsContent>
@@ -56,7 +51,10 @@ const NewEquipament: React.FC = () => {
           monitoramento desligado
         </p>
         <form action="">
-          <InputTextField />
+          <InputTextField name="Apelido" />
+          <InputTextField name="Modelo" />
+          <InputTextField name="Marca" />
+          <Select options={options} placeholder="Selecionar categoria" />
         </form>
 
         <S.ButtonHolder>
@@ -66,6 +64,4 @@ const NewEquipament: React.FC = () => {
       </S.NewEquipamentsContent>
     </S.ContainerNewEquipament>
   );
-};
-
-export default NewEquipament;
+}
