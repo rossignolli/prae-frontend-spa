@@ -9,6 +9,7 @@ import NavigationBar from "../../../components/Navbar";
 import * as S from "./styles";
 import InputTextField from "../../../components/TextField";
 import Select from "react-select";
+import InputSelectField from "../../../components/SelectField";
 
 export default function NewEquipament() {
   const options = [
@@ -51,10 +52,28 @@ export default function NewEquipament() {
           monitoramento desligado
         </p>
         <form action="">
-          <InputTextField name="Apelido" />
-          <InputTextField name="Modelo" />
-          <InputTextField name="Marca" />
-          <Select options={options} placeholder="Selecionar categoria" />
+          <InputTextField
+            name="Apelido"
+            label="Apelido"
+            placeholder={"Ex: Ar-condicionado Servidor"}
+          />
+          <InputTextField
+            name="model"
+            label="Modelo"
+            placeholder="Ar Condicionado Portátil Elgin Eco Cub, 9000 BTUs"
+          />
+          <InputSelectField
+            name="brand"
+            label="Marcas"
+            placeholder="Selecione uma marca"
+            options={options}
+          />
+          <InputSelectField
+            name="Apelido"
+            label="Categorias"
+            placeholder="Selecione uma categoria"
+            options={options}
+          />
         </form>
 
         <S.ButtonHolder>

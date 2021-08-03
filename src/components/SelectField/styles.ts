@@ -17,10 +17,6 @@ export const Input = styled.input<InputProps>`
   border: 1px solid #e1e1e5;
   transition: border 0.2s ease-in;
 
-  ::placeholder {
-    color: #95979a;
-  }
-
   ${(props) =>
     props.isFocused &&
     css`

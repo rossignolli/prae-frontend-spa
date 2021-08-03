@@ -1,11 +1,17 @@
-import { useCallback, useState } from "react";
+import { InputHTMLAttributes, useCallback, useState } from "react";
 import * as S from "./styles";
 
-interface InputTextProps {
+interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
+  label: string;
 }
 
-export default function InputTextField({ name }: InputTextProps) {
+export default function InputTextField({
+  name,
+  label,
+  placeholder,
+  ...rest
+}: InputTextProps) {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleInputBlur = useCallback(() => {
@@ -18,12 +24,14 @@ export default function InputTextField({ name }: InputTextProps) {
 
   return (
     <S.ContainerInput>
-      <S.LabelForm>{name}</S.LabelForm>
+      <S.LabelForm htmlFor={name}>{label}</S.LabelForm>
       <S.Input
+        id={name}
         type="text"
         isFocused={isFocused}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
+        placeholder={placeholder}
       />
     </S.ContainerInput>
   );
