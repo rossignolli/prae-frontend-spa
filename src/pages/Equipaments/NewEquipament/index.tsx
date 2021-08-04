@@ -51,7 +51,7 @@ export default function NewEquipament() {
           <p>
             Insira os dados do equipamento que será adicionado na base de dados
             de monitoramento. Todo equipamento por padrão é adicionado com
-            monitoramento desligado
+            monitoramento desligado!
           </p>
           <form action="">
             <InputTextField
