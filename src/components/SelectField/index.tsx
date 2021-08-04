@@ -9,13 +9,10 @@ interface InputTextProps extends Props {
 
 const customStyles = {
   input: () => ({
-    // none of react-select's styles are passed to <Control />
     padding: 10,
-
     height: 58,
   }),
   control: (provided: CSSObject, state: any) => ({
-    // none of react-select's styles are passed to <Control />
     ...provided,
     borderRadius: 15,
     borderColor: "#e1e1e5",
