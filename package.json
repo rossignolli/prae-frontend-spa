@@ -72,6 +72,9 @@
     "cz-conventional-changelog": "3.3.0"
   },
   "config": {
+    "cz-emoji": {
+      "conventional": true
+    },
     "commitizen": {
       "path": "cz-emoji"
     }
