@@ -1,17 +1,26 @@
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components/macro";
+import media from "styled-media-query";
 
-export const Container = styled.div`
-  display: flex;
-  justify-items: center;
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100%;
+interface ContainerProps {
+  isOpen: boolean;
+}
 
-  @media screen and (max-width: 800px) {
-    display: none;
-  }
+export const Container = styled.div<ContainerProps>`
+  ${({ theme, isOpen }) => css`
+    display: flex;
+    justify-items: center;
+    position: fixed;
+    left: ${isOpen ? "0" : "-360px"};
+    top: 0;
+    transition: left 0.3s ease;
+    height: 100%;
+    z-index: 99;
+
+    ${media.greaterThan("large")`
+      left: 0;
+    `}
+  `}
 `;
 
 export const Navbar = styled.div`
@@ -24,6 +33,10 @@ export const Navbar = styled.div`
     text-decoration: none;
     text-decoration-style: none;
     color: #717478;
+  }
+
+  svg {
+    cursor: pointer;
   }
 
   ${({ theme }) => css`
@@ -49,6 +62,21 @@ export const ImgLogo = styled.div`
   img {
     width: 206px;
     margin-top: 40px;
+  }
+`;
+
+export const MobileContainer = styled.div`
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 50px;
+
+  svg {
+    cursor: pointer;
+    margin-left: 12px;
+    margin-top: 12px;
   }
 `;
 
@@ -140,6 +168,5 @@ export const NotificationCenter = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: red;
   height: 120px;
 `;

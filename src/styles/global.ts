@@ -1,17 +1,22 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import theme from "./theme";
+import media from "styled-media-query";
 
 export default createGlobalStyle`
 
 ${reset}
-
 
 body{
     font-family: 'Roboto', sans-serif;
     padding-left: 360px;
     background-color: ${theme.colors.backgroundBlue};
     height: 100vh;
+
+    ${media.lessThan("large")`
+    /* screen width is less than 768px (medium) */
+      padding-left: 0px;
+    `}
 }
 
 button {
