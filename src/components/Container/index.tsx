@@ -1,9 +1,9 @@
-import { ContainerGeneral } from "./styles";
+import { GlobalDashContainer } from "./styles";
 
 interface ContainerProps {
   children: JSX.Element[] | JSX.Element;
 }
 
 export default function MainContainer({ children }: ContainerProps) {
-  return <ContainerGeneral>{children}</ContainerGeneral>;
+  return <GlobalDashContainer>{children}</GlobalDashContainer>;
 }

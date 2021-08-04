@@ -11,6 +11,7 @@ import {
   ButtonPurple,
   ButtonPurpleInverted,
 } from "../../../components/button/styles";
+import { GlobalDashContainer } from "../../../components/Container/styles";
 
 interface Equipaments {
   created_at: Date;
@@ -33,63 +34,65 @@ export default function Equipament() {
   }, []);
 
   return (
-    <Container>
-      <NavigationBar />
-      <EquipamentsContent>
-        <section>
-          <ButtonPurpleInverted>
-            <FiBarChart />
-            Gerar relatório
-          </ButtonPurpleInverted>
+    <GlobalDashContainer>
+      <Container>
+        <NavigationBar />
+        <EquipamentsContent>
+          <section>
+            <ButtonPurpleInverted>
+              <FiBarChart />
+              Gerar relatório
+            </ButtonPurpleInverted>
 
-          <ButtonPurple
-            onClick={() => {
-              history.push("equipaments/new");
-            }}
-          >
-            <FiPlus />
-            Adicionar
-          </ButtonPurple>
-        </section>
+            <ButtonPurple
+              onClick={() => {
+                history.push("equipaments/new");
+              }}
+            >
+              <FiPlus />
+              Adicionar
+            </ButtonPurple>
+          </section>
 
-        <table>
-          <tr>
-            <th>Nome</th>
-            <th>Categoria</th>
-            <th>Criado por</th>
-            <th>Data de vencimento</th>
-            <th>Marca</th>
-            <th>Crítico</th>
-            <th>Expiração</th>
+          <table>
+            <tr>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Criado por</th>
+              <th>Data de vencimento</th>
+              <th>Marca</th>
+              <th>Crítico</th>
+              <th>Expiração</th>
 
-            <th>Ações</th>
-          </tr>
-          {equipaments?.map((equipament) => (
-            <tr key={equipament.id}>
-              <td>
-                <Link to={`/equipaments/details/${equipament.id}`}>
-                  {equipament.name}
-                </Link>
-              </td>
-              <td>Estação de trabalho</td>
-              <td>
-                <img src={manProfile} alt="" />
-                Jeny Irland
-              </td>
-
-              <td>{equipament.description}</td>
-              {equipament.expired ? <td>Vencida</td> : <td>OK</td>}
-              <td>Sim</td>
-              <td>Expirado</td>
-
-              <td>
-                <FiEdit2 />
-                <FiDelete />
-              </td>
+              <th>Ações</th>
             </tr>
-          ))}
-        </table>
-      </EquipamentsContent>
-    </Container>
+            {equipaments?.map((equipament) => (
+              <tr key={equipament.id}>
+                <td>
+                  <Link to={`/equipaments/details/${equipament.id}`}>
+                    {equipament.name}
+                  </Link>
+                </td>
+                <td>Estação de trabalho</td>
+                <td>
+                  <img src={manProfile} alt="" />
+                  Jeny Irland
+                </td>
+
+                <td>{equipament.description}</td>
+                {equipament.expired ? <td>Vencida</td> : <td>OK</td>}
+                <td>Sim</td>
+                <td>Expirado</td>
+
+                <td>
+                  <FiEdit2 />
+                  <FiDelete />
+                </td>
+              </tr>
+            ))}
+          </table>
+        </EquipamentsContent>
+      </Container>
+    </GlobalDashContainer>
   );
 }
