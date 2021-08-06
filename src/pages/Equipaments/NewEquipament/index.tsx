@@ -8,46 +8,35 @@ import NavigationBar from "../../../components/Navbar";
 
 import * as S from "./styles";
 import InputTextField from "../../../components/TextField";
-import Select from "react-select";
 import InputSelectField from "../../../components/SelectField";
 import GlobalDashContainer from "../../../components/Container";
+import InputImageFile from "../../../components/ImageField";
 
 export default function NewEquipament() {
-  const options = [
-    { value: "chocolate", label: "Desktops" },
-    { value: "strawberry", label: "Maquinas de analises Clinicas" },
+  const brandsOptions = [
+    { value: "chocolate", label: "Apple" },
+    { value: "strawberry", label: "LG" },
+    { value: "vanilla", label: "HP" },
+  ];
+
+  const criticaloptions = [
+    { value: "false", label: "Sim" },
+    { value: "true", label: "Não" },
     { value: "vanilla", label: "Refrigeradores" },
+  ];
+
+  const categoriesloptions = [
+    { value: "false", label: "Desktop" },
+    { value: "true", label: "Refrigeradores" },
+    { value: "teste", label: "Casa de máquinas" },
   ];
 
   return (
     <GlobalDashContainer>
       <S.ContainerNewEquipament>
         <NavigationBar />
-        <S.NewEquipamentsContent2>
-          <S.ProgressBarContainer>
-            <S.Internalbar />
-          </S.ProgressBarContainer>
-          <S.ProgressBarContainer>
-            <S.NumberContainer>
-              <h1>1</h1>
-              <span>Informações Basicas</span>
-            </S.NumberContainer>
-            <S.NumberContainer>
-              <h1>2</h1>
-              <span>Imagens</span>
-            </S.NumberContainer>
-            <S.NumberContainer>
-              <h1>3</h1>
-              <span>Detalhes</span>
-            </S.NumberContainer>
-            <S.NumberContainer>
-              <h1>4</h1>
-              <span>Informações Extras</span>
-            </S.NumberContainer>
-          </S.ProgressBarContainer>
-        </S.NewEquipamentsContent2>
         <S.NewEquipamentsContent>
-          <h1>Informações Básica do Equipamento</h1>
+          <h1>Adicionar Equipamento</h1>
           <p>
             Insira os dados do equipamento que será adicionado na base de dados
             de monitoramento. Todo equipamento por padrão é adicionado com
@@ -65,17 +54,29 @@ export default function NewEquipament() {
               placeholder="Ar Condicionado Portátil Elgin Eco Cub, 9000 BTUs"
             />
             <InputSelectField
-              name="brand"
+              name="brands"
               label="Marcas"
               placeholder="Selecione uma marca"
-              options={options}
+              options={brandsOptions}
             />
             <InputSelectField
-              name="Apelido"
+              name="nickname"
               label="Categorias"
               placeholder="Selecione uma categoria"
-              options={options}
+              options={criticaloptions}
             />
+            <InputSelectField
+              name="critical"
+              label="Critico"
+              placeholder="Seleciona a importancia do equipamento"
+              options={categoriesloptions}
+            />
+            <InputTextField
+              name="description"
+              label="Descrição"
+              placeholder="O conceito de ar-condicionado Portátil proporciona praticidade e fácil instalação, podendo ser feita pelo consumidor sem a necessidade de contratação de instaladores credenciados."
+            />
+            <InputImageFile name="critical" label="Critico" />
           </form>
 
           <S.ButtonHolder>
