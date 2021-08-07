@@ -1,7 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import theme from "./theme";
-import media from "styled-media-query";
 
 export default createGlobalStyle`
 
@@ -10,10 +9,12 @@ ${reset}
 body{
     font-family: 'Roboto', sans-serif;
     background-color: ${theme.colors.backgroundBlue};
-    height: 100vh;
-    
-  
+    height: 100vh; 
 }
+
+html {
+      font-size: 62.5%;
+    }
 
 button {
     cursor: pointer;
