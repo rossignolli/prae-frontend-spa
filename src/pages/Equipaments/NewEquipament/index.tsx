@@ -1,9 +1,6 @@
 import React from "react";
 
-import {
-  ButtonPurple,
-  ButtonPurpleInverted,
-} from "../../../components/button/styles";
+
 import NavigationBar from "../../../components/Navbar";
 
 import * as S from "./styles";
@@ -11,6 +8,7 @@ import InputTextField from "../../../components/TextField";
 import InputSelectField from "../../../components/SelectField";
 import GlobalDashContainer from "../../../components/Container";
 import InputImageFile from "../../../components/ImageField";
+import Button from "../../../components/Button";
 
 export default function NewEquipament() {
   const brandsOptions = [
@@ -34,7 +32,7 @@ export default function NewEquipament() {
   return (
     <GlobalDashContainer>
       <S.ContainerNewEquipament>
-        <NavigationBar />
+        {/* <NavigationBar /> */}
         <S.NewEquipamentsContent>
           <h1>Adicionar Equipamento</h1>
           <p>
@@ -52,6 +50,11 @@ export default function NewEquipament() {
               name="model"
               label="Modelo"
               placeholder="Ar Condicionado Portátil Elgin Eco Cub, 9000 BTUs"
+            />
+            <InputTextField
+              name="Apelido"
+              label="Registro de Patrimonio"
+              placeholder={"Ex: Ar-condicionado Servidor"}
             />
             <InputSelectField
               name="brands"
@@ -80,8 +83,7 @@ export default function NewEquipament() {
           </form>
 
           <S.ButtonHolder>
-            <ButtonPurpleInverted>Voltar</ButtonPurpleInverted>
-            <ButtonPurple>Adicionar</ButtonPurple>
+            <Button>Adicionar</Button>
           </S.ButtonHolder>
         </S.NewEquipamentsContent>
       </S.ContainerNewEquipament>

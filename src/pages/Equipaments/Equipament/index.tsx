@@ -7,10 +7,7 @@ import NavigationBar from "../../../components/Navbar";
 
 import api from "../../../services/api";
 import { EquipamentsContent, Container } from "./styles";
-import {
-  ButtonPurple,
-  ButtonPurpleInverted,
-} from "../../../components/button/styles";
+
 import { GlobalDashContainer } from "../../../components/Container/styles";
 
 interface Equipaments {
@@ -39,19 +36,10 @@ export default function Equipament() {
         <NavigationBar />
         <EquipamentsContent>
           <section>
-            <ButtonPurpleInverted>
-              <FiBarChart />
-              Gerar relatório
-            </ButtonPurpleInverted>
-
-            <ButtonPurple
-              onClick={() => {
-                history.push("equipaments/new");
-              }}
-            >
+ 
               <FiPlus />
               Adicionar
-            </ButtonPurple>
+       
           </section>
 
           <table>

@@ -11,13 +11,6 @@ import {
 } from "react-icons/fi";
 import { Link, useHistory, useParams } from "react-router-dom";
 
-import manProfile from "../../assets/temp_assets/man-profile.jpg";
-import {
-  ButtonPurple,
-  ButtonPurpleInverted,
-  GreenButton,
-  SalmonButton,
-} from "../../../components/button/styles";
 import NavigationBar from "../../../components/Navbar";
 
 // import { useAuth } from '../../hooks/AuthContext';
@@ -63,16 +56,7 @@ const EquipamentsDetails: React.FC = () => {
         <p>{equipament?.description}</p>
 
         <div className="button-holder">
-          <ButtonPurpleInverted>Voltar</ButtonPurpleInverted>
-          <ButtonPurple>Adicionar</ButtonPurple>
-          <GreenButton>Registrar Preventiva</GreenButton>
-          <SalmonButton
-            onClick={() => {
-              history.push(`/monitor/${params.id}`);
-            }}
-          >
-            Iniciar
-          </SalmonButton>
+          
         </div>
       </NewEquipamentsContent>
     </Container>

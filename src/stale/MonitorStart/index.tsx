@@ -13,13 +13,7 @@ import { MdDevices } from "react-icons/md";
 
 import { Link, useHistory, useParams } from "react-router-dom";
 
-import manProfile from "../../assets/temp_assets/man-profile.jpg";
-import {
-  ButtonPurple,
-  ButtonPurpleInverted,
-  GreenButton,
-  SalmonButton,
-} from "../../components/button/styles";
+
 import NavigationBar from "../../components/Navbar";
 
 // import { useAuth } from '../../hooks/AuthContext';

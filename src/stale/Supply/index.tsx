@@ -4,10 +4,6 @@ import { AiOutlineDelete } from "react-icons/ai";
 
 import { useHistory } from "react-router-dom";
 
-import {
-  ButtonPurpleInverted,
-  ButtonPurple,
-} from "../../components/button/styles";
 import NavigationBar from "../../components/Navbar";
 
 import api from "../../services/api";
@@ -62,19 +58,7 @@ export default function Supplies() {
       />
       <CategoryContent>
         <section>
-          <ButtonPurpleInverted>
-            <FiBarChart />
-            Gerar relatório
-          </ButtonPurpleInverted>
 
-          <ButtonPurple
-            onClick={() => {
-              history.push("category/new");
-            }}
-          >
-            <FiPlus />
-            Adicionar
-          </ButtonPurple>
         </section>
 
         <table>

@@ -13,10 +13,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 
 import { Link, useHistory } from "react-router-dom";
 
-import {
-  ButtonPurpleInverted,
-  ButtonPurple,
-} from "../../components/button/styles";
+
 import manProfile from "../../assets/temp_assets/man-profile.jpg";
 import NavigationBar from "../../components/Navbar";
 
@@ -55,19 +52,7 @@ const Category: React.FC = () => {
 
       <CategoryContent>
         <section>
-          <ButtonPurpleInverted>
-            <FiBarChart />
-            Gerar relatório
-          </ButtonPurpleInverted>
-
-          <ButtonPurple
-            onClick={() => {
-              history.push("category/new");
-            }}
-          >
-            <FiPlus />
-            Adicionar
-          </ButtonPurple>
+          
         </section>
 
         <table>

@@ -5,10 +5,6 @@ import { useHistory } from "react-router-dom";
 import NavigationBar from "../../components/Navbar";
 
 import { NewCategoryContent, Container } from "./styles";
-import {
-  ButtonPurple,
-  ButtonPurpleInverted,
-} from "../../components/button/styles";
 
 const NewCategory: React.FC = () => {
   const history = useHistory();
@@ -35,14 +31,7 @@ const NewCategory: React.FC = () => {
           </div>
         </form>
         <div className="button-holder">
-          <ButtonPurpleInverted
-            onClick={() => {
-              history.goBack();
-            }}
-          >
-            Voltar
-          </ButtonPurpleInverted>
-          <ButtonPurple>Salvar</ButtonPurple>
+         
         </div>
       </NewCategoryContent>
     </Container>
