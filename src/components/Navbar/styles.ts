@@ -83,51 +83,51 @@ export const MobileContainer = styled.div`
 export const Userdiv = styled.div`
   ${({ theme }) => css`
     border: 1px solid ${theme.colors.grayBorder};
-  `}
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 70px;
-  margin-bottom: 60px;
-  width: 270px;
-  height: 73px;
-  border-radius: 15px;
-
-  padding: 10px;
-
-  img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
-  h2 {
-    color: black;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 19px;
-    margin-left: 10px;
-  }
-
-  h3 {
-    color: #717479;
-    font-size: 14px;
-    margin-top: 6px;
-    margin-left: 14px;
-  }
-
-  div {
     display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
+    align-items: center;
+    justify-content: center;
+    margin-top: 70px;
+    margin-bottom: 60px;
+    width: 270px;
+    height: 73px;
+    border-radius: 15px;
 
-  svg {
-    margin-left: 10px;
-  }
+    padding: 10px;
+
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    h2 {
+      color: black;
+      font-size: ${theme.font.sizes.medium};
+      font-style: normal;
+      font-weight: bold;
+      line-height: 19px;
+      margin-left: 10px;
+    }
+
+    h3 {
+      color: #717479;
+      font-size: ${theme.font.sizes.small};
+      margin-top: 6px;
+      margin-left: 14px;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    svg {
+      margin-left: 10px;
+    }
+  `}
 `;
 
 export const TitleMenu = styled.h3`
@@ -143,19 +143,22 @@ const activeClassName = "active";
 export const StyledNavLink = styled(NavLink).attrs({
   activeClassName: activeClassName,
 })`
-  padding: 10px;
-  height: 45px;
-  border-left: 5px solid #fff;
+  ${({ theme }) => css`
+    font-size: ${theme.font.sizes.medium};
+    padding: 10px;
+    height: 45px;
+    border-left: 5px solid #fff;
 
-  svg {
-    margin-left: 20px;
-    margin-right: 10px;
-  }
+    svg {
+      margin-left: 20px;
+      margin-right: 10px;
+    }
 
-  &.${activeClassName} {
-    color: #7367f0;
-    border-left: 5px solid #7367f0;
-  }
+    &.${activeClassName} {
+      color: #7367f0;
+      border-left: 5px solid #7367f0;
+    }
+  `}
 `;
 
 export const Content = styled.div`

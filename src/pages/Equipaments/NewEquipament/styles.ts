@@ -1,10 +1,9 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const ContainerNewEquipament = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   flex-direction: column;
 `;
 
@@ -93,9 +92,22 @@ export const NumberContainer = styled.div`
   }
 `;
 
-export const ProgressBarContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
+export const ImageContainer = styled.div`
+  ${({ theme }) => css`
+    text-decoration: none;
+    text-decoration-style: none;
+    padding: ${theme.spacings.xsmall} 0 ${theme.spacings.xsmall};
+    display: flex;
+
+    div {
+      margin-right: ${theme.spacings.xsmall};
+    }
+
+    img {
+      width: 96px;
+      height: 96px;
+      object-fit: cover;
+      border-radius: ${theme.border.radius};
+    }
+  `}
 `;

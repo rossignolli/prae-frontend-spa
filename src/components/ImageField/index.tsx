@@ -11,6 +11,7 @@ export default function InputImageFile({
   name,
   label,
   placeholder,
+  onChange,
   ...rest
 }: InputTextProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -25,7 +26,7 @@ export default function InputImageFile({
 
   return (
     <S.ContainerInput>
-      <S.LabelFormTitle>Adiciona as imagens do equipamento</S.LabelFormTitle>
+      <S.LabelFormTitle>Adicione imagens do equipamento</S.LabelFormTitle>
       <S.LabelForm htmlFor={name}>
         <FiPlus size={24} color="#8257e5" />
       </S.LabelForm>
@@ -38,6 +39,7 @@ export default function InputImageFile({
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         placeholder={placeholder}
+        onChange={onChange}
       />
     </S.ContainerInput>
   );

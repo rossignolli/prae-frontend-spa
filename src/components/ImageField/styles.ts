@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 export const ContainerInput = styled.div`
-  margin-top: 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -40,7 +39,8 @@ export const LabelForm = styled.label`
 export const LabelFormTitle = styled.label`
   display: flex;
   color: #000000;
-  margin: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
   font-size: 16px;
   font-weight: bold;
 `;

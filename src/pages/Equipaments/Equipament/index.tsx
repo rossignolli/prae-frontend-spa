@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FiBarChart, FiDelete, FiEdit2, FiPlus } from "react-icons/fi";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 import { Link, useHistory } from "react-router-dom";
 
 import manProfile from "../../../assets/temp_assets/man-profile.jpg";
@@ -35,15 +37,8 @@ export default function Equipament() {
       <Container>
         <NavigationBar />
         <EquipamentsContent>
-          <section>
- 
-              <FiPlus />
-              Adicionar
-       
-          </section>
-
           <table>
-            <tr>
+            <thead>
               <th>Nome</th>
               <th>Categoria</th>
               <th>Criado por</th>
@@ -51,34 +46,99 @@ export default function Equipament() {
               <th>Marca</th>
               <th>Crítico</th>
               <th>Expiração</th>
+            </thead>
 
-              <th>Ações</th>
-            </tr>
-            {equipaments?.map((equipament) => (
-              <tr key={equipament.id}>
+            <tbody>
+              <tr>
                 <td>
-                  <Link to={`/equipaments/details/${equipament.id}`}>
-                    {equipament.name}
-                  </Link>
+                  <Link to={`/equipaments/details/`}>Teste</Link>
                 </td>
                 <td>Estação de trabalho</td>
                 <td>
                   <img src={manProfile} alt="" />
                   Jeny Irland
                 </td>
-
-                <td>{equipament.description}</td>
-                {equipament.expired ? <td>Vencida</td> : <td>OK</td>}
+                <td>Pc muito bom</td>
+                <td>Vencida</td>
                 <td>Sim</td>
-                <td>Expirado</td>
-
                 <td>
-                  <FiEdit2 />
-                  <FiDelete />
+                  Expirado
+                  <BsThreeDotsVertical />
                 </td>
               </tr>
-            ))}
+              <tr>
+                <td>
+                  <Link to={`/equipaments/details/`}>Teste</Link>
+                </td>
+                <td>Estação de trabalho</td>
+                <td>
+                  <img src={manProfile} alt="" />
+                  Jeny Irland
+                </td>
+                <td>Pc muito bom</td>
+                <td>Vencida</td>
+                <td>Sim</td>
+                <td>
+                  Expirado
+                  <BsThreeDotsVertical />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <Link to={`/equipaments/details/`}>Teste</Link>
+                </td>
+                <td>Estação de trabalho</td>
+                <td>
+                  <img src={manProfile} alt="" />
+                  Jeny Irland
+                </td>
+                <td>Pc muito bom</td>
+                <td>Vencida</td>
+                <td>Sim</td>
+                <td>
+                  Expirado
+                  <BsThreeDotsVertical />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <Link to={`/equipaments/details/`}>Teste</Link>
+                </td>
+                <td>Estação de trabalho</td>
+                <td>
+                  <img src={manProfile} alt="" />
+                  Jeny Irland
+                </td>
+                <td>Pc muito bom</td>
+                <td>Vencida</td>
+                <td>Sim</td>
+                <td>
+                  Expirado
+                  <BsThreeDotsVertical />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <Link to={`/equipaments/details/`}>Teste</Link>
+                </td>
+                <td>Estação de trabalho</td>
+                <td>
+                  <img src={manProfile} alt="" />
+                  Jeny Irland
+                </td>
+                <td>Pc muito bom</td>
+                <td>Vencida</td>
+                <td>Sim</td>
+                <td>
+                  Expirado
+                  <BsThreeDotsVertical />
+                </td>
+              </tr>
+            </tbody>
           </table>
+          <caption>
+            <span>Equipamentos adicionados na base de dados</span>
+          </caption>
         </EquipamentsContent>
       </Container>
     </GlobalDashContainer>

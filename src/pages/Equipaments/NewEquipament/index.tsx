@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { ChangeEvent, useState } from "react";
 
 import NavigationBar from "../../../components/Navbar";
 
@@ -9,8 +8,17 @@ import InputSelectField from "../../../components/SelectField";
 import GlobalDashContainer from "../../../components/Container";
 import InputImageFile from "../../../components/ImageField";
 import Button from "../../../components/Button";
+import { FiX } from "react-icons/fi";
+
+interface PreviewImage {
+  name: string;
+  url: string;
+}
 
 export default function NewEquipament() {
+  const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
+  const [images, setImages] = useState<File[]>([]);
+
   const brandsOptions = [
     { value: "chocolate", label: "Apple" },
     { value: "strawberry", label: "LG" },
@@ -29,10 +37,27 @@ export default function NewEquipament() {
     { value: "teste", label: "Casa de máquinas" },
   ];
 
+  function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
+    if (!event.target.files) {
+      return;
+    }
+    const selectedImages = Array.from(event.target.files);
+
+    event.target.value = "";
+
+    setImages(selectedImages);
+
+    const selectedImagesPreview = selectedImages.map((image) => {
+      return { name: image.name, url: URL.createObjectURL(image) };
+    });
+
+    setPreviewImages(selectedImagesPreview);
+  }
+
   return (
     <GlobalDashContainer>
       <S.ContainerNewEquipament>
-        {/* <NavigationBar /> */}
+        <NavigationBar />
         <S.NewEquipamentsContent>
           <h1>Adicionar Equipamento</h1>
           <p>
@@ -79,7 +104,30 @@ export default function NewEquipament() {
               label="Descrição"
               placeholder="O conceito de ar-condicionado Portátil proporciona praticidade e fácil instalação, podendo ser feita pelo consumidor sem a necessidade de contratação de instaladores credenciados."
             />
-            <InputImageFile name="critical" label="Critico" />
+            <S.ImageContainer>
+              {previewImages.map((image) => {
+                return (
+                  <div key={image.url}>
+                    <span
+                      className="remove-image"
+                      onClick={() => {
+                        console.log(`you may remove this image later.`);
+                      }}
+                    ></span>
+                    <img
+                      src={image.url}
+                      alt={"Your uploaded file"}
+                      className="new-image"
+                    />
+                  </div>
+                );
+              })}
+            </S.ImageContainer>
+            <InputImageFile
+              name="critical"
+              label="Critico"
+              onChange={handleSelectImages}
+            />
           </form>
 
           <S.ButtonHolder>
