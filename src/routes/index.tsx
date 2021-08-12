@@ -26,7 +26,7 @@ export default function Supplies() {
       {/* <Route path="/signup" component={Signup} /> */}
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/equipaments" exact component={Equipaments} isPrivate />
-      <Route path="/equipaments/new" component={NewEquipaments}  />
+      <Route path="/equipaments/new" component={NewEquipaments} isPrivate />
       {/* <Route path="/preventives" exact component={Preventive} isPrivate />
       <Route
         path="/equipaments/details/:id"
