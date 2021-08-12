@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 import reset from "styled-reset";
 import theme from "./theme";
 
@@ -10,6 +10,7 @@ body{
     font-family: 'Roboto', sans-serif;
     background-color: ${theme.colors.backgroundBlue};
     height: 100vh; 
+    font-size: 1.6rem;
 }
 
 html {
