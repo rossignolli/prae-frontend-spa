@@ -1,8 +1,6 @@
-import styled, { css } from "styled-components/macro";
+import styled, { css } from "styled-components";
 
-export const Container = styled.div``;
-
-export const EquipamentsContent = styled.div`
+export const StyledTable = styled.div`
   ${({ theme }) => css`
     background-color: #e5e5e5;
     display: flex;
@@ -53,10 +51,6 @@ export const EquipamentsContent = styled.div`
       vertical-align: middle;
       text-align: center;
 
-      :last-child {
-        text-align: end;
-      }
-
       img {
         display: inline-flex;
         width: 40px;
@@ -85,3 +79,5 @@ export const EquipamentsContent = styled.div`
     }
   `}
 `;
+
+// eslint-disable-next-line import/no-anonymous-default-export

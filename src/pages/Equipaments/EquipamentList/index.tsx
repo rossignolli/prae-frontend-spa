@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { FiBarChart, FiDelete, FiEdit2, FiPlus } from "react-icons/fi";
+import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-
 import { Link, useHistory } from "react-router-dom";
-
 import manProfile from "../../../assets/temp_assets/man-profile.jpg";
 import NavigationBar from "../../../components/Navbar";
-
 import api from "../../../services/api";
-import { EquipamentsContent, Container } from "./styles";
-
+import * as S from "./styles";
 import { GlobalDashContainer } from "../../../components/Container/styles";
+import { StyledTable } from "../../../components/StyledTable/styles";
 
 interface Equipaments {
   created_at: Date;
@@ -34,9 +30,9 @@ export default function Equipament() {
 
   return (
     <GlobalDashContainer>
-      <Container>
+      <S.Container>
         <NavigationBar />
-        <EquipamentsContent>
+        <StyledTable>
           <table>
             <thead>
               <th>Nome</th>
@@ -139,8 +135,8 @@ export default function Equipament() {
           <caption>
             <span>Equipamentos adicionados na base de dados</span>
           </caption>
-        </EquipamentsContent>
-      </Container>
+        </StyledTable>
+      </S.Container>
     </GlobalDashContainer>
   );
 }
