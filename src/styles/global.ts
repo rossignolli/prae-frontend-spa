@@ -40,23 +40,27 @@ input{
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    right: -360px;
     bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(1, 0, 0, 0.1);
     backdrop-filter: blur(2px);
+    z-index: 999;
 
 }
 .react-modal-content {
+
+  ${({ theme }) => css`
     position: relative;
-    padding: 1rem;
+    padding: ${theme.spacings.xsmall};
     width: 100%;
-    max-width: 576px;
-    background: #FFFFFF;
-    border: 1px solid #E1E1E5;
-    border-radius: 15px;
+    max-width: 420px;
+    background: #ffffff;
+    border: 1px solid ${theme.colors.backgroundBlue};
+    border-radius: ${theme.border.radius};
+  `}
 }
 .react-modal-close {
     position: absolute;
@@ -70,5 +74,6 @@ input{
       filter: brightness(0.8);
     }
   }
+
 
 `;

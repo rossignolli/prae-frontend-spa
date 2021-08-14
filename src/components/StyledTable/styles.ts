@@ -61,6 +61,12 @@ export const StyledTable = styled.div`
         margin-right: 10px;
       }
 
+      button {
+        background: none;
+        outline: none;
+        border-style: none;
+      }
+
       svg {
         vertical-align: middle;
         font-size: ${theme.font.sizes.xlarge};

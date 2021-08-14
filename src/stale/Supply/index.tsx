@@ -8,7 +8,7 @@ import NavigationBar from "../../components/Navbar";
 
 import api from "../../services/api";
 import { CategoryContent, Container } from "./styles";
-import ModalConfirmation from "../Modals/ConfirmationModal";
+import ModalConfirmation from "../../components/Modals/ConfirmationModal";
 
 interface Supplies {
   id: string;
@@ -57,9 +57,7 @@ export default function Supplies() {
         onRequestClose={handlecloseNewTransactionsModal}
       />
       <CategoryContent>
-        <section>
-
-        </section>
+        <section></section>
 
         <table>
           <tr>

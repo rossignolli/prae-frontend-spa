@@ -12,9 +12,9 @@ export default function App() {
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <Routes />
+          <GlobalStyle />
         </ThemeProvider>
       </AuthProvider>
-      <GlobalStyle />
     </Router>
   );
 }

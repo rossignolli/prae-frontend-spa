@@ -8,7 +8,11 @@ import { GlobalDashContainer } from "../../../components/Container/styles";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { StyledTable } from "../../../components/StyledTable/styles";
 import * as S from "./styles";
-
+import { FormAction } from "../../../components/Dropdown/styles";
+import InputSelectFieldAction from "../../../components/SelectFieldAction";
+import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
+import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
 interface Categories {
   id: string;
   name: string;
@@ -19,12 +23,30 @@ interface Categories {
 
 export default function Category() {
   const [category, setcategory] = useState<Categories[]>();
+  const [isOpenMenu, setOpen] = useState(false);
 
   useEffect(() => {
     api.get(`/categories`).then((response) => {
       setcategory(response.data);
     });
   }, []);
+
+  const brandsOptions = [
+    { value: "chocolate", label: "Apple" },
+    { value: "strawberry", label: "LG" },
+    { value: "vanilla", label: "HP" },
+  ];
+
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
+    useState(false);
+
+  function handleOpenNewTransactionsModal() {
+    setIsNewTransactionModalOpen(true);
+  }
+
+  function handlecloseNewTransactionsModal() {
+    setIsNewTransactionModalOpen(false);
+  }
 
   return (
     <GlobalDashContainer>
@@ -50,7 +72,16 @@ export default function Category() {
                   <td>
                     <img src={manProfile} alt="" />
                     Vitor Rossignolli
-                    <BsThreeDotsVertical />
+                    <Menu
+                      menuButton={
+                        <MenuButton>
+                          <BsThreeDotsVertical />
+                        </MenuButton>
+                      }
+                    >
+                      <MenuItem>Editar</MenuItem>
+                      <MenuItem>Excluir</MenuItem>
+                    </Menu>
                   </td>
                 </tr>
               ))}
@@ -61,6 +92,10 @@ export default function Category() {
           </caption>
         </StyledTable>
       </S.Container>
+      <ConfirmationModal
+        isOpen={true}
+        onRequestClose={handlecloseNewTransactionsModal}
+      />
     </GlobalDashContainer>
   );
 }

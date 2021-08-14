@@ -1,6 +1,6 @@
 import Modal from "react-modal";
-import { Container, TransactionTypeContainer, RadioBox } from "./styles";
-
+import * as S from "./styles";
+import Button from "../../Button";
 interface NewTranctionModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -23,11 +23,16 @@ export default function ConfirmationModal({
         className="react-modal-close"
       ></button>
 
-      <Container>
-        <h2>Cadastrar Transação</h2>
-
-        <h1>Hello world</h1>
-      </Container>
+      <S.ContainerModal>
+        <S.ModalTitle>Esse equipamento já está sendo monitorado.</S.ModalTitle>
+        <S.ModalDescription>
+          Caso deseje editar o ciclo de monitoramento, clique em editar.
+        </S.ModalDescription>
+        <S.ButtonHolder>
+          <Button>Aceitar</Button>
+          <Button>Rejeitar</Button>
+        </S.ButtonHolder>
+      </S.ContainerModal>
     </Modal>
   );
 }

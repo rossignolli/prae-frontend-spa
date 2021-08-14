@@ -38,7 +38,7 @@ export default {
     backgroundBlue: "#F5F5FA",
     green: "#04D361",
     grayBorder: "#E1E1E5",
-    grayDark: "#A6A1B2",
+    bodyText: "#A6A1B2",
   },
   spacings: {
     xxsmall: "0.8rem",
