@@ -93,6 +93,9 @@ export default function Category() {
         </StyledTable>
       </S.Container>
       <ConfirmationModal
+        title="Equipamento ja está sendo monitorado"
+        description="Caso deseje editar o ciclo de monitoramento, clique em editar."
+        type="info"
         isOpen={true}
         onRequestClose={handlecloseNewTransactionsModal}
       />

@@ -20,6 +20,14 @@ export const ModalTitle = styled.h1`
   `}
 `;
 
+export const IconContainer = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    justify-content: center;
+    padding: ${theme.spacings.xsmall};
+  `}
+`;
+
 export const ModalDescription = styled.p`
   ${({ theme }) => css`
     font-size: ${theme.font.sizes.small};
@@ -34,6 +42,7 @@ export const ButtonHolder = styled.div`
     margin-top: ${theme.spacings.xsmall};
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     button {
       :first-of-type {
         margin-right: 1rem;

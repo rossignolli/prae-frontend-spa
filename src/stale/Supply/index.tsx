@@ -52,10 +52,7 @@ export default function Supplies() {
   return (
     <Container>
       <NavigationBar />
-      <ModalConfirmation
-        isOpen={isNewTransactionModalOpen}
-        onRequestClose={handlecloseNewTransactionsModal}
-      />
+
       <CategoryContent>
         <section></section>
 

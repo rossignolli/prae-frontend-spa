@@ -5,6 +5,7 @@ import { ButtonProps } from ".";
 
 export type WrapperProps = {
   hasIcon: boolean;
+  customColor: string;
 } & Pick<ButtonProps, "size" | "fullWidth" | "minimal">;
 
 const wrapperModifiers = {
@@ -24,6 +25,18 @@ const wrapperModifiers = {
   `,
   fullWidth: () => css`
     width: 100%;
+  `,
+  customColor: (customColor: string) => css`
+    background: ${customColor};
+    color: ${darken(0.5, customColor)};
+
+    &:hover {
+      background: ${darken(0.1, customColor)};
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 3px ${darken(0.5, customColor)};
+    }
   `,
   withIcon: (theme: DefaultTheme) => css`
     svg {
@@ -49,7 +62,15 @@ const wrapperModifiers = {
 };
 
 export const Wrapper = styled.button<WrapperProps>`
-  ${({ theme, size, fullWidth, hasIcon, minimal, disabled }) => css`
+  ${({
+    theme,
+    size,
+    fullWidth,
+    hasIcon,
+    minimal,
+    disabled,
+    customColor,
+  }) => css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -69,6 +90,7 @@ export const Wrapper = styled.button<WrapperProps>`
     }
     ${!!size && wrapperModifiers[size](theme)};
     ${!!fullWidth && wrapperModifiers.fullWidth()};
+    ${!!customColor && wrapperModifiers.customColor(customColor)};
     ${!!hasIcon && wrapperModifiers.withIcon(theme)};
     ${!!minimal && wrapperModifiers.minimal(theme)};
     ${disabled && wrapperModifiers.disabled()};
