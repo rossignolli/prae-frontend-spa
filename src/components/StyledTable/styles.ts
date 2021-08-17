@@ -76,9 +76,10 @@ export const StyledTable = styled.div`
       }
     }
 
-    caption {
+    section {
       background-color: ${theme.colors.lightGray};
       padding: 24px;
+      text-align: center;
       color: ${theme.colors.gray};
       border-bottom-left-radius: ${theme.border.radius};
       border-bottom-right-radius: ${theme.border.radius};

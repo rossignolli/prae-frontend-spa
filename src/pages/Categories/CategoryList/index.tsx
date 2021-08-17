@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import manProfile from "../../../assets/temp_assets/man-profile.jpg";
 import NavigationBar from "../../../components/Navbar";
 // import { useAuth } from '../../hooks/AuthContext';
@@ -8,8 +8,6 @@ import { GlobalDashContainer } from "../../../components/Container/styles";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { StyledTable } from "../../../components/StyledTable/styles";
 import * as S from "./styles";
-import { FormAction } from "../../../components/Dropdown/styles";
-import InputSelectFieldAction from "../../../components/SelectFieldAction";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
@@ -23,7 +21,16 @@ interface Categories {
 
 export default function Category() {
   const [category, setcategory] = useState<Categories[]>();
-  const [isOpenMenu, setOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalDescription, setModalDescription] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [butonsOption, setButtonsOption] = useState(true);
+  const [modalType, setModalType] = useState<
+    "warning" | "error" | "sucess" | "info" | undefined
+  >("warning");
+
+  const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] =
+    useState(false);
 
   useEffect(() => {
     api.get(`/categories`).then((response) => {
@@ -37,15 +44,35 @@ export default function Category() {
     { value: "vanilla", label: "HP" },
   ];
 
-  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
-    useState(false);
+  function handleDeleteAction() {
+    setModalTitle("Você tem certeza?");
+    setModalDescription("Essa ação não pode ser desfeita.");
+    setIsNewTConfirmationModalOpen(true);
+  }
+  async function handleConfimedDeletedAction() {
+    const response = await api.delete(`categories/${selectedCategory}`);
 
-  function handleOpenNewTransactionsModal() {
-    setIsNewTransactionModalOpen(true);
+    if (response.status !== 200) {
+      setModalTitle("Ops... Algo deu errado.");
+      setModalDescription("Tente novamente mais tarde");
+      setModalType("error");
+      setButtonsOption(false);
+      return;
+    }
+
+    if (category) {
+      setcategory(
+        category.filter((value) => {
+          return value.id !== selectedCategory;
+        })
+      );
+    }
+
+    setIsNewTConfirmationModalOpen(false);
   }
 
-  function handlecloseNewTransactionsModal() {
-    setIsNewTransactionModalOpen(false);
+  function handleCloseConfirmationModal() {
+    setIsNewTConfirmationModalOpen(false);
   }
 
   return (
@@ -57,9 +84,11 @@ export default function Category() {
         <StyledTable>
           <table>
             <thead>
-              <th>Nome</th>
-              <th>Descrição</th>
-              <th>Criado por</th>
+              <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Criado por</th>
+              </tr>
             </thead>
 
             <tbody>
@@ -80,24 +109,33 @@ export default function Category() {
                       }
                     >
                       <MenuItem>Editar</MenuItem>
-                      <MenuItem>Excluir</MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handleDeleteAction();
+                          setSelectedCategory(category.id);
+                        }}
+                      >
+                        Excluir
+                      </MenuItem>
                     </Menu>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <caption>
+          <section>
             <span>Categorias cadastradas na base de dados</span>
-          </caption>
+          </section>
         </StyledTable>
       </S.Container>
       <ConfirmationModal
-        title="Equipamento ja está sendo monitorado"
-        description="Caso deseje editar o ciclo de monitoramento, clique em editar."
-        type="info"
-        isOpen={true}
-        onRequestClose={handlecloseNewTransactionsModal}
+        title={modalTitle}
+        description={modalDescription}
+        type={modalType}
+        isOpen={isNewTConfirmationModalOpen}
+        onRequestConfirmation={() => handleConfimedDeletedAction()}
+        onRequestCancel={() => handleCloseConfirmationModal()}
+        buttons={butonsOption}
       />
     </GlobalDashContainer>
   );
