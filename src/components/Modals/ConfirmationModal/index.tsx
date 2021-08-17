@@ -8,10 +8,12 @@ import Info from "../../../assets/svgs/info_modal_type.svg";
 
 interface NewTranctionModalProps {
   isOpen: boolean;
-  onRequestClose: () => void;
+  onRequestCancel: () => void;
+  onRequestConfirmation: () => void;
   title?: string;
   description?: string;
   type?: "warning" | "error" | "sucess" | "info";
+  buttons?: boolean;
 }
 
 export default function ConfirmationModal({
@@ -19,14 +21,17 @@ export default function ConfirmationModal({
   title,
   description,
   type = "warning",
-  onRequestClose,
+  buttons = false,
+  onRequestCancel,
+  onRequestConfirmation,
 }: NewTranctionModalProps) {
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      onRequestClose={onRequestCancel}
       overlayClassName="react-modal-overlay"
       className="react-modal-content"
+      ariaHideApp={false}
     >
       <S.ContainerModal>
         <S.IconContainer>
@@ -38,8 +43,28 @@ export default function ConfirmationModal({
         <S.ModalTitle>{title}</S.ModalTitle>
         <S.ModalDescription>{description}</S.ModalDescription>
         <S.ButtonHolder>
-          <Button customColor="#E1F5EC">Aceitar</Button>
-          <Button customColor="#F5E9EC">Rejeitar</Button>
+          {buttons ? (
+            <>
+              <Button
+                type="button"
+                customColor="#E1F5EC"
+                onClick={onRequestConfirmation}
+              >
+                Aceitar
+              </Button>
+              <Button
+                type="button"
+                customColor="#F5E9EC"
+                onClick={onRequestCancel}
+              >
+                Cancelar
+              </Button>
+            </>
+          ) : (
+            <Button customColor="#E1F5EC" onClick={onRequestCancel}>
+              OK
+            </Button>
+          )}
         </S.ButtonHolder>
       </S.ContainerModal>
     </Modal>
