@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useHistory } from "react-router-dom";
@@ -18,6 +19,7 @@ interface Equipaments {
 }
 
 export default function Equipament() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [equipaments, setEquipaments] = useState<Equipaments[]>();
 
   const history = useHistory();
@@ -132,9 +134,6 @@ export default function Equipament() {
               </tr>
             </tbody>
           </table>
-          <caption>
-            <span>Equipamentos adicionados na base de dados</span>
-          </caption>
         </StyledTable>
       </S.Container>
     </GlobalDashContainer>
