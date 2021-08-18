@@ -11,6 +11,15 @@ import * as S from "./styles";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
+import {
+  ActionHolderContainer,
+  DescriptionEmpty,
+  EmptyState,
+  TitleEmpty,
+} from "./styles";
+import Button from "../../../components/Button";
+import { FiFileText } from "react-icons/fi";
+
 interface Categories {
   id: string;
   name: string;
@@ -37,12 +46,6 @@ export default function Category() {
       setcategory(response.data);
     });
   }, []);
-
-  const brandsOptions = [
-    { value: "chocolate", label: "Apple" },
-    { value: "strawberry", label: "LG" },
-    { value: "vanilla", label: "HP" },
-  ];
 
   function handleDeleteAction() {
     setModalTitle("Você tem certeza?");
@@ -81,52 +84,74 @@ export default function Category() {
 
       <S.Container>
         <NavigationBar />
-        <StyledTable>
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Criado por</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {category?.map((category) => (
-                <tr key={category.id}>
-                  <td>
-                    <Link to={`/equipaments/details/`}>{category.name}</Link>
-                  </td>
-                  <td>{category.description}</td>
-                  <td>
-                    <img src={manProfile} alt="" />
-                    Vitor Rossignolli
-                    <Menu
-                      menuButton={
-                        <MenuButton>
-                          <BsThreeDotsVertical />
-                        </MenuButton>
-                      }
-                    >
-                      <MenuItem>Editar</MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          handleDeleteAction();
-                          setSelectedCategory(category.id);
-                        }}
-                      >
-                        Excluir
-                      </MenuItem>
-                    </Menu>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <section>
-            <span>Categorias cadastradas na base de dados</span>
-          </section>
-        </StyledTable>
+        {!category && <div>loading....</div>}
+        {category ? (
+          <>
+            <ActionHolderContainer>
+              <Button minimal customColor="#FFFFFF">
+                Voltar
+              </Button>
+              <Button customColor="#FFFFFF">Gerar Relatório</Button>
+              <Button>Adicionar Catgoria</Button>
+            </ActionHolderContainer>
+            <StyledTable>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Criado por</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {category?.map((category) => (
+                    <tr key={category.id}>
+                      <td>
+                        <Link to={`/equipaments/details/`}>
+                          {category.name}
+                        </Link>
+                      </td>
+                      <td>{category.description}</td>
+                      <td>
+                        <img src={manProfile} alt="" />
+                        Vitor Rossignolli
+                        <Menu
+                          menuButton={
+                            <MenuButton>
+                              <BsThreeDotsVertical />
+                            </MenuButton>
+                          }
+                        >
+                          <MenuItem>Editar</MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              handleDeleteAction();
+                              setSelectedCategory(category.id);
+                            }}
+                          >
+                            Excluir
+                          </MenuItem>
+                        </Menu>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <section>
+                <span>Categorias cadastradas na base de dados</span>
+              </section>
+            </StyledTable>
+          </>
+        ) : (
+          <EmptyState>
+            <FiFileText size={82} color={`#8257e5`} />
+            <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
+            <DescriptionEmpty>
+              Você não possui categorias cadastradas no sistemas.
+            </DescriptionEmpty>
+            <Button>Adicionar Catgoria</Button>
+          </EmptyState>
+        )}
       </S.Container>
       <ConfirmationModal
         title={modalTitle}
