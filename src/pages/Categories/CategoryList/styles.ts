@@ -1,8 +1,11 @@
 import styled, { css } from "styled-components";
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    margin: ${theme.spacings.xsmall};
+  `}
 `;
 
 export const ActionHolderContainer = styled.div`
@@ -21,7 +24,7 @@ export const ActionHolderContainer = styled.div`
 export const EmptyState = styled.div`
   ${({ theme }) => css`
     display: flex;
-    height: 95vh;
+    height: 85vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;

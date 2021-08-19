@@ -19,7 +19,7 @@ import {
 } from "./styles";
 import Button from "../../../components/Button";
 import { FiFileText } from "react-icons/fi";
-
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 interface Categories {
   id: string;
   name: string;
@@ -81,11 +81,178 @@ export default function Category() {
   return (
     <GlobalDashContainer>
       <NavigationBar />
-
       <S.Container>
         <NavigationBar />
-        {!category && <div>loading....</div>}
-        {category ? (
+        <SkeletonTheme color="#FFFF" highlightColor="#e6e1e139" />
+        {!category ? (
+          <>
+            <ActionHolderContainer>
+              <Skeleton
+                duration={0.5}
+                width={140}
+                count={3}
+                height={40}
+                style={{ borderRadius: `15px`, marginRight: `10px` }}
+              />
+            </ActionHolderContainer>
+            <StyledTable>
+              <>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Descrição</th>
+                      <th>Criado por</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                      <td>
+                        <Skeleton
+                          duration={0.5}
+                          height={20}
+                          style={{ borderRadius: `15px` }}
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <section>
+                  <span>Categorias cadastradas na base de dados</span>
+                </section>
+              </>
+            </StyledTable>
+          </>
+        ) : (
           <>
             <ActionHolderContainer>
               <Button minimal customColor="#FFFFFF">
@@ -95,62 +262,66 @@ export default function Category() {
               <Button>Adicionar Catgoria</Button>
             </ActionHolderContainer>
             <StyledTable>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Criado por</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {category?.map((category) => (
-                    <tr key={category.id}>
-                      <td>
-                        <Link to={`/equipaments/details/`}>
-                          {category.name}
-                        </Link>
-                      </td>
-                      <td>{category.description}</td>
-                      <td>
-                        <img src={manProfile} alt="" />
-                        Vitor Rossignolli
-                        <Menu
-                          menuButton={
-                            <MenuButton>
-                              <BsThreeDotsVertical />
-                            </MenuButton>
-                          }
-                        >
-                          <MenuItem>Editar</MenuItem>
-                          <MenuItem
-                            onClick={() => {
-                              handleDeleteAction();
-                              setSelectedCategory(category.id);
-                            }}
-                          >
-                            Excluir
-                          </MenuItem>
-                        </Menu>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <section>
-                <span>Categorias cadastradas na base de dados</span>
-              </section>
+              {category.length > 0 ? (
+                <>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Criado por</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {category?.map((category) => (
+                        <tr key={category.id}>
+                          <td>
+                            <Link to={`/equipaments/details/`}>
+                              {category.name}
+                            </Link>
+                          </td>
+                          <td>{category.description}</td>
+                          <td>
+                            <img src={manProfile} alt="" />
+                            Vitor Rossignolli
+                            <Menu
+                              menuButton={
+                                <MenuButton>
+                                  <BsThreeDotsVertical />
+                                </MenuButton>
+                              }
+                            >
+                              <MenuItem>Editar</MenuItem>
+                              <MenuItem
+                                onClick={() => {
+                                  handleDeleteAction();
+                                  setSelectedCategory(category.id);
+                                }}
+                              >
+                                Excluir
+                              </MenuItem>
+                            </Menu>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <section>
+                    <span>Categorias cadastradas na base de dados</span>
+                  </section>
+                </>
+              ) : (
+                <EmptyState>
+                  <FiFileText size={82} color={`#8257e5`} />
+                  <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
+                  <DescriptionEmpty>
+                    Você não possui categorias cadastradas no sistemas.
+                  </DescriptionEmpty>
+                  <Button>Adicionar Catgoria</Button>
+                </EmptyState>
+              )}
             </StyledTable>
           </>
-        ) : (
-          <EmptyState>
-            <FiFileText size={82} color={`#8257e5`} />
-            <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
-            <DescriptionEmpty>
-              Você não possui categorias cadastradas no sistemas.
-            </DescriptionEmpty>
-            <Button>Adicionar Catgoria</Button>
-          </EmptyState>
         )}
       </S.Container>
       <ConfirmationModal
