@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import manProfile from "../../../assets/temp_assets/man-profile.jpg";
 import NavigationBar from "../../../components/Navbar";
 // import { useAuth } from '../../hooks/AuthContext';
@@ -34,6 +34,7 @@ export default function Category() {
   const [modalDescription, setModalDescription] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [butonsOption, setButtonsOption] = useState(true);
+  const history = useHistory();
   const [modalType, setModalType] = useState<
     "warning" | "error" | "sucess" | "info" | undefined
   >("warning");
@@ -255,11 +256,17 @@ export default function Category() {
         ) : (
           <>
             <ActionHolderContainer>
-              <Button minimal customColor="#FFFFFF">
+              <Button
+                minimal
+                customColor="#FFFFFF"
+                onClick={() => history.goBack()}
+              >
                 Voltar
               </Button>
               <Button customColor="#FFFFFF">Gerar Relatório</Button>
-              <Button>Adicionar Catgoria</Button>
+              <Button onClick={() => history.push(`/category/new`)}>
+                Adicionar Catgoria
+              </Button>
             </ActionHolderContainer>
             <StyledTable>
               {category.length > 0 ? (

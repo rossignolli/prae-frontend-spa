@@ -65,7 +65,7 @@ export default function NewEquipament() {
             de monitoramento. Todo equipamento por padrão é adicionado com
             monitoramento desligado!!!
           </p>
-          <form action="">
+          <form>
             <InputTextField
               name="Apelido"
               label="Apelido"
