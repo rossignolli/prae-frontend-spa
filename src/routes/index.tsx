@@ -11,6 +11,7 @@ import Equipaments from "../pages/Equipaments/EquipamentList";
 import NewEquipaments from "../pages/Equipaments/NewEquipament";
 import Category from "../pages/Categories/CategoryList";
 import CategoryCreate from "../pages/Categories/NewCategory";
+import CategoryId from "../pages/Categories/EditCategory";
 
 import Route from "./Route";
 export default function Supplies() {
@@ -23,6 +24,7 @@ export default function Supplies() {
       <Route path="/equipaments/new" component={NewEquipaments} isPrivate />
       <Route path="/category" exact component={Category} isPrivate />
       <Route path="/category/new" exact component={CategoryCreate} isPrivate />
+      <Route path="/category/edit/:id" exact component={CategoryId} isPrivate />
 
       {/* <Route path="/preventives" exact component={Preventive} isPrivate />
       <Route

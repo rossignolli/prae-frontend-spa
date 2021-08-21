@@ -14,7 +14,7 @@ import {
   FiArrowLeft,
 } from "react-icons/fi";
 
-import manProfile from "../../assets/temp_assets/man-profile.jpg";
+import manProfile from "../../assets/temp_assets/man-profile.png";
 import logosvg from "../../assets/temp_assets/logomin.svg";
 import { useAuth } from "../../hooks/AuthContext";
 import { useMediaQuery } from "react-responsive";

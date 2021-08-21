@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link, useHistory } from "react-router-dom";
-import manProfile from "../../../assets/temp_assets/man-profile.jpg";
+import manProfile from "../../../assets/temp_assets/man-profile.png";
 import NavigationBar from "../../../components/Navbar";
 import api from "../../../services/api";
 import * as S from "./styles";

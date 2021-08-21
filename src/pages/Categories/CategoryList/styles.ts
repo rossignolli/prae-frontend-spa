@@ -12,8 +12,10 @@ export const ActionHolderContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+
     padding: ${theme.spacings.xsmall};
-    justify-content: flex-end;
+    justify-content: flex-start;
     button + button {
       padding: ${theme.spacings.xsmall};
       margin-left: ${theme.spacings.xsmall};

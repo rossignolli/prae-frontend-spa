@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import manProfile from "../../../assets/temp_assets/man-profile.jpg";
+import manProfile from "../../../assets/temp_assets/man-profile.png";
 import NavigationBar from "../../../components/Navbar";
 // import { useAuth } from '../../hooks/AuthContext';
 import api from "../../../services/api";
@@ -20,6 +20,7 @@ import {
 import Button from "../../../components/Button";
 import { FiFileText } from "react-icons/fi";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import InputSearchBar from "../../../components/SearchBar";
 interface Categories {
   id: string;
   name: string;
@@ -29,11 +30,14 @@ interface Categories {
 }
 
 export default function Category() {
-  const [category, setcategory] = useState<Categories[]>();
+  const [category, setCategory] = useState<Categories[]>();
+  const [categoryDefault, setCategoryDefault] = useState<Categories[]>();
+
   const [modalTitle, setModalTitle] = useState("");
   const [modalDescription, setModalDescription] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [butonsOption, setButtonsOption] = useState(true);
+  const [input, setInput] = useState("");
   const history = useHistory();
   const [modalType, setModalType] = useState<
     "warning" | "error" | "sucess" | "info" | undefined
@@ -44,7 +48,8 @@ export default function Category() {
 
   useEffect(() => {
     api.get(`/categories`).then((response) => {
-      setcategory(response.data);
+      setCategory(response.data);
+      setCategoryDefault(response.data);
     });
   }, []);
 
@@ -65,7 +70,7 @@ export default function Category() {
     }
 
     if (category) {
-      setcategory(
+      setCategory(
         category.filter((value) => {
           return value.id !== selectedCategory;
         })
@@ -78,6 +83,20 @@ export default function Category() {
   function handleCloseConfirmationModal() {
     setIsNewTConfirmationModalOpen(false);
   }
+
+  const updateInput = async (e: any) => {
+    if (!category) return;
+
+    const filtered = category.filter((country) => {
+      return country.name.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setInput(e.target.value);
+    setCategory(filtered);
+
+    if (!e.target.value || /^\s*$/.test(e.target.value)) {
+      setCategory(categoryDefault);
+    }
+  };
 
   return (
     <GlobalDashContainer>
@@ -256,16 +275,22 @@ export default function Category() {
         ) : (
           <>
             <ActionHolderContainer>
+              <InputSearchBar
+                name="search"
+                placeholder="Pesquisar"
+                value={input}
+                onChange={updateInput}
+              />
               <Button
                 minimal
                 customColor="#FFFFFF"
-                onClick={() => history.goBack()}
+                onClick={() => history.push(`dashboard`)}
               >
                 Voltar
               </Button>
               <Button customColor="#FFFFFF">Gerar Relatório</Button>
               <Button onClick={() => history.push(`/category/new`)}>
-                Adicionar Catgoria
+                Adicionar Categoria
               </Button>
             </ActionHolderContainer>
             <StyledTable>
@@ -282,11 +307,7 @@ export default function Category() {
                     <tbody>
                       {category?.map((category) => (
                         <tr key={category.id}>
-                          <td>
-                            <Link to={`/equipaments/details/`}>
-                              {category.name}
-                            </Link>
-                          </td>
+                          <td>{category.name}</td>
                           <td>{category.description}</td>
                           <td>
                             <img src={manProfile} alt="" />
@@ -298,7 +319,11 @@ export default function Category() {
                                 </MenuButton>
                               }
                             >
-                              <MenuItem>Editar</MenuItem>
+                              <MenuItem>
+                                <Link to={`category/edit/${category.id}`}>
+                                  Editar
+                                </Link>
+                              </MenuItem>
                               <MenuItem
                                 onClick={() => {
                                   handleDeleteAction();
@@ -322,9 +347,13 @@ export default function Category() {
                   <FiFileText size={82} color={`#8257e5`} />
                   <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
                   <DescriptionEmpty>
-                    Você não possui categorias cadastradas no sistemas.
+                    {input
+                      ? `Nao encontramos nenhuma categoria relacionada com a sua busca`
+                      : `Você não possui categorias cadastradas no sistemas.`}
                   </DescriptionEmpty>
-                  <Button>Adicionar Catgoria</Button>
+                  <Button onClick={() => history.push(`/category/new`)}>
+                    Adicionar Categoria
+                  </Button>
                 </EmptyState>
               )}
             </StyledTable>

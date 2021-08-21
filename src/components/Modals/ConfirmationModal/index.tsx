@@ -9,7 +9,7 @@ import Info from "../../../assets/svgs/info_modal_type.svg";
 interface NewTranctionModalProps {
   isOpen: boolean;
   onRequestCancel: () => void;
-  onRequestConfirmation: () => void;
+  onRequestConfirmation?: () => void;
   title?: string;
   description?: string;
   type?: "warning" | "error" | "sucess" | "info";
@@ -61,7 +61,11 @@ export default function ConfirmationModal({
               </Button>
             </>
           ) : (
-            <Button customColor="#E1F5EC" onClick={onRequestCancel}>
+            <Button
+              type="button"
+              customColor="#E1F5EC"
+              onClick={onRequestCancel}
+            >
               OK
             </Button>
           )}

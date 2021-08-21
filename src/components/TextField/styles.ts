@@ -4,6 +4,7 @@ export const ContainerInput = styled.div``;
 
 interface InputProps {
   isFocused: boolean;
+  hasError: boolean;
 }
 
 export const Input = styled.input<InputProps>`
@@ -26,6 +27,12 @@ export const Input = styled.input<InputProps>`
     css`
       border: 2px solid #8257e5;
     `}
+
+  ${(props) =>
+    props.hasError &&
+    css`
+      border: 2px solid #ff1e1e;
+    `}
 `;
 
 export const LabelForm = styled.label`
@@ -34,4 +41,12 @@ export const LabelForm = styled.label`
   margin: 10px;
   font-size: 16px;
   font-weight: bold;
+`;
+
+export const ErrorContainer = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    color: #ff1e1e;
+    padding: ${theme.spacings.xsmall} 0 ${theme.spacings.xsmall};
+  `}
 `;

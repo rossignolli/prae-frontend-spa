@@ -4,8 +4,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 
 import { Link, useHistory } from "react-router-dom";
 
-
-import manProfile from "../../assets/temp_assets/man-profile.jpg";
+import manProfile from "../../assets/temp_assets/man-profile.png";
 import NavigationBar from "../../components/Navbar";
 
 // import { useAuth } from '../../hooks/AuthContext';
@@ -42,9 +41,7 @@ const Category: React.FC = () => {
       <NavigationBar />
 
       <CategoryContent>
-        <section>
-
-        </section>
+        <section></section>
 
         <table>
           <tr>
