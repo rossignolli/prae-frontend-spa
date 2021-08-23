@@ -1,5 +1,4 @@
 import { InputHTMLAttributes, useCallback, useState } from "react";
-import { BsSearch } from "react-icons/bs";
 import * as S from "./styles";
 
 interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {

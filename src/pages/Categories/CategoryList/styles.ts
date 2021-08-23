@@ -33,6 +33,13 @@ export const EmptyState = styled.div`
   `}
 `;
 
+export const PaginationContainer = styled.div`
+  ${({ theme }) => css`
+    width: 100%;
+    padding: ${theme.spacings.xsmall};
+  `}
+`;
+
 export const TitleEmpty = styled.h1`
   ${({ theme }) => css`
     color: ${theme.colors.heading};

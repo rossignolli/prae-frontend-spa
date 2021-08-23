@@ -11,6 +11,7 @@ import * as S from "./styles";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
+import ReactPaginate from "react-paginate";
 import {
   ActionHolderContainer,
   DescriptionEmpty,
@@ -21,6 +22,7 @@ import Button from "../../../components/Button";
 import { FiFileText } from "react-icons/fi";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import InputSearchBar from "../../../components/SearchBar";
+import Pagination from "../../../components/Pagination";
 interface Categories {
   id: string;
   name: string;
@@ -30,7 +32,7 @@ interface Categories {
 }
 
 export default function Category() {
-  const [category, setCategory] = useState<Categories[]>();
+  const [category, setCategory] = useState<Categories[] | undefined>();
   const [categoryDefault, setCategoryDefault] = useState<Categories[]>();
 
   const [modalTitle, setModalTitle] = useState("");
@@ -42,6 +44,13 @@ export default function Category() {
   const [modalType, setModalType] = useState<
     "warning" | "error" | "sucess" | "info" | undefined
   >("warning");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [issuesPerPage, setIssuesPerPage] = useState(8);
+
+  const IndexOfLastPost = currentPage * issuesPerPage;
+  const indexfFirstPost = IndexOfLastPost - issuesPerPage;
+
+  const currentCategories = category?.slice(indexfFirstPost, IndexOfLastPost);
 
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] =
     useState(false);
@@ -97,6 +106,8 @@ export default function Category() {
       setCategory(categoryDefault);
     }
   };
+
+  const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
 
   return (
     <GlobalDashContainer>
@@ -271,6 +282,7 @@ export default function Category() {
                 </section>
               </>
             </StyledTable>
+            <div>testes</div>
           </>
         ) : (
           <>
@@ -305,7 +317,7 @@ export default function Category() {
                       </tr>
                     </thead>
                     <tbody>
-                      {category?.map((category) => (
+                      {currentCategories?.map((category) => (
                         <tr key={category.id}>
                           <td>{category.name}</td>
                           <td>{category.description}</td>
@@ -357,6 +369,13 @@ export default function Category() {
                 </EmptyState>
               )}
             </StyledTable>
+            <S.PaginationContainer>
+              <Pagination
+                issuesPerPage={issuesPerPage}
+                totalIssues={category.length}
+                paginate={paginate}
+              />
+            </S.PaginationContainer>
           </>
         )}
       </S.Container>
