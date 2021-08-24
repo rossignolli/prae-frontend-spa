@@ -4,12 +4,14 @@ import * as S from "./styles";
 interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
+  type?: string;
   errorMesage?: string | false;
 }
 
 export default function InputTextField({
   name,
   label,
+  type = "text",
   placeholder,
   onBlur,
   value,
@@ -32,7 +34,7 @@ export default function InputTextField({
       {label && <S.LabelForm htmlFor={name}>{label}</S.LabelForm>}
       <S.Input
         id={name}
-        type="text"
+        type={type}
         value={value}
         onChange={onChange}
         onBlur={(e) => {

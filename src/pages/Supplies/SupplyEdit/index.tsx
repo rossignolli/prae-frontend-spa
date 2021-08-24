@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Button from "../../../components/Button";
 import { GlobalDashContainer } from "../../../components/Container/styles";
 import Header from "../../../components/Header";
@@ -12,12 +12,27 @@ import { useFormik } from "formik";
 import api from "../../../services/api";
 import { useAuth } from "../../../hooks/AuthContext";
 import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function NewCategory() {
+interface Categories {
+  id: string;
+  name: string;
+  pricePerJob: string;
+  created_at: Date;
+  description: string;
+  updated_at: Date;
+}
+
+interface EditCategoryParams {
+  id: string;
+}
+
+export default function SupplyEdit() {
   const history = useHistory();
   const { user } = useAuth();
   const [modalTitle, setModalTitle] = useState("Sucesso");
+  const [category, setcategory] = useState<Categories>();
+
   const [modalDescription, setModalDescription] = useState(
     "Categoria adicionada com sucesso."
   );
@@ -27,6 +42,8 @@ export default function NewCategory() {
   const [modalType, setModalType] = useState<
     "warning" | "error" | "sucess" | "info" | undefined
   >("sucess");
+
+  const { id } = useParams<EditCategoryParams>();
 
   function handleCloseConfirmationModal() {
     setIsNewTConfirmationModalOpen(false);
@@ -40,11 +57,12 @@ export default function NewCategory() {
     touched,
     errors,
     handleBlur,
+    setFieldValue,
     isSubmitting,
   } = useFormik({
     initialValues: {
-      name: "",
-      description: "",
+      name: category?.name,
+      pricePerJob: category?.pricePerJob,
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -52,7 +70,7 @@ export default function NewCategory() {
         .required("*Nome da categoria é requerido."),
     }),
     onSubmit: async (values, e) => {
-      const response = await api.post("categories", {
+      const response = await api.put(`supplies/${id}`, {
         ...values,
         technician_id: user.id,
       });
@@ -68,6 +86,19 @@ export default function NewCategory() {
       setIsNewTConfirmationModalOpen(true);
     },
   });
+
+  useEffect(() => {
+    api.get(`/supplies/details/${id}`).then((response) => {
+      setcategory(response.data);
+    });
+  }, [id]);
+
+  useEffect(() => {
+    if (category) {
+      setFieldValue("name", category?.name);
+      setFieldValue("pricePerJob", category?.pricePerJob);
+    }
+  }, [category, category?.pricePerJob, category?.name, id, setFieldValue]);
 
   return (
     <GlobalDashContainer>
@@ -89,13 +120,13 @@ export default function NewCategory() {
               onChange={handleChange}
             />
             <InputTextField
-              name="description"
+              name="pricePerJob"
               label="Descrição da categoria"
-              value={values.description}
+              value={values.pricePerJob}
               placeholder={"Ex: Computadores de executivos"}
               errorMesage={
-                touched.description && errors.description
-                  ? errors.description
+                touched.pricePerJob && errors.pricePerJob
+                  ? errors.pricePerJob
                   : false
               }
               onBlur={handleBlur}
@@ -110,7 +141,7 @@ export default function NewCategory() {
               >
                 Voltar
               </Button>
-              <Button type="submit">
+              <Button type="submit" onClick={() => handleSubmit()}>
                 {isSubmitting ? (
                   <ThreeDots style={{ width: `42px` }} />
                 ) : (

@@ -44,15 +44,16 @@ export default function NewCategory() {
   } = useFormik({
     initialValues: {
       name: "",
-      description: "",
+      pricePerJob: "",
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(6, "Nome de categoria precisa ter ao menos 6 caracteres")
-        .required("*Nome da categoria é requerido."),
+        .min(6, "Nome do suprimento precisa ter ao menos 6 caracteres")
+        .required("*Nome do suprimento é requerido."),
+      pricePerJob: Yup.string().required("*Preco do suprimento é requerido."),
     }),
     onSubmit: async (values, e) => {
-      const response = await api.post("categories", {
+      const response = await api.post("supplies", {
         ...values,
         technician_id: user.id,
       });
@@ -75,27 +76,28 @@ export default function NewCategory() {
       <S.Container>
         <S.ContainerInputs>
           <Header
-            title="Categorias"
+            title="Suprimentos"
             description="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
           />
           <form onSubmit={handleSubmit}>
             <InputTextField
               name="name"
-              label="Nome da categoria"
+              label="Nome do suprimento"
               value={values.name}
-              placeholder={"Ex: Macbook Air"}
+              placeholder={"Ex: Pasta Térmica"}
               errorMesage={touched.name && errors.name ? errors.name : false}
               onBlur={handleBlur}
               onChange={handleChange}
             />
             <InputTextField
-              name="description"
-              label="Descrição da categoria"
-              value={values.description}
-              placeholder={"Ex: Computadores de executivos"}
+              name="pricePerJob"
+              type="number"
+              label="Preço do suprimento"
+              value={values.pricePerJob}
+              placeholder={"Ex: 20.50"}
               errorMesage={
-                touched.description && errors.description
-                  ? errors.description
+                touched.pricePerJob && errors.pricePerJob
+                  ? errors.pricePerJob
                   : false
               }
               onBlur={handleBlur}

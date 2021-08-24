@@ -61,7 +61,7 @@ export default function CategoryEdit() {
   } = useFormik({
     initialValues: {
       name: category?.name,
-      description: "",
+      description: category?.description,
     },
     validationSchema: Yup.object({
       name: Yup.string()
