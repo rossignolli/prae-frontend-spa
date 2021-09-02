@@ -17,6 +17,13 @@ import CategoryId from "../pages/Categories/EditCategory";
 import Supply from "../pages/Supplies/SupplyList";
 import SupplyNew from "../pages/Supplies/SupplyNew";
 import SupplyEdit from "../pages/Supplies/SupplyEdit";
+// * BRANDS ROUTES */
+import Brand from "../pages/Brands/BrandsList";
+import BrandNew from "../pages/Brands/BrandNew";
+import BrandEdit from "../pages/Brands/BrandEdit";
+
+
+
 
 import Route from "./Route";
 export default function Supplies() {
@@ -35,6 +42,10 @@ export default function Supplies() {
       <Route path="/supply" exact component={Supply} isPrivate />
       <Route path="/supply/new" exact component={SupplyNew} isPrivate />
       <Route path="/supply/edit/:id" exact component={SupplyEdit} isPrivate />
+      {/* BRAND ROUTES */}
+      <Route path="/brands" exact component={Brand} isPrivate />
+      <Route path="/brands/new" exact component={BrandNew} isPrivate />
+      <Route path="/brands/edit/:id" exact component={BrandEdit} isPrivate />
 
       {/* <Route path="/preventives" exact component={Preventive} isPrivate />
       <Route

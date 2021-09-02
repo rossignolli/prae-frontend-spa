@@ -29,6 +29,7 @@ import {
   MobileContainer,
 } from "./styles";
 import { useState } from "react";
+import { MdLibraryBooks } from "react-icons/md";
 
 export default function NavigationBar() {
   const { user } = useAuth();
@@ -66,6 +67,10 @@ export default function NavigationBar() {
           <StyledNavLink to="/equipaments">
             <FiMonitor />
             Equipamentos
+          </StyledNavLink>
+          <StyledNavLink to="/brands">
+            <MdLibraryBooks />
+            Marcas
           </StyledNavLink>
           <StyledNavLink to="/preventives">
             <FiTool />

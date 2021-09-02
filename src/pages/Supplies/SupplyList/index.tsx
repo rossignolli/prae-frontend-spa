@@ -8,17 +8,12 @@ import api from "../../../services/api";
 import { GlobalDashContainer } from "../../../components/Container/styles";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { StyledTable } from "../../../components/StyledTable/styles";
-import * as S from "./styles";
+import * as S from "../../Categories/CategoryList/styles";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
 
-import {
-  ActionHolderContainer,
-  DescriptionEmpty,
-  EmptyState,
-  TitleEmpty,
-} from "./styles";
+
 import Button from "../../../components/Button";
 import { FiFolder } from "react-icons/fi";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -119,7 +114,7 @@ export default function Supply() {
         <SkeletonTheme color="#FFFF" highlightColor="#e6e1e139" />
         {!category ? (
           <>
-            <ActionHolderContainer>
+            <S.ActionHolderContainer>
               <Skeleton
                 duration={0.5}
                 width={140}
@@ -127,7 +122,7 @@ export default function Supply() {
                 height={40}
                 style={{ borderRadius: `15px`, marginRight: `10px` }}
               />
-            </ActionHolderContainer>
+            </S.ActionHolderContainer>
             <StyledTable>
               <>
                 <table>
@@ -288,7 +283,7 @@ export default function Supply() {
           </>
         ) : (
           <>
-            <ActionHolderContainer>
+            <S.ActionHolderContainer>
               <InputSearchBar
                 name="search"
                 placeholder="Pesquisar"
@@ -306,7 +301,7 @@ export default function Supply() {
               <Button onClick={() => history.push(`/supply/new`)}>
                 Adicionar Suprimento
               </Button>
-            </ActionHolderContainer>
+            </S.ActionHolderContainer>
             <StyledTable>
               {category.length > 0 ? (
                 <>
@@ -357,18 +352,18 @@ export default function Supply() {
                   </section>
                 </>
               ) : (
-                <EmptyState>
+                <S.EmptyState>
                   <FiFolder size={82} color={`#8257e5`} />
-                  <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
-                  <DescriptionEmpty>
+                  <S.TitleEmpty>Nada para mostrar aqui.</S.TitleEmpty>
+                  <S.DescriptionEmpty>
                     {input
                       ? `Nao encontramos nenhum suprimentos relacionada com a sua busca`
                       : `Você não possui suprimentos cadastradas no sistemas.`}
-                  </DescriptionEmpty>
-                  <Button onClick={() => history.push(`/supplies/new`)}>
+                  </S.DescriptionEmpty>
+                  <Button onClick={() => history.push(`/supply/new`)}>
                     Adicionar Suprimento
                   </Button>
-                </EmptyState>
+                </S.EmptyState>
               )}
             </StyledTable>
             <S.PaginationContainer>

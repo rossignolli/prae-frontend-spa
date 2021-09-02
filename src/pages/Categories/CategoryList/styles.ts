@@ -26,7 +26,7 @@ export const ActionHolderContainer = styled.div`
 export const EmptyState = styled.div`
   ${({ theme }) => css`
     display: flex;
-    height: 85vh;
+    height: 80vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;

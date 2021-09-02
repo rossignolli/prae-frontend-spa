@@ -30,7 +30,7 @@ interface Categories {
   updated_at: Date;
 }
 
-export default function EquipamentList() {
+export default function Category() {
   const [category, setCategory] = useState<Categories[] | undefined>();
   const [categoryDefault, setCategoryDefault] = useState<Categories[]>();
 
@@ -56,7 +56,7 @@ export default function EquipamentList() {
     useState(false);
 
   useEffect(() => {
-    api.get(`/equipaments`).then((response) => {
+    api.get(`/brands`).then((response) => {
       setCategory(response.data);
       setCategoryDefault(response.data);
     });
@@ -68,7 +68,7 @@ export default function EquipamentList() {
     setIsNewTConfirmationModalOpen(true);
   }
   async function handleConfimedDeletedAction() {
-    const response = await api.delete(`equipaments/${selectedCategory}`);
+    const response = await api.delete(`brands/${selectedCategory}`);
 
     if (response.status !== 200) {
       setModalTitle("Ops... Algo deu errado.");
@@ -301,8 +301,8 @@ export default function EquipamentList() {
                 Voltar
               </Button>
               <Button customColor="#FFFFFF">Gerar Relatório</Button>
-              <Button onClick={() => history.push(`/equipaments/new`)}>
-                Adicionar Equipamento
+              <Button onClick={() => history.push(`/category/new`)}>
+                Adicionar Marca
               </Button>
             </ActionHolderContainer>
             <StyledTable>
@@ -363,7 +363,7 @@ export default function EquipamentList() {
                       ? `Nao encontramos nenhuma marca relacionada com a sua busca`
                       : `Você não possui marcas cadastradas no sistemas.`}
                   </DescriptionEmpty>
-                  <Button onClick={() => history.push(`/equipament/new`)}>
+                  <Button onClick={() => history.push(`/category/new`)}>
                     Adicionar Marca
                   </Button>
                 </EmptyState>

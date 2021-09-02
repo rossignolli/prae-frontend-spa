@@ -5,7 +5,7 @@ import Header from "../../../components/Header";
 import NavigationBar from "../../../components/Navbar";
 import InputTextField from "../../../components/TextField";
 import { ThreeDots } from "react-loading-icons";
-import * as S from "../../Categories/NewCategory/styles";
+import * as S from "./styles";
 import * as Yup from "yup";
 
 import { useFormik } from "formik";
@@ -44,16 +44,15 @@ export default function NewCategory() {
   } = useFormik({
     initialValues: {
       name: "",
-      pricePerJob: "",
+      description: "",
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(6, "Nome do suprimento precisa ter ao menos 6 caracteres")
-        .required("*Nome do suprimento é requerido."),
-      pricePerJob: Yup.string().required("*Preco do suprimento é requerido."),
+        .min(6, "Nome de categoria precisa ter ao menos 6 caracteres")
+        .required("*Nome da categoria é requerido."),
     }),
     onSubmit: async (values, e) => {
-      const response = await api.post("supplies", {
+      const response = await api.post("brands", {
         ...values,
         technician_id: user.id,
       });
@@ -76,28 +75,27 @@ export default function NewCategory() {
       <S.Container>
         <S.ContainerInputs>
           <Header
-            title="Suprimentos"
+            title="Categorias"
             description="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
           />
           <form onSubmit={handleSubmit}>
             <InputTextField
               name="name"
-              label="Nome do suprimento"
+              label="Nome da categoria"
               value={values.name}
-              placeholder={"Ex: Pasta Térmica"}
+              placeholder={"Ex: Macbook Air"}
               errorMesage={touched.name && errors.name ? errors.name : false}
               onBlur={handleBlur}
               onChange={handleChange}
             />
             <InputTextField
-              name="pricePerJob"
-              type="number"
-              label="Preço do suprimento"
-              value={values.pricePerJob}
-              placeholder={"Ex: 20.50"}
+              name="description"
+              label="Descrição da categoria"
+              value={values.description}
+              placeholder={"Ex: Computadores de executivos"}
               errorMesage={
-                touched.pricePerJob && errors.pricePerJob
-                  ? errors.pricePerJob
+                touched.description && errors.description
+                  ? errors.description
                   : false
               }
               onBlur={handleBlur}

@@ -5,7 +5,7 @@ import Header from "../../../components/Header";
 import NavigationBar from "../../../components/Navbar";
 import InputTextField from "../../../components/TextField";
 import { ThreeDots } from "react-loading-icons";
-import * as S from "./styles";
+import * as S from "../../Categories/EditCategory/styles";
 import * as Yup from "yup";
 
 import { useFormik } from "formik";
