@@ -10,7 +10,6 @@ export const Container = styled.div`
 
 export const ContainerInputs = styled.div`
   ${({ theme }) => css`
-    background-color: #e5e5e5;
     display: flex;
     padding: ${theme.spacings.medium};
     flex-direction: column;

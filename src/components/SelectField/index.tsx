@@ -5,6 +5,8 @@ import * as S from "./styles";
 interface InputTextProps extends Props {
   name: string;
   label: string;
+  onChange: any;
+  value: any;
 }
 
 const customStyles = {
@@ -26,12 +28,21 @@ const customStyles = {
 export default function InputSelectField({
   name,
   label,
+  options,
+  onChange,
+  value,
+  errorMesage,
   ...rest
 }: InputTextProps) {
+
+
+
+
   return (
     <S.ContainerInput>
       <S.LabelForm htmlFor={name}>{label}</S.LabelForm>
-      <Select {...rest} styles={customStyles} />
+      <Select {...rest} styles={customStyles}  options={options} onChange={(value)=> onChange(value)} />
+      {errorMesage && <S.ErrorContainer>{errorMesage}</S.ErrorContainer>}
     </S.ContainerInput>
   );
 }

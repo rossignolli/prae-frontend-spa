@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 import NavigationBar from "../../../components/Navbar";
 import * as Yup from "yup";
@@ -11,15 +11,43 @@ import Button from "../../../components/Button";
 import { useFormik } from "formik";
 import api from "../../../services/api";
 import { useAuth } from "../../../hooks/AuthContext";
+import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
+import { useHistory } from "react-router";
 
 interface PreviewImage {
   name: string;
   url: string;
 }
 
+interface Brands {
+  id: string;
+  name: string;
+  created_at: Date;
+  description: string;
+  updated_at: Date;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  created_at: Date;
+  description: string;
+  updated_at: Date;
+}
+
+interface Option {
+  value: string, label: string ;
+}
+
+
+
 export default function NewEquipament() {
   const { user } = useAuth();
   const [modalTitle, setModalTitle] = useState("Sucesso");
+  const [brands, setBrands] = useState<Option[]>([])
+  const [categories, setCategories] = useState<Option[]>([])
+  const history = useHistory();
+
   const [modalDescription, setModalDescription] = useState(
     "Categoria adicionada com sucesso."
   );
@@ -37,22 +65,53 @@ export default function NewEquipament() {
     touched,
     errors,
     handleBlur,
+    setFieldValue,
     isSubmitting,
   } = useFormik({
     initialValues: {
-      name: "",
+      nickname: "",
+      model: "",
+      brand: "",
+      critical: "",
+      categories: "",
       description: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string()
+      nickname: Yup.string()
         .min(6, "Nome de categoria precisa ter ao menos 6 caracteres")
         .required("*Nome da categoria é requerido."),
+        brand: Yup.string()
+        .required("*É necessário selecionar uma marca cadastrada para o equipamento."),
+        model: Yup.string()
+        .min(6, "Modelo precisa ter ao menos 6 caracteres")
+        .required("*Modelo é requerido."),
+        
     }),
     onSubmit: async (values, e) => {
-      const response = await api.post("categories", {
-        ...values,
-        technician_id: user.id,
+      
+      const data = new FormData();
+
+      images.forEach(image => {
+        data.append('images', image);
       });
+
+      const equipamentData = {
+        name:  values.model,
+        description:  values.description,
+        technician_id: user.id,
+        monitor: false,
+        critical: values.critical,
+        levelToManage: 0,
+        category_id: values.categories,
+        brand_id: values.brand
+      }
+
+
+      data.append('data', JSON.stringify(equipamentData));
+
+      console.log(equipamentData)
+
+      const response = await api.post("equipaments", data);
 
       if (response.status !== 200) {
         setModalTitle("Ops... Algo deu errado.");
@@ -63,30 +122,52 @@ export default function NewEquipament() {
         return;
       }
       setIsNewTConfirmationModalOpen(true);
+      
     },
   });
+
+  useEffect(() => {
+    api.get(`/brands`).then((response) => {
+      const brands = response.data
+      const parsedBrand:  Option[] = [];
+      brands.map((brand: Brands) => {
+        parsedBrand.push({ value: brand.id, label: brand.name },)
+      })
+      setBrands(parsedBrand);
+    });
+  }, []);
+
+  useEffect(() => {
+    api.get(`/categories`).then((response) => {
+      const categories = response.data
+      const parsedCategories:  Option[] = [];
+      categories.map((category: Category) => {
+        parsedCategories.push({ value: category.id, label: category.name },)
+      })
+      setCategories(parsedCategories);
+    });
+  }, []);
+
+
+  function handleCloseConfirmationModal() {
+    setIsNewTConfirmationModalOpen(false);
+    history.goBack();
+  }
+
+
+  
 
 
   const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
   const [images, setImages] = useState<File[]>([]);
 
-  const brandsOptions = [
-    { value: "chocolate", label: "Apple" },
-    { value: "strawberry", label: "LG" },
-    { value: "vanilla", label: "HP" },
-  ];
 
   const criticaloptions = [
     { value: "false", label: "Sim" },
-    { value: "true", label: "Não" },
-    { value: "vanilla", label: "Refrigeradores" },
+    { value: "true", label: "Não" }
   ];
 
-  const categoriesloptions = [
-    { value: "false", label: "Desktop" },
-    { value: "true", label: "Refrigeradores" },
-    { value: "teste", label: "Casa de máquinas" },
-  ];
+
 
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
     if (!event.target.files) {
@@ -105,6 +186,8 @@ export default function NewEquipament() {
     setPreviewImages(selectedImagesPreview);
   }
 
+
+
   return (
     <GlobalDashContainer>
       <S.ContainerNewEquipament>
@@ -116,54 +199,65 @@ export default function NewEquipament() {
             de monitoramento. Todo equipamento por padrão é adicionado com
             monitoramento desligado!!!
           </p>
-          <form>
+          <form onSubmit={handleSubmit}>
             <InputTextField
-              name="Apelido"
-              label="Apelido"
-              placeholder={"Ex: Ar-condicionado Servidor"}
+              name="nickname"
+              label="Modelo"
+              placeholder="Ar Condicionado Portátil Elgin Eco Cub, 9000 BTUs"
+              value={values.nickname}
+              errorMesage={touched.nickname && errors.nickname ? errors.nickname : false}
               onBlur={handleBlur}
               onChange={handleChange}
             />
             <InputTextField
               name="model"
-              label="Modelo"
+              label="Apelido"
+              errorMesage={touched.model && errors.model ? errors.model : false}
               placeholder="Ar Condicionado Portátil Elgin Eco Cub, 9000 BTUs"
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            <InputTextField
-              name="Apelido"
-              label="Registro de Patrimonio"
-              placeholder={"Ex: Ar-condicionado Servidor"}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <InputSelectField
-              name="brands"
+              <InputSelectField
+              name="brand"
               label="Marcas"
-              placeholder="Selecione uma marca"
-              options={brandsOptions}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <InputSelectField
-              name="nickname"
-              label="Categorias"
-              placeholder="Selecione uma categoria"
-              options={criticaloptions}
-              onBlur={handleBlur}
-              onChange={handleChange}
+              placeholder={"Selecione uma marca"}
+              options={brands}
+              value={values.brand}
+              errorMesage={touched.brand && errors.brand ? errors.brand : false}
+              onChange={(value: any) => setFieldValue('brand', value.value)}
             />
             <InputSelectField
               name="critical"
-              label="Critico"
-              placeholder="Seleciona a importancia do equipamento"
-              options={categoriesloptions}
+              label="Critico?"
+              placeholder={"Selecione a situação do equipamento"}
+              options={criticaloptions}
+              value={values.critical}
+              errorMesage={touched.critical && errors.critical ? errors.critical : false}
+              onChange={(value: any) => setFieldValue('critical', value.value)}
+            />
+            <InputSelectField
+              name="categories"
+              label="Categoria"
+              placeholder={"Selecione uma categoria"}
+              options={categories}
+              value={values.categories}
+              errorMesage={touched.categories && errors.categories ? errors.categories : false}
+              onChange={(value: any) => setFieldValue('categories', value.value)}
+            />
+            <InputTextField
+              name="register"
+              label="Registro de Patrimonio"
+              placeholder={"MSD4684652"}
+              onBlur={handleBlur}
+              onChange={handleChange}
             />
             <InputTextField
               name="description"
               label="Descrição"
               placeholder="O conceito de ar-condicionado Portátil proporciona praticidade e fácil instalação..."
+              errorMesage={touched.description && errors.description ? errors.description : false}
+              onBlur={handleBlur}
+              onChange={handleChange}
             />
             <S.ImageContainer>
               {previewImages.map((image) => {
@@ -185,15 +279,22 @@ export default function NewEquipament() {
               })}
             </S.ImageContainer>
             <InputImageFile
-              name="critical"
+              name="file"
               label="Critico"
               onChange={handleSelectImages}
             />
-          </form>
-
-          <S.ButtonHolder>
-            <Button>Adicionar</Button>
+            <S.ButtonHolder>
+            <Button type="submit">Adicionar</Button>
           </S.ButtonHolder>
+          </form>
+          <ConfirmationModal
+        title={modalTitle}
+        description={modalDescription}
+        type={modalType}
+        isOpen={isNewTConfirmationModalOpen}
+        onRequestCancel={() => handleCloseConfirmationModal()}
+        buttons={butonsOption}
+      />
         </S.NewEquipamentsContent>
       </S.ContainerNewEquipament>
     </GlobalDashContainer>

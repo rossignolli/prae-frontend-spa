@@ -31,3 +31,12 @@ export const LabelForm = styled.label`
   font-size: 16px;
   font-weight: bold;
 `;
+
+
+export const ErrorContainer = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    color: #ff1e1e;
+    padding: ${theme.spacings.xsmall} 0 ${theme.spacings.xsmall};
+  `}
+  `;

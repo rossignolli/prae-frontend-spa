@@ -1,141 +1,110 @@
-import styled from 'styled-components';
-
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
-        display: flex;
-        height: 100vh;
-        background-color: #E5E5E5;
-        flex-direction: column;
-
-    `;
-
-
-    
-export const NewEquipamentsContent = styled.div`
-    margin-top: 20px;
-    margin-left: 340px;
-    background-color: #E5E5E5;
-    display: flex;
-    padding: 50px;
-    flex-direction: column;
-    margin-right: 20px;
-    margin-bottom: 20px;
-
-
-    background-color: #FFFFFF;
-    border-radius: 15px;
-
-    div {
-        margin-bottom: 20px;
-    }
-
-
-    // FAZER COMPONENTES DESSES INPUTS PARA USAR EM OUTROS LUGARES
-
-    input {
-        width: 100%;
-        background: #F1F1F1;
-        border-radius: 15px;
-        outline: none;
-        color: #95979A;
-        height: 58px;
-        padding: 10px;
-        border: 1px solid #DDDDDD;
-    }
-    textarea {
-        width: 100%;
-        background: #F1F1F1;
-        border-radius: 15px;
-        outline: none;
-        color: #95979A;
-        height: 58px;
-        padding: 10px;
-        border: 1px solid #DDDDDD;
-        height: 120px;
-    }
-
-    label {
-        display: flex;
-        color: #000000;
-        margin-bottom: 10px;
-        font-size: 16px;
-        font-weight: bold;
-
-    }
-
-    p {
-        color: #95979A;
-        margin-bottom: 20px;
-    }
-
-    select {
-        background: #F1F1F1;
-        border-radius: 15px;
-        outline: none;
-        width: 100%;
-        color: #95979A;
-        height: 58px;
-        padding: 10px;
-        border: 1px solid #DDDDDD;
-        
-        option {
-        color: black;
-         background: #F1F1F1;
-        }
-
-
-
-    }
-
-    .warning {
-        color: #EA5455;
-  }
-
-  .warning-equip{
-    color: #95979A;
-    margin-bottom: 0px;
-
-  }
-
-  
-  .button-holder{
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 40px;
-
-    button{
-        margin-left: 20px;
-    }
-
-  }
-
-  .input-block-check{
-
-      display: flex;
-      align-items: center;
-
-    label {
-        display: inline-block;
-        color: #95979A;
-        font-weight: normal;
-    }
-
-      input {
-          width: auto;
-          margin-bottom: 10px;
-          margin-right: 10px;
-      }
-  }
-
-
-    @media screen and (max-width: 800px) {
-    margin-left: 20px;
-    }   
-
-
-
-
-
-
+  display: flex;
+  flex-direction: column;
 `;
 
+export const ResumeEquipament = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+export const ContainerEquipaments = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    padding: ${theme.spacings.medium};
+    flex-direction: column;
+    margin: 16px;
+    background-color: #ffffff;
+    border-radius: 15px;
+  `}
+`;
+
+export const HeaderEquipament = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+  `}
+`;
+
+export const GalleryEquipament = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    max-width: 540px;
+  `}
+`;
+
+export const EquipamentDetails = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    width: 100%;
+    padding: ${theme.spacings.xsmall};
+    flex-direction: column;
+  `}
+`;
+
+export const EquipamentTitle = styled.h1`
+  ${({ theme }) => css`
+    font-size:${theme.font.sizes.xlarge};
+    font-weight: ${theme.font.bold};
+    color:  ${theme.colors.primary};
+    margin-bottom: ${theme.spacings.xsmall};
+  `}
+`;
+
+export const EquipamentDescription = styled.p`
+  ${({ theme }) => css`
+    font-size:${theme.font.sizes.medium};
+    color:  ${theme.colors.bodyText};
+    font-weight: ${theme.font.normal};
+  `}
+`;
+
+export const ResumeEquipamentList = styled.div`
+  ${({ theme }) => css`
+    background-color: red;
+  `}
+`;
+
+export const ResumeInfo = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    padding: ${theme.spacings.xsmall};
+
+    h1 {
+      font-size: ${theme.font.sizes.xxlarge};
+      color: ${theme.colors.heading};
+    }
+    span {
+      font-size: ${theme.font.sizes.small};
+      color: ${theme.colors.bodyText};
+    }
+
+  `}
+`;
+
+export const CardEquipament = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    border: 1px solid ${theme.colors.grayBorder};
+    padding: ${theme.spacings.xsmall};
+    border-radius: ${theme.border.radius};
+    align-items: center;
+    justify-content: center;
+    margin-left: ${theme.spacings.xxsmall};
+    width: 100%;
+
+    img {
+      margin-right: ${theme.spacings.xxsmall};
+    }
+  `}
+`;
+
+export const ResumeActions = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    
+  `}
+`;

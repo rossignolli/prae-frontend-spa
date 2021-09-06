@@ -7,7 +7,9 @@ import React from "react";
 import { Switch } from "react-router-dom";
 import Signin from "../pages/SignIn";
 import Dashboard from "../pages/Dashboard";
+// * EQUIPAMENTS ROUTES */
 import Equipaments from "../pages/Equipaments/EquipamentList";
+import EquipamentsDetails from "../pages/Equipaments/EquipamentsDetails";
 import NewEquipaments from "../pages/Equipaments/NewEquipament";
 // * CATEGORY ROUTES */
 import Category from "../pages/Categories/CategoryList";
@@ -34,6 +36,7 @@ export default function Supplies() {
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/equipaments" exact component={Equipaments} isPrivate />
       <Route path="/equipaments/new" component={NewEquipaments} isPrivate />
+      <Route path="/equipaments/details" exact component={EquipamentsDetails} isPrivate />
       {/* CATEGORY ROUTES */}
       <Route path="/category" exact component={Category} isPrivate />
       <Route path="/category/new" exact component={CategoryCreate} isPrivate />
