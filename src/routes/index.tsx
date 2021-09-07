@@ -36,7 +36,7 @@ export default function Supplies() {
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/equipaments" exact component={Equipaments} isPrivate />
       <Route path="/equipaments/new" component={NewEquipaments} isPrivate />
-      <Route path="/equipaments/details" exact component={EquipamentsDetails} isPrivate />
+      <Route path="/equipaments/details/:id" exact component={EquipamentsDetails} isPrivate />
       {/* CATEGORY ROUTES */}
       <Route path="/category" exact component={Category} isPrivate />
       <Route path="/category/new" exact component={CategoryCreate} isPrivate />

@@ -319,7 +319,11 @@ export default function EquipamentList() {
                     <tbody>
                       {currentCategories?.map((category) => (
                         <tr key={category.id}>
-                          <td>{category.name}</td>
+                          <td>
+                          <Link to={`equipaments/details/${category.id}`}>
+                          {category.name}
+                          </Link>
+                          </td>
                           <td>{category.description}</td>
                           <td>
                             <img src={manProfile} alt="" />

@@ -8,7 +8,7 @@ export const Container = styled.div`
 export const ResumeEquipament = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+
 `;
 
 export const ContainerEquipaments = styled.div`
@@ -25,13 +25,13 @@ export const ContainerEquipaments = styled.div`
 export const HeaderEquipament = styled.div`
   ${({ theme }) => css`
     display: flex;
+
   `}
 `;
 
 export const GalleryEquipament = styled.div`
   ${({ theme }) => css`
     display: flex;
-    max-width: 540px;
   `}
 `;
 
@@ -93,7 +93,7 @@ export const CardEquipament = styled.div`
     border-radius: ${theme.border.radius};
     align-items: center;
     justify-content: center;
-    margin-left: ${theme.spacings.xxsmall};
+    margin ${theme.spacings.xxsmall};
     width: 100%;
 
     img {
@@ -102,9 +102,36 @@ export const CardEquipament = styled.div`
   `}
 `;
 
+export const ResumeContainer = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    
+  `}
+`;
+
+export const ButtonContainer = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+
+    button + button {
+      padding: ${theme.spacings.xsmall};
+      margin-left: ${theme.spacings.xsmall};
+    }
+    
+  `}
+`;
+
 export const ResumeActions = styled.div`
   ${({ theme }) => css`
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    span {
+      margin-bottom: ${theme.spacings.xxsmall};
+    }
+  
     
   `}
 `;

@@ -26,9 +26,9 @@ const wrapperModifiers = {
   fullWidth: () => css`
     width: 100%;
   `,
-  customColor: (customColor: string) => css`
+  customColor: (customColor: string, theme: DefaultTheme) => css`
     background: ${customColor};
-    color: ${darken(0.5, customColor)};
+    color: ${theme.colors.white};
 
     &:hover {
       background: ${darken(0.1, customColor)};
@@ -90,7 +90,7 @@ export const Wrapper = styled.button<WrapperProps>`
     }
     ${!!size && wrapperModifiers[size](theme)};
     ${!!fullWidth && wrapperModifiers.fullWidth()};
-    ${!!customColor && wrapperModifiers.customColor(customColor)};
+    ${!!customColor && wrapperModifiers.customColor(customColor, theme)};
     ${!!hasIcon && wrapperModifiers.withIcon(theme)};
     ${!!minimal && wrapperModifiers.minimal(theme)};
     ${disabled && wrapperModifiers.disabled()};
