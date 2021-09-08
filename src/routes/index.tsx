@@ -2,32 +2,29 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-indent-props */
 
-import React from "react";
+import React from 'react';
 
-import { Switch } from "react-router-dom";
-import Signin from "../pages/SignIn";
-import Dashboard from "../pages/Dashboard";
+import { Switch } from 'react-router-dom';
+import Signin from '../pages/SignIn';
+import Dashboard from '../pages/Dashboard';
 // * EQUIPAMENTS ROUTES */
-import Equipaments from "../pages/Equipaments/EquipamentList";
-import EquipamentsDetails from "../pages/Equipaments/EquipamentsDetails";
-import NewEquipaments from "../pages/Equipaments/NewEquipament";
+import Equipaments from '../pages/Equipaments/EquipamentList';
+import EquipamentsDetails from '../pages/Equipaments/EquipamentsDetails';
+import NewEquipaments from '../pages/Equipaments/NewEquipament';
 // * CATEGORY ROUTES */
-import Category from "../pages/Categories/CategoryList";
-import CategoryCreate from "../pages/Categories/NewCategory";
-import CategoryId from "../pages/Categories/EditCategory";
+import Category from '../pages/Categories/CategoryList';
+import CategoryCreate from '../pages/Categories/NewCategory';
+import CategoryId from '../pages/Categories/EditCategory';
 // * SUPPLY ROUTES */
-import Supply from "../pages/Supplies/SupplyList";
-import SupplyNew from "../pages/Supplies/SupplyNew";
-import SupplyEdit from "../pages/Supplies/SupplyEdit";
+import Supply from '../pages/Supplies/SupplyList';
+import SupplyNew from '../pages/Supplies/SupplyNew';
+import SupplyEdit from '../pages/Supplies/SupplyEdit';
 // * BRANDS ROUTES */
-import Brand from "../pages/Brands/BrandsList";
-import BrandNew from "../pages/Brands/BrandNew";
-import BrandEdit from "../pages/Brands/BrandEdit";
+import Brand from '../pages/Brands/BrandsList';
+import BrandNew from '../pages/Brands/BrandNew';
+import BrandEdit from '../pages/Brands/BrandEdit';
 
-
-
-
-import Route from "./Route";
+import Route from './Route';
 export default function Supplies() {
   return (
     <Switch>

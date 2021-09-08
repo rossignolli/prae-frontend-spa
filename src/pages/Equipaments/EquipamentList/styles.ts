@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   ${({ theme }) => css`
@@ -13,7 +13,6 @@ export const ActionHolderContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-
     padding: ${theme.spacings.xsmall};
     justify-content: flex-start;
     button + button {

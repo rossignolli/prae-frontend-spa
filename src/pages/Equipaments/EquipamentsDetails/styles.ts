@@ -8,7 +8,6 @@ export const Container = styled.div`
 export const ResumeEquipament = styled.div`
   display: flex;
   flex-direction: row;
-
 `;
 
 export const ContainerEquipaments = styled.div`
@@ -25,7 +24,6 @@ export const ContainerEquipaments = styled.div`
 export const HeaderEquipament = styled.div`
   ${({ theme }) => css`
     display: flex;
-
   `}
 `;
 
@@ -46,17 +44,17 @@ export const EquipamentDetails = styled.div`
 
 export const EquipamentTitle = styled.h1`
   ${({ theme }) => css`
-    font-size:${theme.font.sizes.xlarge};
+    font-size: ${theme.font.sizes.xlarge};
     font-weight: ${theme.font.bold};
-    color:  ${theme.colors.primary};
+    color: ${theme.colors.primary};
     margin-bottom: ${theme.spacings.xsmall};
   `}
 `;
 
 export const EquipamentDescription = styled.p`
   ${({ theme }) => css`
-    font-size:${theme.font.sizes.medium};
-    color:  ${theme.colors.bodyText};
+    font-size: ${theme.font.sizes.medium};
+    color: ${theme.colors.bodyText};
     font-weight: ${theme.font.normal};
   `}
 `;
@@ -81,7 +79,6 @@ export const ResumeInfo = styled.div`
       font-size: ${theme.font.sizes.small};
       color: ${theme.colors.bodyText};
     }
-
   `}
 `;
 
@@ -105,7 +102,6 @@ export const CardEquipament = styled.div`
 export const ResumeContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
-    
   `}
 `;
 
@@ -117,7 +113,6 @@ export const ButtonContainer = styled.div`
       padding: ${theme.spacings.xsmall};
       margin-left: ${theme.spacings.xsmall};
     }
-    
   `}
 `;
 
@@ -131,7 +126,5 @@ export const ResumeActions = styled.div`
     span {
       margin-bottom: ${theme.spacings.xxsmall};
     }
-  
-    
   `}
 `;

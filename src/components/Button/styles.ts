@@ -1,12 +1,12 @@
-import styled, { css, DefaultTheme } from "styled-components";
-import { darken } from "polished";
+import styled, { css, DefaultTheme } from 'styled-components';
+import { darken } from 'polished';
 
-import { ButtonProps } from ".";
+import { ButtonProps } from '.';
 
 export type WrapperProps = {
   hasIcon: boolean;
   customColor: string;
-} & Pick<ButtonProps, "size" | "fullWidth" | "minimal">;
+} & Pick<ButtonProps, 'size' | 'fullWidth' | 'minimal'>;
 
 const wrapperModifiers = {
   small: (theme: DefaultTheme) => css`
@@ -28,7 +28,7 @@ const wrapperModifiers = {
   `,
   customColor: (customColor: string, theme: DefaultTheme) => css`
     background: ${customColor};
-    color: ${theme.colors.white};
+    color: ${darken(0.5, customColor)};
 
     &:hover {
       background: ${darken(0.1, customColor)};
@@ -62,15 +62,7 @@ const wrapperModifiers = {
 };
 
 export const Wrapper = styled.button<WrapperProps>`
-  ${({
-    theme,
-    size,
-    fullWidth,
-    hasIcon,
-    minimal,
-    disabled,
-    customColor,
-  }) => css`
+  ${({ theme, size, fullWidth, hasIcon, minimal, disabled, customColor }) => css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
