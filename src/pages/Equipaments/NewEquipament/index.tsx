@@ -86,8 +86,6 @@ export default function NewEquipament() {
 
       data.append('data', JSON.stringify(equipamentData));
 
-      console.log(equipamentData);
-
       const response = await api.post('equipaments', data);
 
       if (response.status !== 200) {

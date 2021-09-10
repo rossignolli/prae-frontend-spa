@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const StyledTable = styled.div`
   ${({ theme }) => css`
@@ -14,6 +14,10 @@ export const StyledTable = styled.div`
     a {
       color: inherit;
       text-decoration: none;
+      transition: color 0.3s ease-in;
+      &:hover {
+        color: ${theme.colors.primary};
+      }
     }
 
     table {

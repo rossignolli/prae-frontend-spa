@@ -22,6 +22,39 @@ export const ActionHolderContainer = styled.div`
   `}
 `;
 
+export const CircleExpired = styled.div`
+  ${({ theme }) => css`
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: ${theme.colors.red};
+    margin-right: ${theme.spacings.xsmall};
+  `}
+`;
+
+export const CircleOK = styled.div`
+  ${({ theme }) => css`
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: ${theme.colors.green};
+    margin-right: ${theme.spacings.xsmall};
+  `}
+`;
+
+export const CircleWarning = styled.div`
+  ${({ theme }) => css`
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: ${theme.colors.yellow};
+    margin-right: ${theme.spacings.xsmall};
+  `}
+`;
+
 export const EmptyState = styled.div`
   ${({ theme }) => css`
     display: flex;

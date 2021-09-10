@@ -1,7 +1,7 @@
 import Modal from 'react-modal';
 import * as S from './styles';
 import { useState } from 'react';
-import { format } from 'date-fns';
+import { format, formatISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { DatePickerCalendar } from 'react-nice-dates';
 import 'react-nice-dates/build/style.css';
@@ -11,7 +11,7 @@ import Header from '../../Header';
 interface NewTranctionModalProps {
   isOpen: boolean;
   onRequestCancel: () => void;
-  onRequestConfirmation?: () => void;
+  onRequestConfirmation: (date: string) => void;
   title?: string;
   description?: string;
   type?: 'warning' | 'error' | 'sucess' | 'info';
@@ -30,7 +30,7 @@ export default function SelectDateMonitorModal({ isOpen, onRequestCancel, onRequ
           <p>Data selecionada: {startDate ? format(startDate, 'dd MMM yyyy', { locale: ptBR }) : 'none'}.</p>
         </S.ButtonHolder>
         <S.ButtonHolder>
-          <Button type="button" customColor="#E1F5EC" onClick={onRequestConfirmation}>
+          <Button type="button" customColor="#E1F5EC" onClick={() => onRequestConfirmation(formatISO(startDate))}>
             Confirmar Data
           </Button>
           <Button type="button" customColor="#F5E9EC" onClick={onRequestCancel}>

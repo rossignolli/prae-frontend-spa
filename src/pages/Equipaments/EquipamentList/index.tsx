@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import manProfile from '../../../assets/temp_assets/man-profile.png';
 import NavigationBar from '../../../components/Navbar';
+
 // import { useAuth } from '../../hooks/AuthContext';
 import api from '../../../services/api';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { StyledTable } from '../../../components/StyledTable/styles';
 import * as S from './styles';
+import { isPast, parseISO } from 'date-fns';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
@@ -25,9 +27,22 @@ interface Categories {
   updated_at: Date;
 }
 
+interface Equipament {
+  id: string;
+  name: string;
+  created_at: Date;
+  description: string;
+  monitor: boolean;
+  dateOfExpiration: string;
+  updated_at: Date;
+  brand: {
+    name: string;
+  };
+}
+
 export default function EquipamentList() {
-  const [category, setCategory] = useState<Categories[] | undefined>();
-  const [categoryDefault, setCategoryDefault] = useState<Categories[]>();
+  const [category, setCategory] = useState<Equipament[] | undefined>();
+  const [categoryDefault, setCategoryDefault] = useState<Equipament[]>();
 
   const [modalTitle, setModalTitle] = useState('');
   const [modalDescription, setModalDescription] = useState('');
@@ -216,6 +231,7 @@ export default function EquipamentList() {
                       <tr>
                         <th>Nome</th>
                         <th>Descrição</th>
+                        <th>Status</th>
                         <th>Criado por</th>
                       </tr>
                     </thead>
@@ -225,7 +241,27 @@ export default function EquipamentList() {
                           <td>
                             <Link to={`equipaments/details/${category.id}`}>{category.name}</Link>
                           </td>
-                          <td>{category.description}</td>
+                          <td>{category?.description ? category.description : `Sem descrição`}</td>
+                          <td>
+                            {category.dateOfExpiration ? (
+                              isPast(parseISO(category.dateOfExpiration)) ? (
+                                <>
+                                  <S.CircleExpired />
+                                  Expirado
+                                </>
+                              ) : (
+                                <>
+                                  <S.CircleOK />
+                                  Operando
+                                </>
+                              )
+                            ) : (
+                              <>
+                                <S.CircleWarning />
+                                Não monitorado
+                              </>
+                            )}
+                          </td>
                           <td>
                             <img src={manProfile} alt="" />
                             Vitor Rossignolli

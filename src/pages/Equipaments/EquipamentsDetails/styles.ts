@@ -10,7 +10,40 @@ export const ResumeEquipament = styled.div`
   flex-direction: row;
 `;
 
+export const CardInfoHightlight = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+
+    span {
+      color: ${theme.colors.primary};
+      font-weight: ${theme.font.bold};
+    }
+
+    p {
+      margin-top: ${theme.spacings.xxsmall};
+      padding: ${theme.spacings.xsmall};
+      border-radius: 15px;
+      border: solid 2px ${theme.colors.backgroundBlue};
+      width: 100%;
+    }
+  `}
+`;
+
 export const ContainerEquipaments = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    padding: ${theme.spacings.medium};
+    flex-direction: column;
+    margin: 16px;
+    background-color: #ffffff;
+    border-radius: 15px;
+  `}
+`;
+export const Expiration = styled.div`
   ${({ theme }) => css`
     display: flex;
     padding: ${theme.spacings.medium};
@@ -24,6 +57,7 @@ export const ContainerEquipaments = styled.div`
 export const HeaderEquipament = styled.div`
   ${({ theme }) => css`
     display: flex;
+    flex-wrap: wrap;
   `}
 `;
 
@@ -36,7 +70,7 @@ export const GalleryEquipament = styled.div`
 export const EquipamentDetails = styled.div`
   ${({ theme }) => css`
     display: flex;
-    width: 100%;
+    max-width: 360px;
     padding: ${theme.spacings.xsmall};
     flex-direction: column;
   `}
@@ -102,6 +136,8 @@ export const CardEquipament = styled.div`
 export const ResumeContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
+    justify-content: space-around;
+    margin-top: ${theme.spacings.xsmall};
   `}
 `;
 

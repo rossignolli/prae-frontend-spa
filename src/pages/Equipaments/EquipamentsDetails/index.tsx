@@ -15,7 +15,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useHistory } from 'react-router-dom';
 import SelectDateMonitorModal from '../../../components/Modals/SelectDateMonitorModal';
-
+import { ptBR } from 'date-fns/locale';
 interface EditCategoryParams {
   id: string;
 }
@@ -51,6 +51,8 @@ interface Equipament {
   name: string;
   created_at: Date;
   description: string;
+  monitor: boolean;
+  dateOfExpiration: string;
   updated_at: Date;
   brand: {
     name: string;
@@ -104,7 +106,9 @@ export default function EquipamentsDetails() {
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
-  const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(true);
+  const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
+  const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
+
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
   const { id } = useParams<EditCategoryParams>();
   const history = useHistory();
@@ -119,9 +123,52 @@ export default function EquipamentsDetails() {
     });
   }, [id]);
 
+  function handleCloseConfirmationModalMonitoring() {
+    setIsConfirmationMonitorModalOpen(false);
+  }
+
   function handleCloseConfirmationModal() {
     setIsNewTConfirmationModalOpen(false);
-    history.goBack();
+  }
+
+  function handleOpenMonitoringModal() {
+    if (equipament?.monitor) {
+      setModalTitle('Aviso');
+      setModalDescription('Esse equipamento já está sendo monitorado.');
+      setModalType('warning');
+      setButtonsOption(false);
+      setIsNewTConfirmationModalOpen(true);
+      return;
+    }
+
+    setIsConfirmationMonitorModalOpen(true);
+  }
+
+  async function handleStarMonitoringEquipament(date: string) {
+    const MonitoringDate = {
+      date,
+    };
+    const response = await api.post(`preventives/monitor/${id}`, MonitoringDate);
+
+    if (response.status !== 200) {
+      setModalTitle('Ops... Algo deu errado.');
+      setModalDescription('Tente novamente mais tarde');
+      setModalType('error');
+      setButtonsOption(false);
+      setIsNewTConfirmationModalOpen(true);
+      return;
+    }
+
+    if (equipament) {
+      setEquipament({ ...equipament, monitor: true, dateOfExpiration: date });
+    }
+
+    setModalTitle('Sucesso.');
+    setModalDescription('Equipamento está sendo monitorado.');
+    setModalType('sucess');
+    setButtonsOption(false);
+    setIsConfirmationMonitorModalOpen(false);
+    setIsNewTConfirmationModalOpen(true);
   }
 
   return (
@@ -134,7 +181,7 @@ export default function EquipamentsDetails() {
           </S.GalleryEquipament>
           <S.EquipamentDetails>
             <S.EquipamentTitle>{equipament?.name}</S.EquipamentTitle>
-            <S.EquipamentDescription>{equipament?.description}</S.EquipamentDescription>
+            <S.EquipamentDescription>{equipament?.description ? equipament.description : `Sem descrição`}</S.EquipamentDescription>
             <S.ResumeEquipament>
               <S.ResumeInfo>
                 <h1>{equipament?.brand.name}</h1>
@@ -149,7 +196,16 @@ export default function EquipamentsDetails() {
                 <span>preventivas executadas</span>
               </S.ResumeInfo>
             </S.ResumeEquipament>
-            <S.ResumeContainer></S.ResumeContainer>
+            <S.ResumeContainer>
+              <S.CardInfoHightlight>
+                <span>Expiração</span>
+                <p>
+                  {!equipament?.dateOfExpiration
+                    ? 'Não monitorado'
+                    : equipament && equipament?.dateOfExpiration && format(parseISO(equipament?.dateOfExpiration), 'dd MMMM yyyy', { locale: ptBR })}
+                </p>
+              </S.CardInfoHightlight>
+            </S.ResumeContainer>
           </S.EquipamentDetails>
         </S.HeaderEquipament>
         <S.ButtonContainer>
@@ -157,7 +213,9 @@ export default function EquipamentsDetails() {
             <Button minimal>Voltar</Button>
           </div>
           <Button customColor="#24A3FF">Relatório</Button>
-          <Button customColor="#28C76F">Monitorar</Button>
+          <Button customColor="#28C76F" onClick={handleOpenMonitoringModal}>
+            Monitorar
+          </Button>
           <Button>Editar</Button>
           <Button customColor="#FF787A">Iniciar Ação</Button>
         </S.ButtonContainer>
@@ -193,6 +251,15 @@ export default function EquipamentsDetails() {
         </StyledTable>
       </S.ContainerEquipaments>
       <SelectDateMonitorModal
+        title={modalTitle}
+        description={modalDescription}
+        type={modalType}
+        isOpen={isConfirmationMonitorModalOpen}
+        onRequestCancel={() => handleCloseConfirmationModalMonitoring()}
+        onRequestConfirmation={date => handleStarMonitoringEquipament(date)}
+        buttons={butonsOption}
+      />
+      <ConfirmationModal
         title={modalTitle}
         description={modalDescription}
         type={modalType}
