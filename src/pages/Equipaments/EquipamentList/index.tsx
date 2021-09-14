@@ -217,7 +217,7 @@ export default function EquipamentList() {
           <>
             <ActionHolderContainer>
               <InputSearchBar name="search" placeholder="Pesquisar" value={input} onChange={updateInput} />
-              <Button minimal customColor="#FFFFFF" onClick={() => history.push(`dashboard`)}>
+              <Button minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
                 Voltar
               </Button>
               <Button customColor="#FFFFFF">Gerar Relatório</Button>
@@ -231,6 +231,7 @@ export default function EquipamentList() {
                       <tr>
                         <th>Nome</th>
                         <th>Descrição</th>
+
                         <th>Status</th>
                         <th>Criado por</th>
                       </tr>

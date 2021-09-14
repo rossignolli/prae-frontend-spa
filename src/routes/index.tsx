@@ -10,6 +10,9 @@ import Dashboard from '../pages/Dashboard';
 // * EQUIPAMENTS ROUTES */
 import Equipaments from '../pages/Equipaments/EquipamentList';
 import EquipamentsDetails from '../pages/Equipaments/EquipamentsDetails';
+import EquipamentsDetailsPreventive from '../pages/Equipaments/EquipamentsDetailsPreventive';
+import EquipamentsDetailsPreventiveAction from '../pages/Equipaments/EquipamentsActionExecute';
+
 import NewEquipaments from '../pages/Equipaments/NewEquipament';
 // * CATEGORY ROUTES */
 import Category from '../pages/Categories/CategoryList';
@@ -34,6 +37,9 @@ export default function Supplies() {
       <Route path="/equipaments" exact component={Equipaments} isPrivate />
       <Route path="/equipaments/new" component={NewEquipaments} isPrivate />
       <Route path="/equipaments/details/:id" exact component={EquipamentsDetails} isPrivate />
+      <Route path="/equipaments/details/preventive/:id" exact component={EquipamentsDetailsPreventive} isPrivate />
+      <Route path="/equipaments/details/actions/new/:id" exact component={EquipamentsDetailsPreventiveAction} isPrivate />
+
       {/* CATEGORY ROUTES */}
       <Route path="/category" exact component={Category} isPrivate />
       <Route path="/category/new" exact component={CategoryCreate} isPrivate />

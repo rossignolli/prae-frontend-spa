@@ -51,6 +51,7 @@ const wrapperModifiers = {
     color: ${theme.colors.primary};
     &:hover {
       color: ${darken(0.1, theme.colors.primary)};
+      background: none;
     }
   `,
   disabled: () => css`

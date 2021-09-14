@@ -1,7 +1,7 @@
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import NavigationBar from '../../../components/Navbar';
-import * as S from '../EquipamentsDetails/styles';
-// import { useAuth } from '../../hooks/AuthContext';
+import * as S from '../EquipamentsDetailsPreventive/styles';
+import { useAuth } from '../../../hooks/AuthContext';
 import ImageGallery from 'react-image-gallery';
 import '../../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import { StyledTable } from '../../../components/StyledTable/styles';
@@ -9,14 +9,10 @@ import Button from '../../../components/Button';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import api from '../../../services/api';
-import Header from '../../../components/Header';
-import { format, parseISO } from 'date-fns';
-import { AiOutlineArrowRight } from 'react-icons/ai';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import SelectDateMonitorModal from '../../../components/Modals/SelectDateMonitorModal';
-import { ptBR } from 'date-fns/locale';
-import QRCodeModal from '../../../components/Modals/QRCodeShow';
+
 interface EditCategoryParams {
   id: string;
 }
@@ -41,9 +37,23 @@ interface Preventive {
     name: string;
   };
   equipament: {
-    id: string;
     technician: {
       name: string;
+    };
+  };
+}
+
+interface Jobs {
+  id: string;
+  preventive: {
+    isCorrective: boolean;
+  };
+  job: {
+    description: string;
+    name: string;
+    supply: {
+      name: string;
+      pricePerJob: number;
     };
   };
 }
@@ -57,10 +67,6 @@ interface Equipament {
   dateOfExpiration: string;
   updated_at: Date;
   brand: {
-    name: string;
-  };
-  category: {
-    id: string;
     name: string;
   };
   images: Images[];
@@ -106,27 +112,23 @@ const images = [
   },
 ];
 
-export default function EquipamentsDetails() {
+export default function EquipamentsDetailsPreventive() {
   const [equipament, setEquipament] = useState<Equipament>();
-  const [preventives, setPreventives] = useState<Preventive[]>();
+  const [jobs, setJobs] = useState<Jobs[]>();
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
-  const [isModalQRCodeOpen, setIsModalQRCodeOpen] = useState(true);
 
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
   const { id } = useParams<EditCategoryParams>();
   const history = useHistory();
+  const { user } = useAuth();
 
   useEffect(() => {
-    api.get(`/equipaments/details/${id}`).then(response => {
-      setEquipament(response.data);
-    });
-
-    api.get(`/preventives/equipament/${id}`).then(response => {
-      setPreventives(response.data);
+    api.get(`/preventives/details/${id}`).then(response => {
+      setJobs(response.data);
     });
   }, [id]);
 
@@ -182,82 +184,33 @@ export default function EquipamentsDetails() {
     <GlobalDashContainer>
       <NavigationBar />
       <S.ContainerEquipaments>
-        <S.HeaderEquipament>
-          <S.GalleryEquipament>
-            <ImageGallery items={images} />
-          </S.GalleryEquipament>
-          <S.EquipamentDetails>
-            <S.EquipamentTitle>{equipament?.name}</S.EquipamentTitle>
-            <S.EquipamentDescription>{equipament?.description ? equipament.description : `Sem descrição`}</S.EquipamentDescription>
-            <S.ResumeEquipament>
-              <S.ResumeInfo>
-                <h1>{equipament?.brand.name}</h1>
-                <span>Marca</span>
-              </S.ResumeInfo>
-              <S.ResumeInfo>
-                <h1>86</h1>
-                <span>dias sem corretivas</span>
-              </S.ResumeInfo>
-              <S.ResumeInfo>
-                <h1>12</h1>
-                <span>preventivas executadas</span>
-              </S.ResumeInfo>
-            </S.ResumeEquipament>
-            <S.ResumeContainer>
-              <S.CardInfoHightlight>
-                <span>Expiração</span>
-                <p>
-                  {!equipament?.dateOfExpiration
-                    ? 'Não monitorado'
-                    : equipament && equipament?.dateOfExpiration && format(parseISO(equipament?.dateOfExpiration), 'dd MMMM yyyy', { locale: ptBR })}
-                </p>
-              </S.CardInfoHightlight>
-            </S.ResumeContainer>
-          </S.EquipamentDetails>
-        </S.HeaderEquipament>
-        <S.ButtonContainer>
-          <div style={{ flex: '1' }}>
-            <Button minimal onClick={() => history.goBack()}>
-              Voltar
-            </Button>
-          </div>
-          <Button customColor="#24A3FF">Relatório</Button>
-          <Button customColor="#28C76F" onClick={handleOpenMonitoringModal}>
-            Monitorar
+        <S.HeaderTitle>
+          <Button minimal onClick={() => () => history.goBack()}>
+            Voltar
           </Button>
-          <Button>QR CODE</Button>
-          <Button customColor="#FF787A" onClick={() => history.push(`actions/new/${equipament?.category.id}`)}>
-            Iniciar Ação
-          </Button>
-        </S.ButtonContainer>
-      </S.ContainerEquipaments>
-      <S.ContainerEquipaments>
-        <Header title="Preventivas" description="Listagem completa de todas as preventivas executadas no equipamento" />
+          <b>Ação</b> #{jobs && jobs[0].id} - <b>{jobs && jobs[0].preventive.isCorrective ? `Corretiva` : `Preventiva`}</b>
+        </S.HeaderTitle>
         <StyledTable>
           <table>
             <thead>
               <tr>
-                <th>Data de execução</th>
-                <th>Tipo</th>
-                <th>Realizado por</th>
-                <th>Ações</th>
+                <th>Procedimento</th>
+                <th>Suprimento</th>
+                <th>Custo</th>
               </tr>
             </thead>
             <tbody>
-              {preventives?.map(preventive => (
-                <tr key={preventive.id}>
-                  <td>{format(parseISO(preventive.created_at), " dd 'de' MMMM'")}</td>
-                  <td>{preventive.isCorrective ? 'Corretiva' : 'Preventiva'}</td>
-                  <td>{preventive.equipament.technician.name}</td>
-                  <td>
-                    <Link to={`preventive/${preventive.id}`}>Ver detalhes</Link>
-                  </td>
+              {jobs?.map(job => (
+                <tr key={job.id}>
+                  <td>{job.job.name}</td>
+                  <td>{job.job.supply.name}</td>
+                  <td>{job.job.supply.pricePerJob}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           <section>
-            <span>Preventivas executadas nesse equipamento</span>
+            <span>Detalhes da Ações</span>
           </section>
         </StyledTable>
       </S.ContainerEquipaments>
@@ -275,14 +228,6 @@ export default function EquipamentsDetails() {
         description={modalDescription}
         type={modalType}
         isOpen={isNewTConfirmationModalOpen}
-        onRequestCancel={() => handleCloseConfirmationModal()}
-        buttons={butonsOption}
-      />
-      <QRCodeModal
-        title={modalTitle}
-        description={modalDescription}
-        type={modalType}
-        isOpen={isModalQRCodeOpen}
         onRequestCancel={() => handleCloseConfirmationModal()}
         buttons={butonsOption}
       />

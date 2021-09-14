@@ -5,7 +5,6 @@ export const StyledTable = styled.div`
     background-color: #e5e5e5;
     display: flex;
     flex-direction: column;
-    margin-left: 16px;
     border-radius: ${theme.border.radius};
     background-color: #ffffff;
 

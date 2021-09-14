@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from 'styled-components/macro';
 
 export const Container = styled.div`
   display: flex;
@@ -24,9 +24,7 @@ export const Navbar = styled.div`
   }
 `;
 
-export const Userdiv = styled.div`
-  background-color: red;
-`;
+export const Userdiv = styled.div``;
 
 export const DashBoardContent = styled.div`
   margin-left: 340px;

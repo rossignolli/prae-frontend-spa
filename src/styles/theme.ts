@@ -37,7 +37,6 @@ export default {
     backgroundBlue: '#F5F5FA',
     green: '#04D361',
     yellow: '#FFB167',
-
     grayBorder: '#E1E1E5',
     bodyText: '#A6A1B2',
   },
