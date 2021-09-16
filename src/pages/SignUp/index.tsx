@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import InputTextField from '../../components/TextField';
 import Button from '../../components/Button';
+import { Helmet } from 'react-helmet';
 
 export default function SignUpPage() {
   const { signIn } = useAuth();
@@ -41,9 +42,25 @@ export default function SignUpPage() {
 
   return (
     <S.Container>
+      <Helmet>
+        <title>Prae - Registrar</title>
+        <meta property="og:title" content="Prae - Gerencia seus assets com inteligência" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://cdn.discordapp.com/attachments/393816255993479179/887888085256388658/unknown.png" />
+        <meta property="og:url" content="https://prae.vigarani.dev/" />
+      </Helmet>
       <S.Content>
         <img src={logo} alt="Prae logo" />
         <S.Form onSubmit={handleSubmit}>
+          <InputTextField
+            name="name"
+            label="Nome"
+            type="email"
+            value={values.login}
+            errorMesage={touched.login && errors.login ? errors.login : false}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          />
           <InputTextField
             name="login"
             label="E-mail"

@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import InputTextField from '../../components/TextField';
 import Button from '../../components/Button';
+import { Helmet } from 'react-helmet';
 
 export default function SigninPage() {
   const { signIn } = useAuth();
@@ -39,6 +40,13 @@ export default function SigninPage() {
 
   return (
     <S.Container>
+      <Helmet>
+        <title>Prae - Login</title>
+        <meta property="og:title" content="Prae - Gerencia seus assets com inteligência" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://cdn.discordapp.com/attachments/393816255993479179/887888085256388658/unknown.png" />
+        <meta property="og:url" content="https://prae.vigarani.dev/" />
+      </Helmet>
       <S.ADBIG></S.ADBIG>
       <S.Content>
         <img src={logo} alt="Prae logo" />
