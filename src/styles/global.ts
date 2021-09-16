@@ -1,13 +1,13 @@
-import { createGlobalStyle, css } from "styled-components";
-import reset from "styled-reset";
-import theme from "./theme";
+import { createGlobalStyle, css } from 'styled-components';
+import reset from 'styled-reset';
+import theme from './theme';
 
 export default createGlobalStyle`
 
 ${reset}
 
 body{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: ${theme.colors.backgroundBlue};
     height: 100vh; 
     font-size: 1.6rem;
@@ -23,7 +23,7 @@ button {
 
 input{
     box-sizing:border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 16px;
     color: #707479;
     } 

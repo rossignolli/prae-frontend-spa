@@ -114,7 +114,7 @@ export default function EquipamentsDetails() {
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
-  const [isModalQRCodeOpen, setIsModalQRCodeOpen] = useState(true);
+  const [isModalQRCodeOpen, setIsModalQRCodeOpen] = useState(false);
 
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
   const { id } = useParams<EditCategoryParams>();

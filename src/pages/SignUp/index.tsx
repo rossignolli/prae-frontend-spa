@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import InputTextField from '../../components/TextField';
 import Button from '../../components/Button';
 
-export default function SigninPage() {
+export default function SignUpPage() {
   const { signIn } = useAuth();
   const history = useHistory();
 
@@ -15,6 +15,8 @@ export default function SigninPage() {
     initialValues: {
       login: '',
       password: '',
+      passwordvalidation: '',
+      code: '',
       invalidlogin: '',
     },
     validationSchema: Yup.object({
@@ -39,7 +41,6 @@ export default function SigninPage() {
 
   return (
     <S.Container>
-      <S.ADBIG></S.ADBIG>
       <S.Content>
         <img src={logo} alt="Prae logo" />
         <S.Form onSubmit={handleSubmit}>
@@ -61,18 +62,32 @@ export default function SigninPage() {
             onBlur={handleBlur}
             onChange={handleChange}
           />
+          <InputTextField
+            name="passwordvalidation"
+            label="Confirme sua senha"
+            type="password"
+            value={values.password}
+            errorMesage={touched.password && errors.password ? errors.password : false}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          />
+          <InputTextField
+            name="login"
+            label="Código de identificação"
+            type="number"
+            value={values.login}
+            errorMesage={touched.login && errors.login ? errors.login : false}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          />
           <Button type="submit"> Entrar</Button>
-
+          <Button minimal type="button">
+            <Link to={'/'}>Voltar</Link>
+          </Button>
           <h3>{errors?.invalidlogin}</h3>
-
-          <S.SignUpHintContainer>
-            <span>Não possui conta?</span>
-            <Link to={'/signup'}>
-              <h1>Solicitar Conta</h1>
-            </Link>
-          </S.SignUpHintContainer>
         </S.Form>
       </S.Content>
+      <S.ADBIG />
     </S.Container>
   );
 }

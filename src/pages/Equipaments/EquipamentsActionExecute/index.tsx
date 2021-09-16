@@ -58,15 +58,29 @@ interface Jobs {
   };
 }
 
+interface JobExecution {
+  id: string;
+  name: string;
+  created_at: Date;
+  description: string;
+  monitor: boolean;
+  dateOfExpiration: string;
+  updated_at: Date;
+  supply: {
+    name: string;
+    pricePerJob: string;
+  };
+}
+
 export default function EquipamentsPreventiveExecute() {
-  const [equipament, setEquipament] = useState<Jobs>();
-  const [jobs, setJobs] = useState<Jobs[]>();
+  const [jobs, setJobs] = useState<Jobs[]>([]);
+  const [jobsExecution, setJobsExecution] = useState<JobExecution[]>([]);
+
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
-
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
   const { id } = useParams<EditCategoryParams>();
   const history = useHistory();
@@ -78,52 +92,8 @@ export default function EquipamentsPreventiveExecute() {
     });
   }, [id]);
 
-  function handleCloseConfirmationModalMonitoring() {
-    setIsConfirmationMonitorModalOpen(false);
-  }
-
-  function handleCloseConfirmationModal() {
-    setIsNewTConfirmationModalOpen(false);
-  }
-
-  function handleOpenMonitoringModal() {
-    if (equipament?.monitor) {
-      setModalTitle('Aviso');
-      setModalDescription('Esse equipamento já está sendo monitorado.');
-      setModalType('warning');
-      setButtonsOption(false);
-      setIsNewTConfirmationModalOpen(true);
-      return;
-    }
-
-    setIsConfirmationMonitorModalOpen(true);
-  }
-
-  async function handleStarMonitoringEquipament(date: string) {
-    const MonitoringDate = {
-      date,
-    };
-    const response = await api.post(`preventives/monitor/${id}`, MonitoringDate);
-
-    if (response.status !== 200) {
-      setModalTitle('Ops... Algo deu errado.');
-      setModalDescription('Tente novamente mais tarde');
-      setModalType('error');
-      setButtonsOption(false);
-      setIsNewTConfirmationModalOpen(true);
-      return;
-    }
-
-    if (equipament) {
-      setEquipament({ ...equipament, monitor: true, dateOfExpiration: date });
-    }
-
-    setModalTitle('Sucesso.');
-    setModalDescription('Equipamento está sendo monitorado.');
-    setModalType('sucess');
-    setButtonsOption(false);
-    setIsConfirmationMonitorModalOpen(false);
-    setIsNewTConfirmationModalOpen(true);
+  function AddJobToExecution(job: Jobs) {
+    setJobsExecution([...jobsExecution, job]);
   }
 
   return (
@@ -144,13 +114,13 @@ export default function EquipamentsPreventiveExecute() {
               </tr>
             </thead>
             <tbody>
-              {jobs?.map(job => (
+              {jobs?.map((job, index) => (
                 <tr key={job.id}>
                   <td>{job.name}</td>
                   <td>{job.supply.name}</td>
                   <td>{job.supply.pricePerJob}</td>
                   <td>
-                    <AiOutlinePlusCircle />
+                    <AiOutlinePlusCircle onClick={() => AddJobToExecution(jobs[index])} />
                   </td>
                 </tr>
               ))}
@@ -176,7 +146,7 @@ export default function EquipamentsPreventiveExecute() {
               </tr>
             </thead>
             <tbody>
-              {jobs?.map(job => (
+              {jobsExecution?.map(job => (
                 <tr key={job.id}>
                   <td>{job.name}</td>
                   <td>{job.supply.name}</td>
@@ -193,21 +163,13 @@ export default function EquipamentsPreventiveExecute() {
           </section>
         </StyledTable>
       </S.ContainerEquipaments>
-      <SelectDateMonitorModal
-        title={modalTitle}
-        description={modalDescription}
-        type={modalType}
-        isOpen={isConfirmationMonitorModalOpen}
-        onRequestCancel={() => handleCloseConfirmationModalMonitoring()}
-        onRequestConfirmation={date => handleStarMonitoringEquipament(date)}
-        buttons={butonsOption}
-      />
+
       <ConfirmationModal
         title={modalTitle}
         description={modalDescription}
         type={modalType}
         isOpen={isNewTConfirmationModalOpen}
-        onRequestCancel={() => handleCloseConfirmationModal()}
+        onRequestCancel={() => null}
         buttons={butonsOption}
       />
     </GlobalDashContainer>

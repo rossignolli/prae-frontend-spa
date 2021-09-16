@@ -28,10 +28,13 @@ import BrandNew from '../pages/Brands/BrandNew';
 import BrandEdit from '../pages/Brands/BrandEdit';
 
 import Route from './Route';
+import SignUpPage from '../pages/SignUp';
 export default function Supplies() {
   return (
     <Switch>
       <Route path="/" exact component={Signin} />
+      <Route path="/signup" exact component={SignUpPage} />
+
       {/* <Route path="/signup" component={Signup} /> */}
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/equipaments" exact component={Equipaments} isPrivate />
