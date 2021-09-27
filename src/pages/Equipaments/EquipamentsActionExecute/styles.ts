@@ -5,11 +5,6 @@ export const ContainerPreventive = styled.div`
   flex-direction: column;
 `;
 
-export const ResumeEquipament = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
 export const UserdivContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,7 +18,6 @@ export const UserdivContainer = styled.div`
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 16px;
   }
 `;
 
@@ -35,17 +29,30 @@ export const CardInfoHightlight = styled.div`
     align-items: center;
     border-radius: 15px;
 
-    span {
-      color: ${theme.colors.primary};
-      font-weight: ${theme.font.bold};
-    }
-
     p {
       margin-top: ${theme.spacings.xxsmall};
       padding: ${theme.spacings.xsmall};
       border-radius: 15px;
       border: solid 2px ${theme.colors.backgroundBlue};
       width: 100%;
+    }
+  `}
+`;
+
+export const HeaderTitle = styled.span`
+  ${({ theme }) => css`
+    margin-bottom: ${theme.spacings.xsmall};
+    margin-top: ${theme.spacings.xsmall};
+    margin-right: ${theme.spacings.xsmall};
+    color: ${theme.colors.bodyText};
+
+    b {
+      margin-left: ${theme.spacings.xsmall};
+      color: ${theme.colors.primary};
+      font-weight: ${theme.font.bold};
+    }
+    p {
+      color: ${theme.colors.bodyText};
     }
   `}
 `;
@@ -126,10 +133,6 @@ export const ResumeInfo = styled.div`
       font-size: ${theme.font.sizes.xxlarge};
       color: ${theme.colors.heading};
     }
-    span {
-      font-size: ${theme.font.sizes.small};
-      color: ${theme.colors.bodyText};
-    }
   `}
 `;
 
@@ -158,39 +161,19 @@ export const ResumeContainer = styled.div`
   `}
 `;
 
-export const ButtonContainer = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-
-    button + button {
-      padding: ${theme.spacings.xsmall};
-      margin-left: ${theme.spacings.xsmall};
-    }
-  `}
-`;
-
 export const ResumeActions = styled.div`
   ${({ theme }) => css`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: end;
     align-items: center;
+    padding: ${theme.spacings.xsmall};
+
     width: 100%;
-    span {
-      margin-bottom: ${theme.spacings.xxsmall};
-    }
-  `}
-`;
 
-export const HeaderTitle = styled.span`
-  ${({ theme }) => css`
-    margin-bottom: ${theme.spacings.xsmall};
-    color: ${theme.colors.bodyText};
-
-    b {
-      margin-left: ${theme.spacings.xsmall};
-      color: ${theme.colors.primary};
-      font-weight: ${theme.font.bold};
+    button {
+      margin-right: ${theme.spacings.xsmall};
     }
   `}
 `;

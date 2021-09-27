@@ -20,5 +20,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [ "**/*.ts", "**/*.tsx", "src/components/SelectField/index.tsxx"]
+  "include": [ "**/*.ts", "**/*.tsx", "src/components/SelectField/index.tsxx", "src/pages/Dashboard/index.js"]
 }

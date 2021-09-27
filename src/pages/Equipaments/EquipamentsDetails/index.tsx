@@ -68,41 +68,28 @@ interface Equipament {
 
 const images = [
   {
-    original: 'http://localhost:3333/files/0b50de5f4aae8ebf9858-760148446251347.jpeg',
+    original: 'https://img.olx.com.br/images/92/929193801690748.jpg',
     originalWidth: 250,
     originalHeight: 250,
-    thumbnail: 'http://localhost:3333/files/0b50de5f4aae8ebf9858-760148446251347.jpeg',
+    thumbnail: 'https://img.olx.com.br/images/92/929193801690748.jpg',
   },
   {
-    original: 'http://localhost:3333/files/daa5bda676f87d904d47-762130207961785.jpeg',
+    original: 'https://img.olx.com.br/images/92/924123327343916.jpg',
     originalWidth: 250,
     originalHeight: 250,
-    thumbnail: 'http://localhost:3333/files/daa5bda676f87d904d47-762130207961785.jpeg',
+    thumbnail: 'https://img.olx.com.br/images/92/924123327343916.jpg',
   },
   {
-    original: 'http://localhost:3333/files/be29c49654b49f9d11f9-763128805964384.jpeg',
+    original: 'https://img.olx.com.br/images/92/923124808687582.jpg',
     originalWidth: 250,
     originalHeight: 250,
-    thumbnail: 'http://localhost:3333/files/be29c49654b49f9d11f9-763128805964384.jpeg',
+    thumbnail: 'https://img.olx.com.br/images/92/923124808687582.jpg',
   },
   {
-    original: 'http://localhost:3333/files/258da99226c2a204dfe8-764140683729824.jpeg',
+    original: 'https://img.olx.com.br/images/92/924123327343916.jpg',
     originalWidth: 250,
     originalHeight: 250,
-    thumbnail: 'http://localhost:3333/files/258da99226c2a204dfe8-764140683729824.jpeg',
-  },
-  {
-    original: 'http://localhost:3333/files/ee2fc3a6091764ecec60-765186449538074.jpeg',
-    originalWidth: 250,
-    originalHeight: 250,
-
-    thumbnail: 'http://localhost:3333/files/ee2fc3a6091764ecec60-765186449538074.jpeg',
-  },
-  {
-    original: 'http://localhost:3333/files/c5e834a04d4e020e268f-769109686298883.jpeg',
-    originalWidth: 250,
-    originalHeight: 250,
-    thumbnail: 'http://localhost:3333/files/c5e834a04d4e020e268f-769109686298883.jpeg',
+    thumbnail: 'https://img.olx.com.br/images/92/924123327343916.jpg',
   },
 ];
 

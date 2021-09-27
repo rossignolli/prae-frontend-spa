@@ -1,6 +1,6 @@
-import { NavLink } from "react-router-dom";
-import styled, { css } from "styled-components/macro";
-import media from "styled-media-query";
+import { NavLink } from 'react-router-dom';
+import styled, { css } from 'styled-components/macro';
+import media from 'styled-media-query';
 
 interface ContainerProps {
   isOpen: boolean;
@@ -11,13 +11,13 @@ export const Container = styled.div<ContainerProps>`
     display: flex;
     justify-items: center;
     position: fixed;
-    left: ${isOpen ? "0" : "-360px"};
+    left: ${isOpen ? '0' : '-360px'};
     top: 0;
     transition: left 0.3s ease;
     height: 100%;
     z-index: 99;
 
-    ${media.greaterThan("large")`
+    ${media.greaterThan('large')`
       left: 0;
     `}
   `}
@@ -82,18 +82,14 @@ export const MobileContainer = styled.div`
 
 export const Userdiv = styled.div`
   ${({ theme }) => css`
-    border: 1px solid ${theme.colors.grayBorder};
-
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 70px;
-    margin-bottom: 60px;
+    height: 80px;
     width: 270px;
-    height: 73px;
-    border-radius: 15px;
-
     padding: 10px;
+
+    margin-bottom: ${theme.spacings.xsmall};
 
     img {
       width: 60px;
@@ -130,6 +126,42 @@ export const Userdiv = styled.div`
   `}
 `;
 
+interface NavBarActionProps {
+  isOpen: boolean;
+}
+
+export const MenuHolder = styled.div<NavBarActionProps>`
+  ${({ theme, isOpen }) => css`
+    border: 1px solid ${theme.colors.grayBorder};
+    margin-top: ${theme.spacings.xsmall};
+    margin-bottom: ${theme.spacings.xsmall};
+    transition: all 1s ease;
+
+    height: 80px;
+    border-radius: 15px;
+    overflow: hidden;
+
+    span {
+      display: flex;
+      margin-left: ${theme.spacings.xsmall};
+      cursor: pointer;
+      svg {
+        margin-right: ${theme.spacings.xxsmall};
+      }
+
+      :hover {
+        color: ${theme.colors.primary};
+      }
+    }
+
+    ${() =>
+      isOpen &&
+      css`
+        height: 200px;
+      `}
+  `}
+`;
+
 export const TitleMenu = styled.h3`
   ${({ theme }) => css`
     font-size: ${theme.font.sizes.xsmall};
@@ -139,7 +171,7 @@ export const TitleMenu = styled.h3`
   `}
 `;
 
-const activeClassName = "active";
+const activeClassName = 'active';
 export const StyledNavLink = styled(NavLink).attrs({
   activeClassName: activeClassName,
 })`

@@ -185,6 +185,8 @@ export const ResumeActions = styled.div`
 export const HeaderTitle = styled.span`
   ${({ theme }) => css`
     margin-bottom: ${theme.spacings.xsmall};
+    margin-top: ${theme.spacings.xsmall};
+
     color: ${theme.colors.bodyText};
 
     b {

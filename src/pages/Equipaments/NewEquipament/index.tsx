@@ -232,6 +232,9 @@ export default function NewEquipament() {
             </S.ImageContainer>
             <InputImageFile name="file" label="Critico" onChange={handleSelectImages} />
             <S.ButtonHolder>
+              <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
+                Voltar
+              </Button>
               <Button type="submit">Adicionar</Button>
             </S.ButtonHolder>
           </form>

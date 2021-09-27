@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from "react";
-import {
-  FiAlertTriangle,
-  FiAlignLeft,
-  FiBarChart,
-  FiBell,
-  FiDelete,
-  FiEdit2,
-  FiHardDrive,
-  FiPlus,
-} from "react-icons/fi";
-import { AiOutlineDelete } from "react-icons/ai";
+import React, { useEffect, useState } from 'react';
+import { FiAlertTriangle, FiAlignLeft, FiBarChart, FiBell, FiDelete, FiEdit2, FiHardDrive, FiPlus } from 'react-icons/fi';
+import { AiOutlineDelete } from 'react-icons/ai';
 
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from 'react-router-dom';
 
-import manProfile from "../../assets/temp_assets/man-profile.png";
-import NavigationBar from "../../components/Navbar";
+import manProfile from '../../assets/temp_assets/man-profile.png';
+import NavigationBar from '../../components/Navbar';
 
 // import { useAuth } from '../../hooks/AuthContext';
 
-import api from "../../services/api";
-import { HeadersContents } from "../../pages/Dashboard/styles";
-import { CategoryContent, Container } from "./styles";
+import api from '../../services/api';
+import { CategoryContent, Container } from './styles';
 
 interface Categories {
   id: string;
@@ -43,7 +33,7 @@ const Jobs: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    api.get(`/jobs`).then((response) => {
+    api.get(`/jobs`).then(response => {
       setEquipaments(response.data);
     });
   }, []);
@@ -68,10 +58,10 @@ const Jobs: React.FC = () => {
             <th>Suprimentos</th>
             <th>Ações</th>
           </tr>
-          {equipaments?.map((equipament) => (
+          {equipaments?.map(equipament => (
             <tr key={equipament.id}>
               <td>
-                {" "}
+                {' '}
                 <input type="checkbox" /> {equipament.name}
               </td>
               <td>{equipament.description}</td>

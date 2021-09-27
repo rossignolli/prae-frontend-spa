@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import manProfile from '../../../assets/temp_assets/man-profile.png';
@@ -7,27 +8,30 @@ import api from '../../../services/api';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { StyledTable } from '../../../components/StyledTable/styles';
-import * as S from './styles';
+import * as S from '../../Categories/CategoryList/styles';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
-import { ActionHolderContainer, DescriptionEmpty, EmptyState, TitleEmpty } from './styles';
+
 import Button from '../../../components/Button';
-import { FiFileText } from 'react-icons/fi';
+import { FiFolder } from 'react-icons/fi';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
-interface Categories {
+interface Supplies {
   id: string;
   name: string;
-  created_at: Date;
-  description: string;
-  updated_at: Date;
+  supply: {
+    pricePerJob: string;
+  };
+  category: {
+    name: string;
+  };
 }
 
-export default function Category() {
-  const [category, setCategory] = useState<Categories[] | undefined>();
-  const [categoryDefault, setCategoryDefault] = useState<Categories[]>();
+export default function JobList() {
+  const [category, setCategory] = useState<Supplies[] | undefined>();
+  const [categoryDefault, setCategoryDefault] = useState<Supplies[]>();
 
   const [modalTitle, setModalTitle] = useState('');
   const [modalDescription, setModalDescription] = useState('');
@@ -37,7 +41,6 @@ export default function Category() {
   const history = useHistory();
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('warning');
   const [currentPage, setCurrentPage] = useState(1);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [issuesPerPage, setIssuesPerPage] = useState(8);
 
   const IndexOfLastPost = currentPage * issuesPerPage;
@@ -48,7 +51,7 @@ export default function Category() {
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
 
   useEffect(() => {
-    api.get(`/brands`).then(response => {
+    api.get(`/jobs`).then(response => {
       setCategory(response.data);
       setCategoryDefault(response.data);
     });
@@ -60,9 +63,9 @@ export default function Category() {
     setIsNewTConfirmationModalOpen(true);
   }
   async function handleConfimedDeletedAction() {
-    const response = await api.delete(`brands/${selectedCategory}`);
+    const response = await api.delete(`jobs/${selectedCategory}`);
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       setModalTitle('Ops... Algo deu errado.');
       setModalDescription('Tente novamente mais tarde');
       setModalType('error');
@@ -109,16 +112,16 @@ export default function Category() {
         <SkeletonTheme color="#FFFF" highlightColor="#e6e1e139" />
         {!category ? (
           <>
-            <ActionHolderContainer>
+            <S.ActionHolderContainer>
               <Skeleton duration={0.5} width={140} count={3} height={40} style={{ borderRadius: `15px`, marginRight: `10px` }} />
-            </ActionHolderContainer>
+            </S.ActionHolderContainer>
             <StyledTable>
               <>
                 <table>
                   <thead>
                     <tr>
                       <th>Nome</th>
-                      <th>Descrição</th>
+                      <th>Preço</th>
                       <th>Criado por</th>
                     </tr>
                   </thead>
@@ -192,7 +195,7 @@ export default function Category() {
                   </tbody>
                 </table>
                 <section>
-                  <span>Categorias cadastradas na base de dados</span>
+                  <span>Suprimentos cadastradas na base de dados</span>
                 </section>
               </>
             </StyledTable>
@@ -200,14 +203,14 @@ export default function Category() {
           </>
         ) : (
           <>
-            <ActionHolderContainer>
+            <S.ActionHolderContainer>
               <InputSearchBar name="search" placeholder="Pesquisar" value={input} onChange={updateInput} />
               <Button minimal customColor="#FFFFFF" onClick={() => history.push(`dashboard`)}>
                 Voltar
               </Button>
               <Button customColor="#FFFFFF">Gerar Relatório</Button>
-              <Button onClick={() => history.push(`/category/new`)}>Adicionar Marca</Button>
-            </ActionHolderContainer>
+              <Button onClick={() => history.push(`/job/new`)}>Adicionar Procedimento</Button>
+            </S.ActionHolderContainer>
             <StyledTable>
               {category.length > 0 ? (
                 <>
@@ -215,14 +218,17 @@ export default function Category() {
                     <thead>
                       <tr>
                         <th>Nome</th>
-
+                        <th>Categoria</th>
+                        <th>Preço</th>
                         <th>Criado por</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentCategories?.map(category => (
-                        <tr key={category.id}>
-                          <td>{category.name}</td>
+                      {currentCategories?.map(job => (
+                        <tr key={job.id}>
+                          <td>{job.name}</td>
+                          <td>{job.category.name}</td>
+                          <td>R$ {job.supply.pricePerJob}</td>
                           <td>
                             <img src={manProfile} alt="" />
                             Vitor Rossignolli
@@ -233,12 +239,12 @@ export default function Category() {
                                 </MenuButton>
                               }>
                               <MenuItem>
-                                <Link to={`category/edit/${category.id}`}>Editar</Link>
+                                <Link to={`supply/edit/${job.id}`}>Editar</Link>
                               </MenuItem>
                               <MenuItem
                                 onClick={() => {
                                   handleDeleteAction();
-                                  setSelectedCategory(category.id);
+                                  setSelectedCategory(job.id);
                                 }}>
                                 Excluir
                               </MenuItem>
@@ -249,18 +255,18 @@ export default function Category() {
                     </tbody>
                   </table>
                   <section>
-                    <span>Marcas cadastradas na base de dados</span>
+                    <span>Procedimentos cadastradas na base de dados</span>
                   </section>
                 </>
               ) : (
-                <EmptyState>
-                  <FiFileText size={82} color={`#8257e5`} />
-                  <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
-                  <DescriptionEmpty>
-                    {input ? `Nao encontramos nenhuma marca relacionada com a sua busca` : `Você não possui marcas cadastradas no sistemas.`}
-                  </DescriptionEmpty>
-                  <Button onClick={() => history.push(`/category/new`)}>Adicionar Marca</Button>
-                </EmptyState>
+                <S.EmptyState>
+                  <FiFolder size={82} color={`#8257e5`} />
+                  <S.TitleEmpty>Nada para mostrar aqui.</S.TitleEmpty>
+                  <S.DescriptionEmpty>
+                    {input ? `Nao encontramos nenhum suprimentos relacionada com a sua busca` : `Você não possui suprimentos cadastradas no sistemas.`}
+                  </S.DescriptionEmpty>
+                  <Button onClick={() => history.push(`/job/new`)}>Adicionar Procedimento</Button>
+                </S.EmptyState>
               )}
             </StyledTable>
             <S.PaginationContainer>

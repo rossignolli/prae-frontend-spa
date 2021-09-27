@@ -1,101 +1,69 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components';
+import media from 'styled-media-query';
 
-export const Container = styled.div`
-  display: flex;
-  height: 100%;
-  background-color: #e1e1e5;
-  flex-direction: column;
+export const EquipamentsContainer = styled.div`
+  ${({ theme }) => css`
+    grid-area: Resume-Equipaments;
+    padding: ${theme.spacings.xsmall};
+  `}
 `;
 
-export const Navbar = styled.div`
-  img {
-    width: 192px;
-  }
-
-  display: flex;
-  flex-direction: column;
-  width: 320px;
-  background-color: #ffffff;
-
-  a {
-    text-decoration: none;
-    text-decoration-style: none;
-    color: #717478;
-  }
+export const TitleSection = styled.h1`
+  ${({ theme }) => css`
+    color: ${theme.colors.heading};
+    margin-bottom: ${theme.spacings.xsmall};
+    font-weight: ${theme.font.bold};
+    font-size: ${theme.font.sizes.large};
+  `}
 `;
 
-export const Userdiv = styled.div``;
-
-export const DashBoardContent = styled.div`
-  margin-left: 340px;
-  margin-top: 40px;
-  background-color: #e5e5e5;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-area: auto;
-  grid-gap: 10px;
-  justify-items: center;
-  height: 100vh;
-
-  @media screen and (max-width: 800px) {
-    margin-left: 20px;
-  }
+export const SubTitleSection = styled.span`
+  ${({ theme }) => css`
+      color: ${theme.colors.bodyText};
+      font-size: ${theme.font.sizes.small};
+      margin-bottom: ${theme.spacings.xsmall};
+    }
+  `}
 `;
 
-export const HeadersContents = styled.div`
-  display: flex;
-  margin-left: 320px;
-  height: 100%;
-  margin-top: 20px;
-  background-color: #e5e5e5;
-  padding: 20px;
-  align-items: center;
+export const DataCardsContainer = styled.div`
+  ${({ theme }) => css`
+    padding: ${theme.spacings.xsmall};
+    grid-area: Chart;
+  `}
+`;
 
-  div:first-of-type {
+export const DataCardsInsideContainer = styled.div`
+  ${({ theme }) => css`
     display: flex;
-    align-items: center;
-    flex: 1;
-    h3 {
-      color: black;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 22px;
-      margin-left: 20px;
-    }
-  }
+    ${media.lessThan('medium')`
+  flex-wrap: wrap;
+  `}
+  `}
+`;
 
-  a {
-    text-decoration: none;
-    position: relative;
-    display: inline-block;
-    border-radius: 2px;
-    margin-right: 35px;
+export const ChartContainer = styled.div`
+  ${({ theme }) => css`
+    padding: ${theme.spacings.xsmall};
+    max-width: 580px;
+  `}
+`;
 
-    span {
-      display: none;
-      position: absolute;
-      top: -16px;
-      right: -14px;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 7px 10px;
-      border-radius: 50%;
-      background: #ea5455;
-      color: white;
-    }
-
-    @media screen and (max-width: 800px) {
-      margin-left: 10px;
-      margin-right: 5px;
-    }
-
-    @media screen and (max-width: 300px) {
-      display: none;
-    }
-  }
-
-  @media screen and (max-width: 800px) {
-    margin-left: 0px;
-  }
+export const ContainerDash = styled.div`
+  ${({ theme }) => css`
+    margin-top: ${theme.spacings.medium};
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 20px 20px;
+    grid-template-areas: 'Resume-Equipaments Chart';
+    ${media.lessThan('medium')`
+    grid-template-columns: 1fr ;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+      'Resume-Equipaments'
+      'Chart '
+      'Chart';
+  `};
+  `}
 `;

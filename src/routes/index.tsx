@@ -26,6 +26,10 @@ import SupplyEdit from '../pages/Supplies/SupplyEdit';
 import Brand from '../pages/Brands/BrandsList';
 import BrandNew from '../pages/Brands/BrandNew';
 import BrandEdit from '../pages/Brands/BrandEdit';
+// * jobs ROUTES */
+import Jobs from '../pages/Jobs/JobsList';
+import JobNew from '../pages/Jobs/JobsNew';
+import JobEdit from '../pages/Jobs/JobsEdit';
 
 import Route from './Route';
 import SignUpPage from '../pages/SignUp';
@@ -42,7 +46,6 @@ export default function Supplies() {
       <Route path="/equipaments/details/:id" exact component={EquipamentsDetails} isPrivate />
       <Route path="/equipaments/details/preventive/:id" exact component={EquipamentsDetailsPreventive} isPrivate />
       <Route path="/equipaments/details/actions/new/:id" exact component={EquipamentsDetailsPreventiveAction} isPrivate />
-
       {/* CATEGORY ROUTES */}
       <Route path="/category" exact component={Category} isPrivate />
       <Route path="/category/new" exact component={CategoryCreate} isPrivate />
@@ -55,6 +58,10 @@ export default function Supplies() {
       <Route path="/brands" exact component={Brand} isPrivate />
       <Route path="/brands/new" exact component={BrandNew} isPrivate />
       <Route path="/brands/edit/:id" exact component={BrandEdit} isPrivate />
+      {/* JOBS ROUTES */}
+      <Route path="/job" exact component={Jobs} isPrivate />
+      <Route path="/job/new" exact component={JobNew} isPrivate />
+      <Route path="/job/edit/:id" exact component={JobEdit} isPrivate />
 
       {/* <Route path="/preventives" exact component={Preventive} isPrivate />
       <Route
