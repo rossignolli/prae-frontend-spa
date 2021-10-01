@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
+import signInBackgroundImg from '../../assets/temp_assets/girlit.jpg';
 
-import signInBackgroundImg from '../../assets/temp_assets/girlholdingcoffe.jpg';
 export const Container = styled.div`
   ${({ theme }) => css`
     display: flex;
@@ -70,17 +70,6 @@ export const Form = styled.form`
     h3 {
       color: ${theme.colors.red};
     }
-
-    h2 {
-      margin-top: ${theme.spacings.xsmall};
-      text-align: center;
-      color: ${theme.colors.heading};
-      font-weight: ${theme.font.bold};
-
-      a {
-        color: inherit;
-      }
-    }
   `}
 `;
 
@@ -90,6 +79,27 @@ export const SignUpHintContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin-top: ${theme.spacings.xxsmall};
+
+    h1 {
+      margin-top: ${theme.spacings.xxsmall};
+      color: ${theme.colors.primary};
+      font: ${theme.font.bold};
+    }
+  `}
+`;
+
+export const EmailSucess = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: ${theme.spacings.xsmall};
+    margin: ${theme.spacings.xxsmall};
+    border-radius: ${theme.border.radius};
+    text-align: center;
+    border-style: 2px solid red;
+    background-color: #c1f8d9;
+    color: #28c76f;
 
     h1 {
       margin-top: ${theme.spacings.xxsmall};

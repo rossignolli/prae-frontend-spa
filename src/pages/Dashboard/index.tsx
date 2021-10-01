@@ -4,13 +4,41 @@ import * as S from './styles';
 import CardData from '../../components/CardData';
 import Chart from 'react-apexcharts';
 import CardEquipament from '../../components/CardEquipament';
-import { FiMonitor, FiTool, FiUsers } from 'react-icons/fi';
+import { FiMonitor, FiUsers } from 'react-icons/fi';
 import { MdLibraryBooks } from 'react-icons/md';
-import AvatarEditor from 'react-avatar-editor';
-import Profile from '../../assets/temp_assets/profile.png';
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
+
+interface HomeData {
+  equipamentsTotal: number;
+  preventiveTotal: number;
+  brandTotal: number;
+  userTotal: number;
+  percentage: {
+    operational: number;
+    expired: number;
+    notBeingMonitored: number;
+  };
+  equipaments: Array<{
+    id: string;
+    name: string;
+    status: 'expired' | 'running' | 'expiring';
+    category: {
+      name: string;
+    };
+  }>;
+}
 
 export default function Dashboard() {
-  const series = [44, 55, 41, 17];
+  const [homeData, setHomedata] = useState<HomeData>();
+
+  useEffect(() => {
+    api.get(`/equipaments/home`).then(response => {
+      setHomedata(response.data);
+    });
+  }, []);
+
+  const series = [homeData?.percentage.operational, homeData?.percentage.expired, 20, homeData?.percentage.notBeingMonitored];
   const options = {
     type: 'donut',
     labels: ['Em dia', 'Vencidos', 'Vencendo', 'Não Monitorados'],
@@ -57,30 +85,28 @@ export default function Dashboard() {
         <S.EquipamentsContainer>
           <S.TitleSection>Vencimentos</S.TitleSection>
           <S.SubTitleSection>Esses equipamentos precisarão de atenção em breve</S.SubTitleSection>
-          <CardEquipament title="Computador da Recepção" status={'expired'} subtitle="Estação de trabalho" />
-          <CardEquipament title="Computador da Recepção" status={'expired'} subtitle="Estação de trabalho" />
-          <CardEquipament title="Computador da Recepção" status={'expiring'} subtitle="Estação de trabalho" />
-          <CardEquipament title="Computador da Recepção" status={'expiring'} subtitle="Estação de trabalho" />
-          <CardEquipament title="Computador da Recepção" status={'expiring'} subtitle="Estação de trabalho" />
-          <CardEquipament title="Computador da Recepção" status={'expiring'} subtitle="Estação de trabalho" />
-          <CardEquipament title="Computador da Recepção" status={'expiring'} subtitle="Estação de trabalho" />
-        </S.EquipamentsContainer>
 
+          {homeData?.equipaments.map(equipament => {
+            return (
+              <CardEquipament id={equipament.id} key={equipament.id} title={equipament.name} status={equipament.status} subtitle={equipament.category.name} />
+            );
+          })}
+        </S.EquipamentsContainer>
         <S.DataCardsContainer>
           <S.ChartContainer>
             <S.TitleSection>Visão Geral da Organização</S.TitleSection>
             <S.SubTitleSection>Resumo da situação da organização</S.SubTitleSection>
-            <Chart options={options} type="pie" series={series} />
+            {homeData && <Chart options={options} type="pie" series={series} />}
           </S.ChartContainer>
           <S.TitleSection>Estatísticas de Entidades</S.TitleSection>
           <S.SubTitleSection>Esses equipamentos precisarão de atenção em breve</S.SubTitleSection>
           <S.DataCardsInsideContainer>
-            <CardData title="25" icon={<FiMonitor size={32} color={'#8257E5'} />} subtitle="Equipamentos" />
-            <CardData title="12" icon={<FiMonitor size={32} color={'#8257E5'} />} subtitle="Preventivas" />
+            <CardData title={homeData?.equipamentsTotal} icon={<FiMonitor size={32} color={'#8257E5'} />} subtitle="Equipamentos" />
+            <CardData title={homeData?.preventiveTotal} icon={<FiMonitor size={32} color={'#8257E5'} />} subtitle="Manutenções" />
           </S.DataCardsInsideContainer>
           <S.DataCardsInsideContainer>
-            <CardData title="36" icon={<MdLibraryBooks size={32} color={'#8257E5'} />} subtitle="Marcas" />
-            <CardData title="2" icon={<FiUsers size={32} color={'#8257E5'} />} subtitle="Técnicos" />
+            <CardData title={homeData?.brandTotal} icon={<MdLibraryBooks size={32} color={'#8257E5'} />} subtitle="Marcas" />
+            <CardData title={homeData?.userTotal} icon={<FiUsers size={32} color={'#8257E5'} />} subtitle="Técnicos" />
           </S.DataCardsInsideContainer>
         </S.DataCardsContainer>
       </S.ContainerDash>

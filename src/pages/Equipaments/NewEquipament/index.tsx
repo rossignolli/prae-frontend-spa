@@ -50,6 +50,8 @@ export default function NewEquipament() {
   const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
+  const [isWarnModal, setIsWarnModal] = useState(false);
+
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
 
   const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
@@ -141,6 +143,15 @@ export default function NewEquipament() {
     }
     const selectedImages = Array.from(event.target.files);
 
+    if (selectedImages.length > 4) {
+      setModalTitle('Ops... Algo deu errado.');
+      setModalDescription('Apenas 4 imagens são permitidas por equipamento.');
+      setModalType('error');
+      setButtonsOption(false);
+      setIsWarnModal(true);
+      return;
+    }
+
     event.target.value = '';
 
     setImages(selectedImages);
@@ -172,14 +183,6 @@ export default function NewEquipament() {
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            <InputTextField
-              name="model"
-              label="Apelido"
-              errorMesage={touched.model && errors.model ? errors.model : false}
-              placeholder="Ar Condicionado Portátil Elgin Eco Cub, 9000 BTUs"
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
             <InputSelectField
               name="brand"
               label="Marcas"
@@ -207,7 +210,6 @@ export default function NewEquipament() {
               errorMesage={touched.categories && errors.categories ? errors.categories : false}
               onChange={(value: any) => setFieldValue('categories', value.value)}
             />
-            <InputTextField name="register" label="Registro de Patrimonio" placeholder={'MSD4684652'} onBlur={handleBlur} onChange={handleChange} />
             <InputTextField
               name="description"
               label="Descrição"
@@ -244,6 +246,14 @@ export default function NewEquipament() {
             type={modalType}
             isOpen={isNewTConfirmationModalOpen}
             onRequestCancel={() => handleCloseConfirmationModal()}
+            buttons={butonsOption}
+          />
+          <ConfirmationModal
+            title={modalTitle}
+            description={modalDescription}
+            type={modalType}
+            isOpen={isWarnModal}
+            onRequestCancel={() => setIsWarnModal(false)}
             buttons={butonsOption}
           />
         </S.NewEquipamentsContent>

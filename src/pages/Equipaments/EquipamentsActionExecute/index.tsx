@@ -2,7 +2,6 @@ import { GlobalDashContainer } from '../../../components/Container/styles';
 import NavigationBar from '../../../components/Navbar';
 import * as S from './styles';
 import { useAuth } from '../../../hooks/AuthContext';
-import ImageGallery from 'react-image-gallery';
 import '../../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import { StyledTable } from '../../../components/StyledTable/styles';
 import Button from '../../../components/Button';
@@ -11,13 +10,12 @@ import { useEffect, useState } from 'react';
 import api from '../../../services/api';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useHistory } from 'react-router-dom';
-import SelectDateMonitorModal from '../../../components/Modals/SelectDateMonitorModal';
-import { AiFillCheckCircle, AiOutlineMinus, AiOutlinePlusCircle } from 'react-icons/ai';
-import Jobs from '../../../stale/JobsPage';
+import { AiFillCheckCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import InputSelectField from '../../../components/SelectField';
 
 interface EditCategoryParams {
   id: string;
+  equipamentId: string;
 }
 
 interface Images {
@@ -73,15 +71,14 @@ export default function EquipamentsPreventiveExecute() {
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
-
   const [isCritical, setCritical] = useState(false);
-
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
-  const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
-  const { id } = useParams<EditCategoryParams>();
+  const { id, equipamentId } = useParams<EditCategoryParams>();
   const history = useHistory();
   const { user } = useAuth();
+
+  console.log(equipamentId);
 
   useEffect(() => {
     api.get(`/jobs/details/categories/${id}`).then(response => {
@@ -97,7 +94,11 @@ export default function EquipamentsPreventiveExecute() {
   function AddJobToExecution(job: JobsType) {
     if (job.checked === true) {
       job.checked = false;
-      setJobsExecution([...jobsExecution, job]);
+      setJobsExecution(
+        jobsExecution.filter(value => {
+          return value.id !== job.id;
+        })
+      );
       setTotal(total - parseFloat(job.supply.pricePerJob));
       setTotalJobs(totalJobs - 1);
       return;
@@ -106,6 +107,47 @@ export default function EquipamentsPreventiveExecute() {
     setJobsExecution([...jobsExecution, job]);
     setTotalJobs(totalJobs + 1);
     setTotal(total + parseFloat(job.supply.pricePerJob));
+  }
+
+  console.log(jobsExecution);
+
+  async function ApplyMaintenance() {
+    if (!jobsExecution.length) {
+      setIsNewTConfirmationModalOpen(true);
+      setModalType('error');
+      setModalTitle('Erro');
+      setModalDescription('Nenhuma ação adicionada.');
+      return;
+    }
+
+    const jobs: any = [];
+
+    jobsExecution.map(job => {
+      jobs.push({ id: job.id });
+    });
+
+    const data = {
+      equipament_id: equipamentId,
+      isCorrective: isCritical,
+      technician_id: user.id,
+      jobs: jobs,
+    };
+
+    const response = await api.post('preventives', data);
+
+    if (response.status !== 200) {
+      setIsNewTConfirmationModalOpen(true);
+      setModalType('error');
+      setModalTitle('Erro');
+      setModalDescription('Algo deu errado');
+      return;
+    }
+
+    setIsNewTConfirmationModalOpen(true);
+    setModalType('sucess');
+    setModalDescription('Manutenção adicionada com sucesso.');
+
+    console.log(response);
   }
 
   return (
@@ -179,8 +221,15 @@ export default function EquipamentsPreventiveExecute() {
               currency: 'BRL',
             }).format(total)}
           </S.HeaderTitle>
-          <Button minimal>Voltar</Button>
-          <Button>Confirmar e Aplicar</Button>
+          <Button minimal onClick={() => history.goBack()}>
+            Voltar
+          </Button>
+          <Button
+            onClick={() => {
+              ApplyMaintenance();
+            }}>
+            Confirmar e Aplicar
+          </Button>
         </S.ResumeActions>
       </S.ContainerEquipaments>
       <ConfirmationModal
@@ -188,7 +237,10 @@ export default function EquipamentsPreventiveExecute() {
         description={modalDescription}
         type={modalType}
         isOpen={isNewTConfirmationModalOpen}
-        onRequestCancel={() => null}
+        onRequestCancel={() => {
+          setIsNewTConfirmationModalOpen(false);
+          history.goBack();
+        }}
         buttons={butonsOption}
       />
     </GlobalDashContainer>

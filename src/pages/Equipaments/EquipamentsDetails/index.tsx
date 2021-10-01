@@ -1,7 +1,7 @@
+/* eslint-disable array-callback-return */
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import NavigationBar from '../../../components/Navbar';
 import * as S from '../EquipamentsDetails/styles';
-// import { useAuth } from '../../hooks/AuthContext';
 import ImageGallery from 'react-image-gallery';
 import '../../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import { StyledTable } from '../../../components/StyledTable/styles';
@@ -11,12 +11,11 @@ import { useEffect, useState } from 'react';
 import api from '../../../services/api';
 import Header from '../../../components/Header';
 import { format, parseISO } from 'date-fns';
-import { AiOutlineArrowRight } from 'react-icons/ai';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { Link, useHistory } from 'react-router-dom';
 import SelectDateMonitorModal from '../../../components/Modals/SelectDateMonitorModal';
 import { ptBR } from 'date-fns/locale';
-import QRCodeModal from '../../../components/Modals/QRCodeShow';
+
 interface EditCategoryParams {
   id: string;
 }
@@ -24,6 +23,13 @@ interface EditCategoryParams {
 interface Images {
   id: string;
   path: string;
+}
+
+interface ImagesGalery {
+  original: string;
+  originalWidth: number;
+  originalHeight: number;
+  thumbnail: string;
 }
 
 interface Preventive {
@@ -56,6 +62,7 @@ interface Equipament {
   monitor: boolean;
   dateOfExpiration: string;
   updated_at: Date;
+  images: Images[];
   brand: {
     name: string;
   };
@@ -63,45 +70,21 @@ interface Equipament {
     id: string;
     name: string;
   };
-  images: Images[];
+  daysWithoutCorrective: number;
+  maintenanceTotal: number;
 }
-
-const images = [
-  {
-    original: 'https://img.olx.com.br/images/92/929193801690748.jpg',
-    originalWidth: 250,
-    originalHeight: 250,
-    thumbnail: 'https://img.olx.com.br/images/92/929193801690748.jpg',
-  },
-  {
-    original: 'https://img.olx.com.br/images/92/924123327343916.jpg',
-    originalWidth: 250,
-    originalHeight: 250,
-    thumbnail: 'https://img.olx.com.br/images/92/924123327343916.jpg',
-  },
-  {
-    original: 'https://img.olx.com.br/images/92/923124808687582.jpg',
-    originalWidth: 250,
-    originalHeight: 250,
-    thumbnail: 'https://img.olx.com.br/images/92/923124808687582.jpg',
-  },
-  {
-    original: 'https://img.olx.com.br/images/92/924123327343916.jpg',
-    originalWidth: 250,
-    originalHeight: 250,
-    thumbnail: 'https://img.olx.com.br/images/92/924123327343916.jpg',
-  },
-];
 
 export default function EquipamentsDetails() {
   const [equipament, setEquipament] = useState<Equipament>();
   const [preventives, setPreventives] = useState<Preventive[]>();
   const [modalTitle, setModalTitle] = useState('Sucesso');
+  const [url, setUrl] = useState('');
+
   const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
-  const [isModalQRCodeOpen, setIsModalQRCodeOpen] = useState(false);
+  const [imagesToShow, setImagesToShow] = useState<ImagesGalery[]>([]);
 
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
   const { id } = useParams<EditCategoryParams>();
@@ -109,13 +92,26 @@ export default function EquipamentsDetails() {
 
   useEffect(() => {
     api.get(`/equipaments/details/${id}`).then(response => {
+      response.data.images.map((image: Images) => {
+        imagesToShow.push({
+          original: image.path,
+          originalWidth: 250,
+          originalHeight: 250,
+          thumbnail: image.path,
+        });
+      });
+      setImagesToShow(imagesToShow);
       setEquipament(response.data);
+      api.get(`equipaments/qrcode/${equipament?.id}`, { responseType: 'blob' }).then(response => {
+        console.log(response);
+        setUrl(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
+      });
     });
 
     api.get(`/preventives/equipament/${id}`).then(response => {
       setPreventives(response.data);
     });
-  }, [id]);
+  }, [equipament?.id, id, imagesToShow]);
 
   function handleCloseConfirmationModalMonitoring() {
     setIsConfirmationMonitorModalOpen(false);
@@ -171,7 +167,7 @@ export default function EquipamentsDetails() {
       <S.ContainerEquipaments>
         <S.HeaderEquipament>
           <S.GalleryEquipament>
-            <ImageGallery items={images} />
+            <ImageGallery items={imagesToShow} />
           </S.GalleryEquipament>
           <S.EquipamentDetails>
             <S.EquipamentTitle>{equipament?.name}</S.EquipamentTitle>
@@ -182,12 +178,12 @@ export default function EquipamentsDetails() {
                 <span>Marca</span>
               </S.ResumeInfo>
               <S.ResumeInfo>
-                <h1>86</h1>
+                <h1>{equipament?.daysWithoutCorrective}</h1>
                 <span>dias sem corretivas</span>
               </S.ResumeInfo>
               <S.ResumeInfo>
-                <h1>12</h1>
-                <span>preventivas executadas</span>
+                <h1>{equipament?.maintenanceTotal}</h1>
+                <span>manutenções executadas</span>
               </S.ResumeInfo>
             </S.ResumeEquipament>
             <S.ResumeContainer>
@@ -212,8 +208,13 @@ export default function EquipamentsDetails() {
           <Button customColor="#28C76F" onClick={handleOpenMonitoringModal}>
             Monitorar
           </Button>
-          <Button>QR CODE</Button>
-          <Button customColor="#FF787A" onClick={() => history.push(`actions/new/${equipament?.category.id}`)}>
+          <Button>
+            <a href={url} target="_blank" rel="noreferrer">
+              QR CODE
+            </a>
+          </Button>
+
+          <Button customColor="#FF787A" onClick={() => history.push(`actions/new/${equipament?.category.id}/${equipament?.id}`)}>
             Iniciar Ação
           </Button>
         </S.ButtonContainer>
@@ -233,7 +234,7 @@ export default function EquipamentsDetails() {
             <tbody>
               {preventives?.map(preventive => (
                 <tr key={preventive.id}>
-                  <td>{format(parseISO(preventive.created_at), " dd 'de' MMMM'")}</td>
+                  <td>{preventives && format(parseISO(preventive.created_at), " dd 'de' MMMM'", { locale: ptBR })}</td>
                   <td>{preventive.isCorrective ? 'Corretiva' : 'Preventiva'}</td>
                   <td>{preventive.equipament.technician.name}</td>
                   <td>
@@ -244,7 +245,7 @@ export default function EquipamentsDetails() {
             </tbody>
           </table>
           <section>
-            <span>Preventivas executadas nesse equipamento</span>
+            <span>Manutenções executadas nesse equipamento</span>
           </section>
         </StyledTable>
       </S.ContainerEquipaments>
@@ -262,14 +263,6 @@ export default function EquipamentsDetails() {
         description={modalDescription}
         type={modalType}
         isOpen={isNewTConfirmationModalOpen}
-        onRequestCancel={() => handleCloseConfirmationModal()}
-        buttons={butonsOption}
-      />
-      <QRCodeModal
-        title={modalTitle}
-        description={modalDescription}
-        type={modalType}
-        isOpen={isModalQRCodeOpen}
         onRequestCancel={() => handleCloseConfirmationModal()}
         buttons={butonsOption}
       />

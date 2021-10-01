@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
+import signInBackgroundImg from '../../assets/temp_assets/girlit.jpg';
 
-import signInBackgroundImg from '../../assets/temp_assets/girlholdingcoffe.jpg';
 export const Container = styled.div`
   ${({ theme }) => css`
     display: flex;
@@ -69,17 +69,6 @@ export const Form = styled.form`
 
     h3 {
       color: ${theme.colors.red};
-    }
-
-    h2 {
-      margin-top: ${theme.spacings.xsmall};
-      text-align: center;
-      color: ${theme.colors.heading};
-      font-weight: ${theme.font.bold};
-
-      a {
-        color: inherit;
-      }
     }
   `}
 `;

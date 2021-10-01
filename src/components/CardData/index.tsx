@@ -3,8 +3,8 @@ import { FiTool } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 
 interface DataCardsProps {
-  title: string | number;
-  subtitle: string | number;
+  title: string | number | undefined;
+  subtitle: string | number | undefined;
   icon: JSX.Element;
 }
 

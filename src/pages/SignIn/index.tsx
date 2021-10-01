@@ -7,10 +7,12 @@ import { Link, useHistory } from 'react-router-dom';
 import InputTextField from '../../components/TextField';
 import Button from '../../components/Button';
 import { Helmet } from 'react-helmet';
+import { useState } from 'react';
 
 export default function SigninPage() {
   const { signIn } = useAuth();
   const history = useHistory();
+  const [passwordRecoveryHint, setPasswordRecoveryHint] = useState(false);
 
   const { handleSubmit, handleChange, values, touched, errors, handleBlur, setErrors } = useFormik({
     initialValues: {
@@ -31,6 +33,7 @@ export default function SigninPage() {
           setErrors({
             invalidlogin: 'Senha ou e-mail inválidos.',
           });
+          setPasswordRecoveryHint(true);
         } else {
           history.push('/dashboard');
         }
@@ -73,12 +76,20 @@ export default function SigninPage() {
 
           <h3>{errors?.invalidlogin}</h3>
 
-          <S.SignUpHintContainer>
-            <span>Não possui conta?</span>
-            <Link to={'/signup'}>
-              <h1>Solicitar Conta</h1>
-            </Link>
-          </S.SignUpHintContainer>
+          {passwordRecoveryHint && (
+            <h2>
+              <Link to="/forgotmypassword">Esqueci a senha</Link>
+            </h2>
+          )}
+
+          {!passwordRecoveryHint && (
+            <S.SignUpHintContainer>
+              <span>Não possui conta?</span>
+              <Link to={'/signup'}>
+                <h1>Solicitar Conta</h1>
+              </Link>
+            </S.SignUpHintContainer>
+          )}
         </S.Form>
       </S.Content>
     </S.Container>

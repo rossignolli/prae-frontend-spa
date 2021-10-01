@@ -1,24 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import manProfile from "../../../assets/temp_assets/man-profile.png";
-import NavigationBar from "../../../components/Navbar";
+import { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import manProfile from '../../../assets/temp_assets/man-profile.png';
+import NavigationBar from '../../../components/Navbar';
 // import { useAuth } from '../../hooks/AuthContext';
-import api from "../../../services/api";
-import { GlobalDashContainer } from "../../../components/Container/styles";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { StyledTable } from "../../../components/StyledTable/styles";
-import * as S from "../../Categories/CategoryList/styles";
-import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
-import "@szhsin/react-menu/dist/index.css";
-import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
+import api from '../../../services/api';
+import { GlobalDashContainer } from '../../../components/Container/styles';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { StyledTable } from '../../../components/StyledTable/styles';
+import * as S from '../../Categories/CategoryList/styles';
+import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 
-
-import Button from "../../../components/Button";
-import { FiFolder } from "react-icons/fi";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import InputSearchBar from "../../../components/SearchBar";
-import Pagination from "../../../components/Pagination";
+import Button from '../../../components/Button';
+import { FiFolder } from 'react-icons/fi';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import InputSearchBar from '../../../components/SearchBar';
+import Pagination from '../../../components/Pagination';
 interface Supplies {
   id: string;
   name: string;
@@ -32,15 +31,13 @@ export default function Supply() {
   const [category, setCategory] = useState<Supplies[] | undefined>();
   const [categoryDefault, setCategoryDefault] = useState<Supplies[]>();
 
-  const [modalTitle, setModalTitle] = useState("");
-  const [modalDescription, setModalDescription] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalDescription, setModalDescription] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [butonsOption, setButtonsOption] = useState(true);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const history = useHistory();
-  const [modalType, setModalType] = useState<
-    "warning" | "error" | "sucess" | "info" | undefined
-  >("warning");
+  const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('warning');
   const [currentPage, setCurrentPage] = useState(1);
   const [issuesPerPage, setIssuesPerPage] = useState(8);
 
@@ -49,41 +46,39 @@ export default function Supply() {
 
   const currentCategories = category?.slice(indexfFirstPost, IndexOfLastPost);
 
-  const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] =
-    useState(false);
+  const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
 
   useEffect(() => {
-    api.get(`/supplies`).then((response) => {
+    api.get(`/supplies`).then(response => {
       setCategory(response.data);
       setCategoryDefault(response.data);
     });
   }, []);
 
   function handleDeleteAction() {
-    setModalTitle("Você tem certeza?");
-    setModalDescription("Essa ação não pode ser desfeita.");
+    setModalTitle('Você tem certeza?');
+    setModalDescription('Essa ação não pode ser desfeita.');
+    setModalType('warning');
     setIsNewTConfirmationModalOpen(true);
+    setButtonsOption(true);
   }
   async function handleConfimedDeletedAction() {
-    const response = await api.delete(`supplies/${selectedCategory}`);
-
-    if (response.status !== 200) {
-      setModalTitle("Ops... Algo deu errado.");
-      setModalDescription("Tente novamente mais tarde");
-      setModalType("error");
+    try {
+      await api.delete(`supplies/${selectedCategory}`);
+      if (category) {
+        setCategory(
+          category.filter(value => {
+            return value.id !== selectedCategory;
+          })
+        );
+      }
+      setIsNewTConfirmationModalOpen(false);
+    } catch {
+      setModalTitle('Ops... Algo deu errado.');
+      setModalDescription('Tente novamente mais tarde');
+      setModalType('error');
       setButtonsOption(false);
-      return;
     }
-
-    if (category) {
-      setCategory(
-        category.filter((value) => {
-          return value.id !== selectedCategory;
-        })
-      );
-    }
-
-    setIsNewTConfirmationModalOpen(false);
   }
 
   function handleCloseConfirmationModal() {
@@ -93,7 +88,7 @@ export default function Supply() {
   const updateInput = async (e: any) => {
     if (!category) return;
 
-    const filtered = category.filter((country) => {
+    const filtered = category.filter(country => {
       return country.name.toLowerCase().includes(e.target.value.toLowerCase());
     });
     setInput(e.target.value);
@@ -115,13 +110,7 @@ export default function Supply() {
         {!category ? (
           <>
             <S.ActionHolderContainer>
-              <Skeleton
-                duration={0.5}
-                width={140}
-                count={3}
-                height={40}
-                style={{ borderRadius: `15px`, marginRight: `10px` }}
-              />
+              <Skeleton duration={0.5} width={140} count={3} height={40} style={{ borderRadius: `15px`, marginRight: `10px` }} />
             </S.ActionHolderContainer>
             <StyledTable>
               <>
@@ -136,140 +125,68 @@ export default function Supply() {
                   <tbody>
                     <tr>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                       <td>
-                        <Skeleton
-                          duration={0.5}
-                          height={20}
-                          style={{ borderRadius: `15px` }}
-                        />
+                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
                       </td>
                     </tr>
                   </tbody>
@@ -284,23 +201,12 @@ export default function Supply() {
         ) : (
           <>
             <S.ActionHolderContainer>
-              <InputSearchBar
-                name="search"
-                placeholder="Pesquisar"
-                value={input}
-                onChange={updateInput}
-              />
-              <Button
-                minimal
-                customColor="#FFFFFF"
-                onClick={() => history.push(`dashboard`)}
-              >
+              <InputSearchBar name="search" placeholder="Pesquisar" value={input} onChange={updateInput} />
+              <Button minimal customColor="#FFFFFF" onClick={() => history.push(`dashboard`)}>
                 Voltar
               </Button>
               <Button customColor="#FFFFFF">Gerar Relatório</Button>
-              <Button onClick={() => history.push(`/supply/new`)}>
-                Adicionar Suprimento
-              </Button>
+              <Button onClick={() => history.push(`/supply/new`)}>Adicionar Suprimento</Button>
             </S.ActionHolderContainer>
             <StyledTable>
               {category.length > 0 ? (
@@ -314,7 +220,7 @@ export default function Supply() {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentCategories?.map((category) => (
+                      {currentCategories?.map(category => (
                         <tr key={category.id}>
                           <td>{category.name}</td>
                           <td>{category.pricePerJob}</td>
@@ -326,19 +232,15 @@ export default function Supply() {
                                 <MenuButton>
                                   <BsThreeDotsVertical />
                                 </MenuButton>
-                              }
-                            >
+                              }>
                               <MenuItem>
-                                <Link to={`supply/edit/${category.id}`}>
-                                  Editar
-                                </Link>
+                                <Link to={`supply/edit/${category.id}`}>Editar</Link>
                               </MenuItem>
                               <MenuItem
                                 onClick={() => {
                                   handleDeleteAction();
                                   setSelectedCategory(category.id);
-                                }}
-                              >
+                                }}>
                                 Excluir
                               </MenuItem>
                             </Menu>
@@ -356,22 +258,14 @@ export default function Supply() {
                   <FiFolder size={82} color={`#8257e5`} />
                   <S.TitleEmpty>Nada para mostrar aqui.</S.TitleEmpty>
                   <S.DescriptionEmpty>
-                    {input
-                      ? `Nao encontramos nenhum suprimentos relacionada com a sua busca`
-                      : `Você não possui suprimentos cadastradas no sistemas.`}
+                    {input ? `Nao encontramos nenhum suprimentos relacionada com a sua busca` : `Você não possui suprimentos cadastradas no sistemas.`}
                   </S.DescriptionEmpty>
-                  <Button onClick={() => history.push(`/supply/new`)}>
-                    Adicionar Suprimento
-                  </Button>
+                  <Button onClick={() => history.push(`/supply/new`)}>Adicionar Suprimento</Button>
                 </S.EmptyState>
               )}
             </StyledTable>
             <S.PaginationContainer>
-              <Pagination
-                issuesPerPage={issuesPerPage}
-                totalIssues={category.length}
-                paginate={paginate}
-              />
+              <Pagination issuesPerPage={issuesPerPage} totalIssues={category.length} paginate={paginate} />
             </S.PaginationContainer>
           </>
         )}

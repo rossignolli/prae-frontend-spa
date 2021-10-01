@@ -133,7 +133,7 @@ export default function EquipamentList() {
                   <thead>
                     <tr>
                       <th>Nome</th>
-                      <th>Descrição</th>
+                      <th>Categoria</th>
                       <th>Criado por</th>
                     </tr>
                   </thead>
@@ -230,7 +230,7 @@ export default function EquipamentList() {
                     <thead>
                       <tr>
                         <th>Nome</th>
-                        <th>Descrição</th>
+                        <th>Categoria</th>
 
                         <th>Status</th>
                         <th>Criado por</th>

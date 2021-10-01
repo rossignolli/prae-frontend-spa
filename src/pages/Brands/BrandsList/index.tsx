@@ -57,28 +57,27 @@ export default function Category() {
   function handleDeleteAction() {
     setModalTitle('Você tem certeza?');
     setModalDescription('Essa ação não pode ser desfeita.');
+    setModalType('warning');
     setIsNewTConfirmationModalOpen(true);
+    setButtonsOption(true);
   }
   async function handleConfimedDeletedAction() {
-    const response = await api.delete(`brands/${selectedCategory}`);
-
-    if (response.status !== 200) {
+    try {
+      await api.delete(`brands/${selectedCategory}`);
+      if (category) {
+        setCategory(
+          category.filter(value => {
+            return value.id !== selectedCategory;
+          })
+        );
+      }
+      setIsNewTConfirmationModalOpen(false);
+    } catch {
       setModalTitle('Ops... Algo deu errado.');
       setModalDescription('Tente novamente mais tarde');
       setModalType('error');
       setButtonsOption(false);
-      return;
     }
-
-    if (category) {
-      setCategory(
-        category.filter(value => {
-          return value.id !== selectedCategory;
-        })
-      );
-    }
-
-    setIsNewTConfirmationModalOpen(false);
   }
 
   function handleCloseConfirmationModal() {

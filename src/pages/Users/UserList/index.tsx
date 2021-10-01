@@ -18,18 +18,14 @@ import { FiFolder } from 'react-icons/fi';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
+
 interface Supplies {
   id: string;
   name: string;
-  supply: {
-    pricePerJob: string;
-  };
-  category: {
-    name: string;
-  };
+  email: string;
 }
 
-export default function JobList() {
+export default function UserList() {
   const [category, setCategory] = useState<Supplies[] | undefined>();
   const [categoryDefault, setCategoryDefault] = useState<Supplies[]>();
 
@@ -51,7 +47,7 @@ export default function JobList() {
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
 
   useEffect(() => {
-    api.get(`/jobs`).then(response => {
+    api.get(`/users`).then(response => {
       setCategory(response.data);
       setCategoryDefault(response.data);
     });
@@ -66,7 +62,7 @@ export default function JobList() {
   }
   async function handleConfimedDeletedAction() {
     try {
-      await api.delete(`jobs/${selectedCategory}`);
+      await api.delete(`supplies/${selectedCategory}`);
       if (category) {
         setCategory(
           category.filter(value => {
@@ -119,9 +115,8 @@ export default function JobList() {
                 <table>
                   <thead>
                     <tr>
+                      <th>E-mail</th>
                       <th>Nome</th>
-                      <th>Preço</th>
-                      <th>Criado por</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -194,7 +189,7 @@ export default function JobList() {
                   </tbody>
                 </table>
                 <section>
-                  <span>Suprimentos cadastradas na base de dados</span>
+                  <span>Técnicos cadastradas na base de dados</span>
                 </section>
               </>
             </StyledTable>
@@ -208,7 +203,6 @@ export default function JobList() {
                 Voltar
               </Button>
               <Button customColor="#FFFFFF">Gerar Relatório</Button>
-              <Button onClick={() => history.push(`/job/new`)}>Adicionar Procedimento</Button>
             </S.ActionHolderContainer>
             <StyledTable>
               {category.length > 0 ? (
@@ -216,18 +210,14 @@ export default function JobList() {
                   <table>
                     <thead>
                       <tr>
+                        <th>E-mail</th>
                         <th>Nome</th>
-                        <th>Categoria</th>
-                        <th>Preço</th>
-                        <th>Criado por</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentCategories?.map(job => (
-                        <tr key={job.id}>
-                          <td>{job.name}</td>
-                          <td>{job.category.name}</td>
-                          <td>R$ {job.supply.pricePerJob}</td>
+                      {currentCategories?.map(category => (
+                        <tr key={category.id}>
+                          <td>{category.email}</td>
                           <td>
                             <img src={manProfile} alt="" />
                             Vitor Rossignolli
@@ -238,12 +228,12 @@ export default function JobList() {
                                 </MenuButton>
                               }>
                               <MenuItem>
-                                <Link to={`supply/edit/${job.id}`}>Editar</Link>
+                                <Link to={`supply/edit/${category.id}`}>Editar</Link>
                               </MenuItem>
                               <MenuItem
                                 onClick={() => {
                                   handleDeleteAction();
-                                  setSelectedCategory(job.id);
+                                  setSelectedCategory(category.id);
                                 }}>
                                 Excluir
                               </MenuItem>
@@ -254,7 +244,7 @@ export default function JobList() {
                     </tbody>
                   </table>
                   <section>
-                    <span>Procedimentos cadastradas na base de dados</span>
+                    <span>Técnicos cadastrados na base de dados</span>
                   </section>
                 </>
               ) : (
@@ -264,7 +254,7 @@ export default function JobList() {
                   <S.DescriptionEmpty>
                     {input ? `Nao encontramos nenhum suprimentos relacionada com a sua busca` : `Você não possui suprimentos cadastradas no sistemas.`}
                   </S.DescriptionEmpty>
-                  <Button onClick={() => history.push(`/job/new`)}>Adicionar Procedimento</Button>
+                  <Button onClick={() => history.push(`/supply/new`)}>Adicionar Suprimento</Button>
                 </S.EmptyState>
               )}
             </StyledTable>

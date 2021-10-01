@@ -56,10 +56,6 @@ export default function NavigationBar() {
             <MdLibraryBooks />
             Marcas
           </StyledNavLink>
-          <StyledNavLink to="/preventives">
-            <FiTool />
-            Preventivas
-          </StyledNavLink>
           <StyledNavLink to="/category">
             <FiFileText />
             Categorias
@@ -73,7 +69,7 @@ export default function NavigationBar() {
             Suprimentos
           </StyledNavLink>
           <TitleMenu>Outros</TitleMenu>
-          <StyledNavLink to="/technicians">
+          <StyledNavLink to="/user">
             <FiUsers />
             Técnicos
           </StyledNavLink>

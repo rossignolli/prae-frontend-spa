@@ -81,6 +81,14 @@ export const Wrapper = styled.button<WrapperProps>`
     &:hover {
       background: ${darken(0.1, theme.colors.primary)};
     }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      width: 100%;
+      height: 100%;
+    }
+
     ${!!size && wrapperModifiers[size](theme)};
     ${!!fullWidth && wrapperModifiers.fullWidth()};
     ${!!customColor && wrapperModifiers.customColor(customColor, theme)};

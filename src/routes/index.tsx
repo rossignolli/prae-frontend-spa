@@ -7,6 +7,9 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import Signin from '../pages/SignIn';
 import Dashboard from '../pages/Dashboard';
+import RecoverPassword from '../pages/RecoverPassword';
+import ForgotPassword from '../pages/RecoverPasswordEmail';
+
 // * EQUIPAMENTS ROUTES */
 import Equipaments from '../pages/Equipaments/EquipamentList';
 import EquipamentsDetails from '../pages/Equipaments/EquipamentsDetails';
@@ -30,22 +33,26 @@ import BrandEdit from '../pages/Brands/BrandEdit';
 import Jobs from '../pages/Jobs/JobsList';
 import JobNew from '../pages/Jobs/JobsNew';
 import JobEdit from '../pages/Jobs/JobsEdit';
+// * user ROUTES */
+import Users from '../pages/Users/UserList';
 
 import Route from './Route';
 import SignUpPage from '../pages/SignUp';
 export default function Supplies() {
   return (
     <Switch>
+      {/* USERS ROUTES */}
       <Route path="/" exact component={Signin} />
       <Route path="/signup" exact component={SignUpPage} />
-
-      {/* <Route path="/signup" component={Signup} /> */}
+      <Route path="/recover/:verificationCode" exact component={RecoverPassword} />
+      <Route path="/forgotmypassword" exact component={ForgotPassword} />
+      {/* EQUIPAMENTS ROUTES */}
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/equipaments" exact component={Equipaments} isPrivate />
       <Route path="/equipaments/new" component={NewEquipaments} isPrivate />
       <Route path="/equipaments/details/:id" exact component={EquipamentsDetails} isPrivate />
       <Route path="/equipaments/details/preventive/:id" exact component={EquipamentsDetailsPreventive} isPrivate />
-      <Route path="/equipaments/details/actions/new/:id" exact component={EquipamentsDetailsPreventiveAction} isPrivate />
+      <Route path="/equipaments/details/actions/new/:id/:equipamentId" exact component={EquipamentsDetailsPreventiveAction} isPrivate />
       {/* CATEGORY ROUTES */}
       <Route path="/category" exact component={Category} isPrivate />
       <Route path="/category/new" exact component={CategoryCreate} isPrivate />
@@ -62,6 +69,8 @@ export default function Supplies() {
       <Route path="/job" exact component={Jobs} isPrivate />
       <Route path="/job/new" exact component={JobNew} isPrivate />
       <Route path="/job/edit/:id" exact component={JobEdit} isPrivate />
+      {/* USER */}
+      <Route path="/user" exact component={Users} isPrivate />
 
       {/* <Route path="/preventives" exact component={Preventive} isPrivate />
       <Route
