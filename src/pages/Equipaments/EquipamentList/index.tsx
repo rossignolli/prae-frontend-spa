@@ -38,6 +38,10 @@ interface Equipament {
   brand: {
     name: string;
   };
+  technician: {
+    avatar: string;
+    name: string;
+  };
 }
 
 export default function EquipamentList() {
@@ -264,8 +268,8 @@ export default function EquipamentList() {
                             )}
                           </td>
                           <td>
-                            <img src={manProfile} alt="" />
-                            Vitor Rossignolli
+                            <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="" />
+                            {category.technician.name}
                             <Menu
                               menuButton={
                                 <MenuButton>

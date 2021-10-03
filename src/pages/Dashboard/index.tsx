@@ -8,6 +8,7 @@ import { FiMonitor, FiUsers } from 'react-icons/fi';
 import { MdLibraryBooks } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
+import ProfileModal from '../../components/Modals/ProfileModal';
 
 interface HomeData {
   equipamentsTotal: number;
@@ -85,7 +86,6 @@ export default function Dashboard() {
         <S.EquipamentsContainer>
           <S.TitleSection>Vencimentos</S.TitleSection>
           <S.SubTitleSection>Esses equipamentos precisarão de atenção em breve</S.SubTitleSection>
-
           {homeData?.equipaments.map(equipament => {
             return (
               <CardEquipament id={equipament.id} key={equipament.id} title={equipament.name} status={equipament.status} subtitle={equipament.category.name} />

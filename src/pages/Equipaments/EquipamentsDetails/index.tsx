@@ -77,16 +77,15 @@ interface Equipament {
 export default function EquipamentsDetails() {
   const [equipament, setEquipament] = useState<Equipament>();
   const [preventives, setPreventives] = useState<Preventive[]>();
-  const [modalTitle, setModalTitle] = useState('Sucesso');
   const [url, setUrl] = useState('');
-
+  const [modalTitle, setModalTitle] = useState('Sucesso');
   const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
   const [imagesToShow, setImagesToShow] = useState<ImagesGalery[]>([]);
 
-  const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
   const { id } = useParams<EditCategoryParams>();
   const history = useHistory();
 
@@ -103,7 +102,6 @@ export default function EquipamentsDetails() {
       setImagesToShow(imagesToShow);
       setEquipament(response.data);
       api.get(`equipaments/qrcode/${equipament?.id}`, { responseType: 'blob' }).then(response => {
-        console.log(response);
         setUrl(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
       });
     });

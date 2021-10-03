@@ -51,20 +51,16 @@ export default function NewEquipament() {
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [isWarnModal, setIsWarnModal] = useState(false);
-
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
 
   const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
     initialValues: {
-      nickname: '',
       model: '',
       brand: '',
-      critical: '',
       categories: '',
       description: '',
     },
     validationSchema: Yup.object({
-      nickname: Yup.string().min(6, 'Nome de categoria precisa ter ao menos 6 caracteres').required('*Nome da categoria é requerido.'),
       brand: Yup.string().required('*É necessário selecionar uma marca cadastrada para o equipamento.'),
       model: Yup.string().min(6, 'Modelo precisa ter ao menos 6 caracteres').required('*Modelo é requerido.'),
     }),
@@ -80,7 +76,7 @@ export default function NewEquipament() {
         description: values.description,
         technician_id: user.id,
         monitor: false,
-        critical: values.critical,
+        critical: false,
         levelToManage: 0,
         category_id: values.categories,
         brand_id: values.brand,
@@ -132,11 +128,6 @@ export default function NewEquipament() {
   const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
   const [images, setImages] = useState<File[]>([]);
 
-  const criticaloptions = [
-    { value: 'false', label: 'Sim' },
-    { value: 'true', label: 'Não' },
-  ];
-
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
     if (!event.target.files) {
       return;
@@ -175,11 +166,11 @@ export default function NewEquipament() {
           </p>
           <form onSubmit={handleSubmit}>
             <InputTextField
-              name="nickname"
+              name="model"
               label="Modelo"
               placeholder="Ar Condicionado Portátil Elgin Eco Cub, 9000 BTUs"
-              value={values.nickname}
-              errorMesage={touched.nickname && errors.nickname ? errors.nickname : false}
+              value={values.model}
+              errorMesage={touched.model && errors.model ? errors.model : false}
               onBlur={handleBlur}
               onChange={handleChange}
             />
@@ -191,15 +182,6 @@ export default function NewEquipament() {
               value={values.brand}
               errorMesage={touched.brand && errors.brand ? errors.brand : false}
               onChange={(value: any) => setFieldValue('brand', value.value)}
-            />
-            <InputSelectField
-              name="critical"
-              label="Critico?"
-              placeholder={'Selecione a situação do equipamento'}
-              options={criticaloptions}
-              value={values.critical}
-              errorMesage={touched.critical && errors.critical ? errors.critical : false}
-              onChange={(value: any) => setFieldValue('critical', value.value)}
             />
             <InputSelectField
               name="categories"
@@ -232,7 +214,7 @@ export default function NewEquipament() {
                 );
               })}
             </S.ImageContainer>
-            <InputImageFile name="file" label="Critico" onChange={handleSelectImages} />
+            <InputImageFile name="file" label="Critico" title={`Adiciona imagens ao equipamento`} onChange={handleSelectImages} />
             <S.ButtonHolder>
               <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
                 Voltar

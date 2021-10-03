@@ -1,19 +1,14 @@
-import { InputHTMLAttributes, useCallback, useState } from "react";
-import { FiPlus } from "react-icons/fi";
-import * as S from "./styles";
+import { InputHTMLAttributes, useCallback, useState } from 'react';
+import { FiPlus } from 'react-icons/fi';
+import * as S from './styles';
 
 interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label: string;
+  title: string;
 }
 
-export default function InputImageFile({
-  name,
-  label,
-  placeholder,
-  onChange,
-  ...rest
-}: InputTextProps) {
+export default function InputImageFile({ name, label, title, placeholder, onChange, ...rest }: InputTextProps) {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleInputBlur = useCallback(() => {
@@ -26,7 +21,7 @@ export default function InputImageFile({
 
   return (
     <S.ContainerInput>
-      <S.LabelFormTitle>Adicione imagens do equipamento</S.LabelFormTitle>
+      <S.LabelFormTitle>{title}</S.LabelFormTitle>
       <S.LabelForm htmlFor={name}>
         <FiPlus size={24} color="#8257e5" />
       </S.LabelForm>

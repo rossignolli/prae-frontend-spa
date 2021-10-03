@@ -135,7 +135,7 @@ export const MenuHolder = styled.div<NavBarActionProps>`
     border: 1px solid ${theme.colors.grayBorder};
     margin-top: ${theme.spacings.xsmall};
     margin-bottom: ${theme.spacings.xsmall};
-    transition: all 1s ease;
+    transition: all 0.3s ease;
 
     height: 80px;
     border-radius: 15px;
@@ -144,6 +144,8 @@ export const MenuHolder = styled.div<NavBarActionProps>`
     span {
       display: flex;
       margin-left: ${theme.spacings.xsmall};
+      margin-bottom: ${theme.spacings.xxsmall};
+
       cursor: pointer;
       svg {
         margin-right: ${theme.spacings.xxsmall};
@@ -157,7 +159,7 @@ export const MenuHolder = styled.div<NavBarActionProps>`
     ${() =>
       isOpen &&
       css`
-        height: 200px;
+        height: 150px;
       `}
   `}
 `;

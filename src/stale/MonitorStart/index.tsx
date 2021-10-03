@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from "react";
-import {
-  FiAlertTriangle,
-  FiAlignLeft,
-  FiBarChart,
-  FiBell,
-  FiDelete,
-  FiEdit2,
-  FiHardDrive,
-  FiPlus,
-} from "react-icons/fi";
-import { MdDevices } from "react-icons/md";
+import React, { useEffect, useState } from 'react';
+import { FiAlertTriangle, FiAlignLeft, FiBarChart, FiBell, FiDelete, FiEdit2, FiHardDrive, FiPlus } from 'react-icons/fi';
+import { MdDevices } from 'react-icons/md';
 
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from 'react-router-dom';
 
-
-import NavigationBar from "../../components/Navbar";
+import NavigationBar from '../../components/Navbar';
 
 // import { useAuth } from '../../hooks/AuthContext';
-import api from "../../services/api";
-import { MonitorContent, Container, ContenderHolder } from "./styles";
-import DateTimePicker from "react-datetime-picker";
-import "react-datetime-picker/dist/DateTimePicker.css";
+import api from '../../services/api';
+import { MonitorContent, Container, ContenderHolder } from './styles';
+import DateTimePicker from 'react-datetime-picker';
+import 'react-datetime-picker/dist/DateTimePicker.css';
 
 interface Equipaments {
   created_at: Date;
@@ -42,12 +32,10 @@ const MonitorStart: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    api.get(`equipaments/details/${params.id}`).then((response) => {
+    api.get(`equipaments/details/${params.id}`).then(response => {
       setEquipament(response.data);
     });
   }, [params.id]);
-
-  console.log(params.id);
 
   return (
     <Container>

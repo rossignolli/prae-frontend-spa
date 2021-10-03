@@ -40,7 +40,7 @@ input{
     position: fixed;
     top: 0;
     left: 0;
-    right: -360px;
+    right: 50%;
     bottom: 0;
     display: flex;
     align-items: center;
@@ -48,6 +48,11 @@ input{
     background: rgba(1, 0, 0, 0.1);
     backdrop-filter: blur(2px);
     z-index: 999;
+
+    @media screen and (max-width: 780px) {
+      right: 0px;
+
+}
 
 }
 .react-modal-content {

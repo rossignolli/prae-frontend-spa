@@ -6,14 +6,29 @@ import { useAuth } from '../../hooks/AuthContext';
 import { useMediaQuery } from 'react-responsive';
 import { Container, ImgLogo, Navbar, NavigationBarHeader, StyledNavLink, TitleMenu, Userdiv, MobileContainer, MenuHolder } from './styles';
 import { useState } from 'react';
-import { MdLibraryBooks, MdPhotoCamera } from 'react-icons/md';
+import { MdExitToApp, MdLibraryBooks, MdModeEdit, MdPhotoCamera } from 'react-icons/md';
+import ProfileModal from '../Modals/ProfileModal';
 
 export default function NavigationBar() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [modalTitle, setModalTitle] = useState('Sucesso');
+  const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
+  const [butonsOption, setButtonsOption] = useState(false);
+
+  const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
 
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1170px)' });
+
+  function handleCloseConfirmationModal() {
+    setIsConfirmationMonitorModalOpen(false);
+  }
+
+  function handleConfirmation() {
+    setIsConfirmationMonitorModalOpen(false);
+  }
 
   return (
     <>
@@ -31,15 +46,18 @@ export default function NavigationBar() {
             </ImgLogo>
             <MenuHolder isOpen={isCollapsed}>
               <Userdiv>
-                <img src={manProfile} alt="" />
+                <img src={user.avatar ? user.avatar : manProfile} alt="" />
                 <div>
                   <h2>{user.name}</h2>
                   <h3>Técnico</h3>
                 </div>
                 <FiArrowDown onClick={() => setIsCollapsed(status => !status)} />
               </Userdiv>
-              <span>
-                <MdPhotoCamera /> Mudar foto de perfil
+              <span onClick={() => setIsConfirmationMonitorModalOpen(true)}>
+                <MdModeEdit /> Editar perfil
+              </span>
+              <span onClick={() => signOut()}>
+                <MdExitToApp /> Sair
               </span>
             </MenuHolder>
           </NavigationBarHeader>
@@ -74,6 +92,15 @@ export default function NavigationBar() {
             Técnicos
           </StyledNavLink>
         </Navbar>
+        <ProfileModal
+          title={modalTitle}
+          description={modalDescription}
+          type={modalType}
+          isOpen={isConfirmationMonitorModalOpen}
+          onRequestConfirmation={handleConfirmation}
+          onRequestCancel={() => handleCloseConfirmationModal()}
+          buttons={butonsOption}
+        />
       </Container>
       {isTabletOrMobile && (
         <MobileContainer>
