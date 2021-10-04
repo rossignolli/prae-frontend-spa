@@ -48,6 +48,17 @@ export const Navbar = styled.div`
   `}
 `;
 
+export const ContainerIcon = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    justify-content: flex-end;
+
+    svg {
+      margin: ${theme.spacings.xxsmall};
+    }
+  `}
+`;
+
 export const NavigationBarHeader = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,12 +77,12 @@ export const ImgLogo = styled.div`
 `;
 
 export const MobileContainer = styled.div`
-  display: flex;
   position: fixed;
-  left: 0;
+  right: 0;
   top: 0;
   width: 100%;
   height: 50px;
+  backdrop-filter: blur(2px);
 
   svg {
     cursor: pointer;

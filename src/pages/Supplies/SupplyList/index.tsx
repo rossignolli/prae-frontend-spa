@@ -8,7 +8,7 @@ import api from '../../../services/api';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { StyledTable } from '../../../components/StyledTable/styles';
-import * as S from '../../Categories/CategoryList/styles';
+import * as S from '../../Equipaments/EquipamentList/styles';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';

@@ -2,16 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import manProfile from '../../../assets/temp_assets/man-profile.png';
 import NavigationBar from '../../../components/Navbar';
-// import { useAuth } from '../../hooks/AuthContext';
 import api from '../../../services/api';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { StyledTable } from '../../../components/StyledTable/styles';
-import * as S from './styles';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
-import { ActionHolderContainer, DescriptionEmpty, EmptyState, TitleEmpty } from './styles';
+import * as S from '../../Equipaments/EquipamentList/styles';
 import Button from '../../../components/Button';
 import { FiFileText } from 'react-icons/fi';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
@@ -23,6 +21,10 @@ interface Categories {
   created_at: Date;
   description: string;
   updated_at: Date;
+  technician: {
+    avatar: string;
+    name: string;
+  };
 }
 
 export default function Category() {
@@ -108,9 +110,9 @@ export default function Category() {
         <SkeletonTheme color="#FFFF" highlightColor="#e6e1e139" />
         {!category ? (
           <>
-            <ActionHolderContainer>
+            <S.ActionHolderContainer>
               <Skeleton duration={0.5} width={140} count={3} height={40} style={{ borderRadius: `15px`, marginRight: `10px` }} />
-            </ActionHolderContainer>
+            </S.ActionHolderContainer>
             <StyledTable>
               <>
                 <table>
@@ -199,14 +201,14 @@ export default function Category() {
           </>
         ) : (
           <>
-            <ActionHolderContainer>
+            <S.ActionHolderContainer>
               <InputSearchBar name="search" placeholder="Pesquisar" value={input} onChange={updateInput} />
               <Button minimal customColor="#FFFFFF" onClick={() => history.push(`dashboard`)}>
                 Voltar
               </Button>
               <Button customColor="#FFFFFF">Gerar Relatório</Button>
-              <Button onClick={() => history.push(`/category/new`)}>Adicionar Marca</Button>
-            </ActionHolderContainer>
+              <Button onClick={() => history.push(`/brands/new`)}>Adicionar Marca</Button>
+            </S.ActionHolderContainer>
             <StyledTable>
               {category.length > 0 ? (
                 <>
@@ -214,7 +216,6 @@ export default function Category() {
                     <thead>
                       <tr>
                         <th>Nome</th>
-
                         <th>Criado por</th>
                       </tr>
                     </thead>
@@ -223,8 +224,8 @@ export default function Category() {
                         <tr key={category.id}>
                           <td>{category.name}</td>
                           <td>
-                            <img src={manProfile} alt="" />
-                            Vitor Rossignolli
+                            <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="" />
+                            {category.technician.name}
                             <Menu
                               menuButton={
                                 <MenuButton>
@@ -232,7 +233,7 @@ export default function Category() {
                                 </MenuButton>
                               }>
                               <MenuItem>
-                                <Link to={`category/edit/${category.id}`}>Editar</Link>
+                                <Link to={`brands/edit/${category.id}`}>Editar</Link>
                               </MenuItem>
                               <MenuItem
                                 onClick={() => {
@@ -252,14 +253,14 @@ export default function Category() {
                   </section>
                 </>
               ) : (
-                <EmptyState>
+                <S.EmptyState>
                   <FiFileText size={82} color={`#8257e5`} />
-                  <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
-                  <DescriptionEmpty>
+                  <S.TitleEmpty>Nada para mostrar aqui.</S.TitleEmpty>
+                  <S.DescriptionEmpty>
                     {input ? `Nao encontramos nenhuma marca relacionada com a sua busca` : `Você não possui marcas cadastradas no sistemas.`}
-                  </DescriptionEmpty>
-                  <Button onClick={() => history.push(`/category/new`)}>Adicionar Marca</Button>
-                </EmptyState>
+                  </S.DescriptionEmpty>
+                  <Button onClick={() => history.push(`/brands/new`)}>Adicionar Marca</Button>
+                </S.EmptyState>
               )}
             </StyledTable>
             <S.PaginationContainer>

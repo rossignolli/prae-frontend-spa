@@ -15,9 +15,14 @@ export const ActionHolderContainer = styled.div`
     align-items: center;
     padding: ${theme.spacings.xsmall};
     justify-content: flex-start;
+
+    div {
+      margin: ${theme.spacings.xxsmall};
+    }
+
     button + button {
       padding: ${theme.spacings.xsmall};
-      margin-left: ${theme.spacings.xsmall};
+      margin: ${theme.spacings.xsmall};
     }
   `}
 `;

@@ -1,24 +1,26 @@
 import React from 'react';
-import { FiArrowDown, FiUsers, FiHome, FiMonitor, FiTool, FiFileText, FiFolder, FiMenu, FiArrowLeft } from 'react-icons/fi';
+import { FiArrowDown, FiUsers, FiHome, FiMonitor, FiTool, FiFileText, FiFolder, FiMenu } from 'react-icons/fi';
+import { RiCloseLine } from 'react-icons/ri';
+
 import manProfile from '../../assets/temp_assets/man-profile.png';
 import logosvg from '../../assets/temp_assets/logomin.svg';
 import { useAuth } from '../../hooks/AuthContext';
 import { useMediaQuery } from 'react-responsive';
-import { Container, ImgLogo, Navbar, NavigationBarHeader, StyledNavLink, TitleMenu, Userdiv, MobileContainer, MenuHolder } from './styles';
+import { Container, ImgLogo, Navbar, NavigationBarHeader, StyledNavLink, TitleMenu, Userdiv, MobileContainer, MenuHolder, ContainerIcon } from './styles';
 import { useState } from 'react';
-import { MdExitToApp, MdLibraryBooks, MdModeEdit, MdPhotoCamera } from 'react-icons/md';
+import { MdExitToApp, MdLibraryBooks, MdModeEdit } from 'react-icons/md';
 import ProfileModal from '../Modals/ProfileModal';
 
 export default function NavigationBar() {
   const { user, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [modalTitle, setModalTitle] = useState('Sucesso');
-  const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
-  const [butonsOption, setButtonsOption] = useState(false);
+  const [modalTitle] = useState('Sucesso');
+  const [modalDescription] = useState('Categoria adicionada com sucesso.');
+  const [butonsOption] = useState(false);
 
   const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
-  const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
+  const [modalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
 
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1170px)' });
 
@@ -34,12 +36,17 @@ export default function NavigationBar() {
     <>
       <Container isOpen={isOpen}>
         <Navbar>
-          <FiArrowLeft
-            size={32}
-            onClick={() => {
-              setIsOpen(isOpen => !isOpen);
-            }}
-          />
+          {isTabletOrMobile && (
+            <ContainerIcon>
+              <RiCloseLine
+                size={32}
+                onClick={() => {
+                  setIsOpen(isOpen => !isOpen);
+                }}
+              />
+            </ContainerIcon>
+          )}
+
           <NavigationBarHeader>
             <ImgLogo>
               <img src={logosvg} alt="Prae - Preventivas" />

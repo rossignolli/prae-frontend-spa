@@ -7,23 +7,26 @@ import api from '../../../services/api';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { StyledTable } from '../../../components/StyledTable/styles';
-import * as S from './styles';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
-import ReactPaginate from 'react-paginate';
-import { ActionHolderContainer, DescriptionEmpty, EmptyState, TitleEmpty } from './styles';
+import * as S from '../../Equipaments/EquipamentList/styles';
 import Button from '../../../components/Button';
 import { FiFileText } from 'react-icons/fi';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
+import { useMediaQuery } from 'react-responsive';
 interface Categories {
   id: string;
   name: string;
   created_at: Date;
   description: string;
   updated_at: Date;
+  technician: {
+    avatar: string;
+    name: string;
+  };
 }
 
 export default function Category() {
@@ -39,12 +42,10 @@ export default function Category() {
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('warning');
   const [currentPage, setCurrentPage] = useState(1);
   const [issuesPerPage, setIssuesPerPage] = useState(8);
-
   const IndexOfLastPost = currentPage * issuesPerPage;
   const indexfFirstPost = IndexOfLastPost - issuesPerPage;
-
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const currentCategories = category?.slice(indexfFirstPost, IndexOfLastPost);
-
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
 
   useEffect(() => {
@@ -108,9 +109,9 @@ export default function Category() {
         <SkeletonTheme color="#FFFF" highlightColor="#e6e1e139" />
         {!category ? (
           <>
-            <ActionHolderContainer>
+            <S.ActionHolderContainer>
               <Skeleton duration={0.5} width={140} count={3} height={40} style={{ borderRadius: `15px`, marginRight: `10px` }} />
-            </ActionHolderContainer>
+            </S.ActionHolderContainer>
             <StyledTable>
               <>
                 <table>
@@ -195,18 +196,17 @@ export default function Category() {
                 </section>
               </>
             </StyledTable>
-            <div>testes</div>
           </>
         ) : (
           <>
-            <ActionHolderContainer>
+            <S.ActionHolderContainer>
               <InputSearchBar name="search" placeholder="Pesquisar" value={input} onChange={updateInput} />
               <Button minimal customColor="#FFFFFF" onClick={() => history.push(`dashboard`)}>
                 Voltar
               </Button>
               <Button customColor="#FFFFFF">Gerar Relatório</Button>
               <Button onClick={() => history.push(`/category/new`)}>Adicionar Categoria</Button>
-            </ActionHolderContainer>
+            </S.ActionHolderContainer>
             <StyledTable>
               {category.length > 0 ? (
                 <>
@@ -214,18 +214,19 @@ export default function Category() {
                     <thead>
                       <tr>
                         <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Criado por</th>
+                        {!isMobile && <th>Descrição</th>}
+                        {!isMobile ? <th>Criado por</th> : <th>Ação</th>}
                       </tr>
                     </thead>
                     <tbody>
                       {currentCategories?.map(category => (
                         <tr key={category.id}>
                           <td>{category.name}</td>
-                          <td>{category.description}</td>
+                          {!isMobile && <td>{category.description}</td>}
                           <td>
-                            <img src={manProfile} alt="" />
-                            Vitor Rossignolli
+                            {!isMobile && <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="Portrait User" />}
+                            {!isMobile && category.technician.name}
+
                             <Menu
                               menuButton={
                                 <MenuButton>
@@ -253,14 +254,14 @@ export default function Category() {
                   </section>
                 </>
               ) : (
-                <EmptyState>
+                <S.EmptyState>
                   <FiFileText size={82} color={`#8257e5`} />
-                  <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
-                  <DescriptionEmpty>
+                  <S.TitleEmpty>Nada para mostrar aqui.</S.TitleEmpty>
+                  <S.DescriptionEmpty>
                     {input ? `Nao encontramos nenhuma categoria relacionada com a sua busca` : `Você não possui categorias cadastradas no sistemas.`}
-                  </DescriptionEmpty>
+                  </S.DescriptionEmpty>
                   <Button onClick={() => history.push(`/category/new`)}>Adicionar Categoria</Button>
-                </EmptyState>
+                </S.EmptyState>
               )}
             </StyledTable>
             <S.PaginationContainer>

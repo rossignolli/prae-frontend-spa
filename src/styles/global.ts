@@ -40,7 +40,7 @@ input{
     position: fixed;
     top: 0;
     left: 0;
-    right: 50%;
+    right: -320px;
     bottom: 0;
     display: flex;
     align-items: center;
@@ -50,7 +50,7 @@ input{
     z-index: 999;
 
     @media screen and (max-width: 780px) {
-      right: 0px;
+      right: -10px;
 
 }
 

@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const ContainerNewEquipament = styled.div`
   display: flex;
@@ -17,26 +17,28 @@ export const NewEquipamentsContent2 = styled.div`
 `;
 
 export const NewEquipamentsContent = styled.div`
-  background-color: #e5e5e5;
-  display: flex;
-  padding: 50px;
-  flex-direction: column;
-  margin: 16px;
-  background-color: #ffffff;
-  border-radius: 15px;
+  ${({ theme }) => css`
+    background-color: #e5e5e5;
+    display: flex;
+    padding: 50px;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin: ${theme.spacings.medium} ${theme.spacings.xxsmall};
 
-  h1 {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: #8257e5;
-  }
+    h1 {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #8257e5;
+    }
 
-  p {
-    color: #95979a;
-    margin-bottom: 20px;
-  }
+    p {
+      color: #95979a;
+      margin-bottom: 20px;
+    }
+  `}
 `;
 
 export const ButtonHolder = styled.div`

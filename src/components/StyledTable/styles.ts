@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import media from 'styled-media-query';
 
 export const StyledTable = styled.div`
   ${({ theme }) => css`
@@ -40,6 +41,11 @@ export const StyledTable = styled.div`
       text-align: center;
       border-bottom: 1px ${theme.colors.grayBorder} solid;
       padding: 12px 24px;
+
+      ${media.lessThan('small')`
+      padding: 2px 6px;
+      `};
+
       font-weight: normal;
     }
 
@@ -53,6 +59,10 @@ export const StyledTable = styled.div`
       padding: 12px 24px;
       vertical-align: middle;
       text-align: center;
+
+      ${media.lessThan('small')`
+      padding: 2px 6px;
+      `};
 
       img {
         display: inline-flex;
@@ -76,6 +86,10 @@ export const StyledTable = styled.div`
         margin-left: 35px;
         cursor: pointer;
         color: ${theme.colors.darkGray};
+
+        ${media.lessThan('small')`
+        margin-left: 0px;
+        `};
       }
     }
 

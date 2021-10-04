@@ -19,6 +19,7 @@ import { FiFileText } from 'react-icons/fi';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
+import { useMediaQuery } from 'react-responsive';
 interface Categories {
   id: string;
   name: string;
@@ -58,6 +59,7 @@ export default function EquipamentList() {
   const [currentPage, setCurrentPage] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [issuesPerPage, setIssuesPerPage] = useState(8);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const IndexOfLastPost = currentPage * issuesPerPage;
   const indexfFirstPost = IndexOfLastPost - issuesPerPage;
@@ -215,7 +217,6 @@ export default function EquipamentList() {
                 </section>
               </>
             </StyledTable>
-            <div>testes</div>
           </>
         ) : (
           <>
@@ -234,10 +235,9 @@ export default function EquipamentList() {
                     <thead>
                       <tr>
                         <th>Nome</th>
-                        <th>Categoria</th>
-
+                        {!isMobile && <th>Categoria</th>}
                         <th>Status</th>
-                        <th>Criado por</th>
+                        {!isMobile ? <th>Criado por</th> : <th>Ação</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -246,7 +246,7 @@ export default function EquipamentList() {
                           <td>
                             <Link to={`equipaments/details/${category.id}`}>{category.name}</Link>
                           </td>
-                          <td>{category?.description ? category.description : `Sem descrição`}</td>
+                          {!isMobile && <td>{category?.description ? category.description : `Sem categoria`}</td>}
                           <td>
                             {category.dateOfExpiration ? (
                               isPast(parseISO(category.dateOfExpiration)) ? (
@@ -268,17 +268,14 @@ export default function EquipamentList() {
                             )}
                           </td>
                           <td>
-                            <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="" />
-                            {category.technician.name}
+                            {!isMobile && <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="Portrait User" />}
+                            {!isMobile && category.technician.name}
                             <Menu
                               menuButton={
                                 <MenuButton>
                                   <BsThreeDotsVertical />
                                 </MenuButton>
                               }>
-                              <MenuItem>
-                                <Link to={`category/edit/${category.id}`}>Editar</Link>
-                              </MenuItem>
                               <MenuItem
                                 onClick={() => {
                                   handleDeleteAction();
@@ -293,7 +290,7 @@ export default function EquipamentList() {
                     </tbody>
                   </table>
                   <section>
-                    <span>Marcas cadastradas na base de dados</span>
+                    <span>Equipamentos cadastradas na base de dados</span>
                   </section>
                 </>
               ) : (
@@ -303,7 +300,7 @@ export default function EquipamentList() {
                   <DescriptionEmpty>
                     {input ? `Nao encontramos nenhuma marca relacionada com a sua busca` : `Você não possui marcas cadastradas no sistemas.`}
                   </DescriptionEmpty>
-                  <Button onClick={() => history.push(`/equipament/new`)}>Adicionar Marca</Button>
+                  <Button onClick={() => history.push(`/equipament/new`)}>Adicionar Equipamento</Button>
                 </EmptyState>
               )}
             </StyledTable>
