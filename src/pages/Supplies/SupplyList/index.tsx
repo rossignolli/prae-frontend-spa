@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import manProfile from '../../../assets/temp_assets/man-profile.png';
 import NavigationBar from '../../../components/Navbar';
-// import { useAuth } from '../../hooks/AuthContext';
+
 import api from '../../../services/api';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import { BsThreeDotsVertical } from 'react-icons/bs';
@@ -18,6 +18,7 @@ import { FiFolder } from 'react-icons/fi';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
+import { useMediaQuery } from 'react-responsive';
 interface Supplies {
   id: string;
   name: string;
@@ -25,6 +26,10 @@ interface Supplies {
   created_at: Date;
   description: string;
   updated_at: Date;
+  technician: {
+    avatar: string;
+    name: string;
+  };
 }
 
 export default function Supply() {
@@ -40,7 +45,7 @@ export default function Supply() {
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('warning');
   const [currentPage, setCurrentPage] = useState(1);
   const [issuesPerPage, setIssuesPerPage] = useState(8);
-
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const IndexOfLastPost = currentPage * issuesPerPage;
   const indexfFirstPost = IndexOfLastPost - issuesPerPage;
 
@@ -216,7 +221,7 @@ export default function Supply() {
                       <tr>
                         <th>Nome</th>
                         <th>Preço</th>
-                        <th>Criado por</th>
+                        {!isMobile ? <th>Criado por</th> : <th>Ação</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -225,8 +230,8 @@ export default function Supply() {
                           <td>{category.name}</td>
                           <td>{category.pricePerJob}</td>
                           <td>
-                            <img src={manProfile} alt="" />
-                            Vitor Rossignolli
+                            {!isMobile && <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="Portrait User" />}
+                            {!isMobile && category.technician.name}
                             <Menu
                               menuButton={
                                 <MenuButton>

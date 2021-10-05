@@ -18,11 +18,13 @@ import { FiFolder } from 'react-icons/fi';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
+import { useMediaQuery } from 'react-responsive';
 
 interface Supplies {
   id: string;
   name: string;
   email: string;
+  avatar: string;
 }
 
 export default function UserList() {
@@ -43,7 +45,7 @@ export default function UserList() {
   const indexfFirstPost = IndexOfLastPost - issuesPerPage;
 
   const currentCategories = category?.slice(indexfFirstPost, IndexOfLastPost);
-
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
 
   useEffect(() => {
@@ -211,34 +213,19 @@ export default function UserList() {
                     <thead>
                       <tr>
                         <th>E-mail</th>
-                        <th>Nome</th>
+                        {!isMobile && <th>Nome</th>}
                       </tr>
                     </thead>
                     <tbody>
                       {currentCategories?.map(category => (
                         <tr key={category.id}>
                           <td>{category.email}</td>
-                          <td>
-                            <img src={manProfile} alt="" />
-                            Vitor Rossignolli
-                            <Menu
-                              menuButton={
-                                <MenuButton>
-                                  <BsThreeDotsVertical />
-                                </MenuButton>
-                              }>
-                              <MenuItem>
-                                <Link to={`supply/edit/${category.id}`}>Editar</Link>
-                              </MenuItem>
-                              <MenuItem
-                                onClick={() => {
-                                  handleDeleteAction();
-                                  setSelectedCategory(category.id);
-                                }}>
-                                Excluir
-                              </MenuItem>
-                            </Menu>
-                          </td>
+                          {!isMobile && (
+                            <td>
+                              <img src={category.avatar ? category.avatar : manProfile} alt="Portrait User" />
+                              {category.name}
+                            </td>
+                          )}
                         </tr>
                       ))}
                     </tbody>

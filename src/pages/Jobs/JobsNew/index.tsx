@@ -107,7 +107,7 @@ export default function JobNew() {
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>
-          <Header title="Procedimentos" description="Adicone procedimentos para manutenções" />
+          <Header title="Procedimentos" description="" />
           <form onSubmit={handleSubmit}>
             <InputTextField
               name="name"

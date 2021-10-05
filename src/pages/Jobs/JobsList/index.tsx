@@ -18,6 +18,7 @@ import { FiFolder } from 'react-icons/fi';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
+import { useMediaQuery } from 'react-responsive';
 interface Supplies {
   id: string;
   name: string;
@@ -25,6 +26,10 @@ interface Supplies {
     pricePerJob: string;
   };
   category: {
+    name: string;
+  };
+  technician: {
+    avatar: string;
     name: string;
   };
 }
@@ -49,6 +54,7 @@ export default function JobList() {
   const currentCategories = category?.slice(indexfFirstPost, IndexOfLastPost);
 
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   useEffect(() => {
     api.get(`/jobs`).then(response => {
@@ -219,7 +225,7 @@ export default function JobList() {
                         <th>Nome</th>
                         <th>Categoria</th>
                         <th>Preço</th>
-                        <th>Criado por</th>
+                        {!isMobile ? <th>Criado por</th> : <th>Ação</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -229,8 +235,8 @@ export default function JobList() {
                           <td>{job.category.name}</td>
                           <td>R$ {job.supply.pricePerJob}</td>
                           <td>
-                            <img src={manProfile} alt="" />
-                            Vitor Rossignolli
+                            {!isMobile && <img src={job.technician.avatar ? job.technician.avatar : manProfile} alt="Portrait User" />}
+                            {!isMobile && job.technician.name}
                             <Menu
                               menuButton={
                                 <MenuButton>
@@ -238,7 +244,7 @@ export default function JobList() {
                                 </MenuButton>
                               }>
                               <MenuItem>
-                                <Link to={`supply/edit/${job.id}`}>Editar</Link>
+                                <Link to={`job/edit/${job.id}`}>Editar</Link>
                               </MenuItem>
                               <MenuItem
                                 onClick={() => {
@@ -264,7 +270,7 @@ export default function JobList() {
                   <S.DescriptionEmpty>
                     {input ? `Nao encontramos nenhum suprimentos relacionada com a sua busca` : `Você não possui suprimentos cadastradas no sistemas.`}
                   </S.DescriptionEmpty>
-                  <Button onClick={() => history.push(`/job/new`)}>Adicionar Procedimento</Button>
+                  <Button onClick={() => history.push(`/jobs/new`)}>Adicionar Procedimento</Button>
                 </S.EmptyState>
               )}
             </StyledTable>

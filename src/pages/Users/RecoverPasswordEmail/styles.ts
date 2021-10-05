@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
-import signInBackgroundImg from '../../assets/temp_assets/girlit.jpg';
+import signInBackgroundImg from '../../../assets/temp_assets/girlholdingcoffe.jpg';
 
 export const Container = styled.div`
   ${({ theme }) => css`

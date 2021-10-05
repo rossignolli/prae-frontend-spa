@@ -1,23 +1,24 @@
 import * as S from './styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import logo from '../../assets/temp_assets/logo.svg';
-import { useAuth } from '../../hooks/AuthContext';
-import { Link, useHistory } from 'react-router-dom';
-import InputTextField from '../../components/TextField';
-import Button from '../../components/Button';
-import { Helmet } from 'react-helmet';
+import logo from '../../../assets/temp_assets/logo.svg';
 
-export default function SignUpPage() {
+import { useAuth } from '../../../hooks/AuthContext';
+import { Link, useHistory } from 'react-router-dom';
+import InputTextField from '../../../components/TextField';
+import Button from '../../../components/Button';
+import { Helmet } from 'react-helmet';
+import { useState } from 'react';
+
+export default function SigninPage() {
   const { signIn } = useAuth();
   const history = useHistory();
+  const [passwordRecoveryHint, setPasswordRecoveryHint] = useState(false);
 
   const { handleSubmit, handleChange, values, touched, errors, handleBlur, setErrors } = useFormik({
     initialValues: {
       login: '',
       password: '',
-      passwordvalidation: '',
-      code: '',
       invalidlogin: '',
     },
     validationSchema: Yup.object({
@@ -33,6 +34,7 @@ export default function SignUpPage() {
           setErrors({
             invalidlogin: 'Senha ou e-mail inválidos.',
           });
+          setPasswordRecoveryHint(true);
         } else {
           history.push('/dashboard');
         }
@@ -43,24 +45,16 @@ export default function SignUpPage() {
   return (
     <S.Container>
       <Helmet>
-        <title>Prae - Registrar</title>
+        <title>Prae - Login</title>
         <meta property="og:title" content="Prae - Gerencia seus assets com inteligência" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://cdn.discordapp.com/attachments/393816255993479179/887888085256388658/unknown.png" />
         <meta property="og:url" content="https://prae.vigarani.dev/" />
       </Helmet>
+      <S.ADBIG></S.ADBIG>
       <S.Content>
         <img src={logo} alt="Prae logo" />
         <S.Form onSubmit={handleSubmit}>
-          <InputTextField
-            name="name"
-            label="Nome"
-            type="email"
-            value={values.login}
-            errorMesage={touched.login && errors.login ? errors.login : false}
-            onBlur={handleBlur}
-            onChange={handleChange}
-          />
           <InputTextField
             name="login"
             label="E-mail"
@@ -79,32 +73,31 @@ export default function SignUpPage() {
             onBlur={handleBlur}
             onChange={handleChange}
           />
-          <InputTextField
-            name="passwordvalidation"
-            label="Confirme sua senha"
-            type="password"
-            value={values.password}
-            errorMesage={touched.password && errors.password ? errors.password : false}
-            onBlur={handleBlur}
-            onChange={handleChange}
-          />
-          <InputTextField
-            name="login"
-            label="Código de identificação"
-            type="number"
-            value={values.login}
-            errorMesage={touched.login && errors.login ? errors.login : false}
-            onBlur={handleBlur}
-            onChange={handleChange}
-          />
           <Button type="submit"> Entrar</Button>
-          <Button minimal type="button">
-            <Link to={'/'}>Voltar</Link>
-          </Button>
+
           <h3>{errors?.invalidlogin}</h3>
+
+          {passwordRecoveryHint && (
+            <>
+              <h2>
+                <Link to="/forgotmypassword">Esqueci a senha</Link>
+              </h2>
+              <h3>
+                <Link to="/user/resend">Não consegue encontrar email?</Link>
+              </h3>
+            </>
+          )}
+
+          {!passwordRecoveryHint && (
+            <S.SignUpHintContainer>
+              <span>Não possui conta?</span>
+              <Link to={'/signup'}>
+                <h1>Solicitar Conta</h1>
+              </Link>
+            </S.SignUpHintContainer>
+          )}
         </S.Form>
       </S.Content>
-      <S.ADBIG />
     </S.Container>
   );
 }

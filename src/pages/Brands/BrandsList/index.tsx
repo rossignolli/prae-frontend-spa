@@ -39,7 +39,7 @@ export default function Category() {
   const history = useHistory();
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('warning');
   const [currentPage, setCurrentPage] = useState(1);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [issuesPerPage, setIssuesPerPage] = useState(8);
 
   const IndexOfLastPost = currentPage * issuesPerPage;

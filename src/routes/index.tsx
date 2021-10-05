@@ -5,17 +5,16 @@
 import React from 'react';
 
 import { Switch } from 'react-router-dom';
-import Signin from '../pages/SignIn';
+import Signin from '../pages/Users/SignIn';
 import Dashboard from '../pages/Dashboard';
-import RecoverPassword from '../pages/RecoverPassword';
-import ForgotPassword from '../pages/RecoverPasswordEmail';
-
+import RecoverPassword from '../pages/Users/RecoverPassword';
+import ResendVerification from '../pages/Users/ResendVerification';
+import ForgotPassword from '../pages/Users/RecoverPasswordEmail';
 // * EQUIPAMENTS ROUTES */
 import Equipaments from '../pages/Equipaments/EquipamentList';
 import EquipamentsDetails from '../pages/Equipaments/EquipamentsDetails';
 import EquipamentsDetailsPreventive from '../pages/Equipaments/EquipamentsDetailsPreventive';
 import EquipamentsDetailsPreventiveAction from '../pages/Equipaments/EquipamentsActionExecute';
-
 import NewEquipaments from '../pages/Equipaments/NewEquipament';
 // * CATEGORY ROUTES */
 import Category from '../pages/Categories/CategoryList';
@@ -35,16 +34,20 @@ import JobNew from '../pages/Jobs/JobsNew';
 import JobEdit from '../pages/Jobs/JobsEdit';
 // * user ROUTES */
 import Users from '../pages/Users/UserList';
-
 import Route from './Route';
-import SignUpPage from '../pages/SignUp';
+import SignUpPage from '../pages/Users/SignUp';
+import AccountConfirmation from '../pages/Users/AccountConfirmation';
+
 export default function Supplies() {
   return (
     <Switch>
       {/* USERS ROUTES */}
       <Route path="/" exact component={Signin} />
+      <Route path="/user" exact component={Users} isPrivate />
+      <Route path="/accout/confirmation/:verificationCode" exact component={AccountConfirmation} />
       <Route path="/signup" exact component={SignUpPage} />
       <Route path="/recover/:verificationCode" exact component={RecoverPassword} />
+      <Route path="/user/resend" exact component={ResendVerification} />
       <Route path="/forgotmypassword" exact component={ForgotPassword} />
       {/* EQUIPAMENTS ROUTES */}
       <Route path="/dashboard" component={Dashboard} isPrivate />
@@ -69,21 +72,6 @@ export default function Supplies() {
       <Route path="/job" exact component={Jobs} isPrivate />
       <Route path="/job/new" exact component={JobNew} isPrivate />
       <Route path="/job/edit/:id" exact component={JobEdit} isPrivate />
-      {/* USER */}
-      <Route path="/user" exact component={Users} isPrivate />
-
-      {/* <Route path="/preventives" exact component={Preventive} isPrivate />
-      <Route
-        path="/equipaments/details/:id"
-        exact
-        component={EquipamentDetails}
-        isPrivate
-      /> */}
-      {/* <Route path="/monitor/:id" exact component={MonitorStart} isPrivate />
-      <Route path="/category/new" component={NewCategory} isPrivate />
-      <Route path="/supply" exact component={Supply} isPrivate />
-      <Route path="/job" exact component={Job} isPrivate /> */}
-      {/* <Route path="/repositories/:repository+" component={Repository} /> */}
     </Switch>
   );
 }

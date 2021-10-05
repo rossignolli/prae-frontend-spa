@@ -42,7 +42,7 @@ export const StyledTable = styled.div`
       border-bottom: 1px ${theme.colors.grayBorder} solid;
       padding: 12px 24px;
 
-      ${media.lessThan('small')`
+      ${media.lessThan('medium')`
       padding: 2px 6px;
       `};
 
@@ -60,7 +60,7 @@ export const StyledTable = styled.div`
       vertical-align: middle;
       text-align: center;
 
-      ${media.lessThan('small')`
+      ${media.lessThan('medium')`
       padding: 2px 6px;
       `};
 

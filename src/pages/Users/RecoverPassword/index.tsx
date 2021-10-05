@@ -1,15 +1,15 @@
 import * as S from './styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import logo from '../../assets/temp_assets/logo.svg';
-import { useAuth } from '../../hooks/AuthContext';
+import logo from '../../../assets/temp_assets/logo.svg';
+import { useAuth } from '../../../hooks/AuthContext';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import InputTextField from '../../components/TextField';
-import Button from '../../components/Button';
+import InputTextField from '../../../components/TextField';
+import Button from '../../../components/Button';
 import { Helmet } from 'react-helmet';
-import api from '../../services/api';
+import api from '../../../services/api';
 import { useState } from 'react';
-import ConfirmationModal from '../../components/Modals/ConfirmationModal';
+import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 
 interface EditCategoryParams {
   verificationCode: string;
@@ -19,7 +19,7 @@ export default function RecoverPasswordPage() {
   const history = useHistory();
 
   const [modalTitle, setModalTitle] = useState('Sucesso');
-  const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
+  const [modalDescription, setModalDescription] = useState('Senha recuperada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
@@ -31,7 +31,7 @@ export default function RecoverPasswordPage() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setErrors } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur } = useFormik({
     initialValues: {
       password: '',
       passwordvalidation: '',

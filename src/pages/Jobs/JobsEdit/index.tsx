@@ -48,7 +48,7 @@ export default function JobEdit() {
   const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
     initialValues: {
       name: category?.name,
-      pricePerJob: category?.pricePerJob,
+      description: category?.pricePerJob,
     },
     validationSchema: Yup.object({
       name: Yup.string().min(6, 'Nome de categoria precisa ter ao menos 6 caracteres').required('*Nome da categoria é requerido.'),
@@ -72,7 +72,7 @@ export default function JobEdit() {
   });
 
   useEffect(() => {
-    api.get(`/supplies/details/${id}`).then(response => {
+    api.get(`/jobs/details/${id}`).then(response => {
       setcategory(response.data);
     });
   }, [id]);
@@ -80,7 +80,7 @@ export default function JobEdit() {
   useEffect(() => {
     if (category) {
       setFieldValue('name', category?.name);
-      setFieldValue('pricePerJob', category?.pricePerJob);
+      setFieldValue('description', category?.pricePerJob);
     }
   }, [category, category?.pricePerJob, category?.name, id, setFieldValue]);
 
@@ -89,10 +89,7 @@ export default function JobEdit() {
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>
-          <Header
-            title="Categorias"
-            description="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
-          />
+          <Header title="Procedimentos" description="" />
           <form onSubmit={handleSubmit}>
             <InputTextField
               name="name"
@@ -106,9 +103,9 @@ export default function JobEdit() {
             <InputTextField
               name="pricePerJob"
               label="Descrição da categoria"
-              value={values.pricePerJob}
+              value={values.description}
               placeholder={'Ex: Computadores de executivos'}
-              errorMesage={touched.pricePerJob && errors.pricePerJob ? errors.pricePerJob : false}
+              errorMesage={touched.description && errors.description ? errors.description : false}
               onBlur={handleBlur}
               onChange={handleChange}
             />
