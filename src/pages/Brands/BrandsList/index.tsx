@@ -15,6 +15,7 @@ import { FiFileText } from 'react-icons/fi';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
+import { MdLibraryBooks } from 'react-icons/md';
 interface Categories {
   id: string;
   name: string;
@@ -254,7 +255,8 @@ export default function Category() {
                 </>
               ) : (
                 <S.EmptyState>
-                  <FiFileText size={82} color={`#8257e5`} />
+                  <MdLibraryBooks size={62} color={`#8257e5`} />
+
                   <S.TitleEmpty>Nada para mostrar aqui.</S.TitleEmpty>
                   <S.DescriptionEmpty>
                     {input ? `Nao encontramos nenhuma marca relacionada com a sua busca` : `Você não possui marcas cadastradas no sistemas.`}

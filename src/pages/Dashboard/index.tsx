@@ -8,7 +8,6 @@ import { FiMonitor, FiUsers } from 'react-icons/fi';
 import { MdLibraryBooks } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
-import ProfileModal from '../../components/Modals/ProfileModal';
 
 interface HomeData {
   equipamentsTotal: number;
@@ -18,6 +17,7 @@ interface HomeData {
   percentage: {
     operational: number;
     expired: number;
+    expiring: number;
     notBeingMonitored: number;
   };
   equipaments: Array<{
@@ -39,9 +39,13 @@ export default function Dashboard() {
     });
   }, []);
 
-  const series = [homeData?.percentage.operational, homeData?.percentage.expired, 20, homeData?.percentage.notBeingMonitored];
+  const series = [
+    homeData?.percentage.operational !== null ? homeData?.percentage.operational : 1,
+    homeData?.percentage.expired !== null ? homeData?.percentage.expired : 1,
+    homeData?.percentage.expiring !== null ? homeData?.percentage.expiring : 1,
+    homeData?.percentage.notBeingMonitored !== null ? homeData?.percentage.notBeingMonitored : 1,
+  ];
   const options = {
-    type: 'donut',
     labels: ['Em dia', 'Vencidos', 'Vencendo', 'Não Monitorados'],
     colors: ['#04D361', '#FF6347', '#FFB167', '#3CD3C1'],
     responsive: [
@@ -84,8 +88,14 @@ export default function Dashboard() {
       <NavigationBar />
       <S.ContainerDash>
         <S.EquipamentsContainer>
-          <S.TitleSection>Vencimentos</S.TitleSection>
-          <S.SubTitleSection>Esses equipamentos precisarão de atenção em breve</S.SubTitleSection>
+          {homeData && homeData.equipaments.length <= 0 ? (
+            <S.TitleSection>Nenhum equipamento necessita de atenção.</S.TitleSection>
+          ) : (
+            <>
+              <S.TitleSection>Vencimentos</S.TitleSection>
+              <S.SubTitleSection>Esses equipamentos precisarão de atenção em breve</S.SubTitleSection>
+            </>
+          )}
           {homeData?.equipaments.map(equipament => {
             return (
               <CardEquipament id={equipament.id} key={equipament.id} title={equipament.name} status={equipament.status} subtitle={equipament.category.name} />
@@ -96,7 +106,7 @@ export default function Dashboard() {
           <S.ChartContainer>
             <S.TitleSection>Visão Geral da Organização</S.TitleSection>
             <S.SubTitleSection>Resumo da situação da organização</S.SubTitleSection>
-            {homeData && <Chart options={options} type="pie" series={series} />}
+            {homeData?.percentage && <Chart options={options} type="donut" series={series} />}
           </S.ChartContainer>
           <S.TitleSection>Estatísticas de Entidades</S.TitleSection>
           <S.SubTitleSection>Esses equipamentos precisarão de atenção em breve</S.SubTitleSection>

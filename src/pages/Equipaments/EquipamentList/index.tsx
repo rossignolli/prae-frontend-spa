@@ -298,9 +298,9 @@ export default function EquipamentList() {
                   <FiFileText size={82} color={`#8257e5`} />
                   <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
                   <DescriptionEmpty>
-                    {input ? `Nao encontramos nenhuma marca relacionada com a sua busca` : `Você não possui marcas cadastradas no sistemas.`}
+                    {input ? `Nao encontramos nenhuma marca relacionada com a sua busca` : `Não existem equipamentos cadastrados no sistemas.`}
                   </DescriptionEmpty>
-                  <Button onClick={() => history.push(`/equipament/new`)}>Adicionar Equipamento</Button>
+                  <Button onClick={() => history.push(`/equipaments/new`)}>Adicionar Equipamento</Button>
                 </EmptyState>
               )}
             </StyledTable>

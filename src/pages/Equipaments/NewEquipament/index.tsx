@@ -47,7 +47,7 @@ export default function NewEquipament() {
   const [categories, setCategories] = useState<Option[]>([]);
   const history = useHistory();
   const [modalTitle, setModalTitle] = useState('Sucesso');
-  const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
+  const [modalDescription, setModalDescription] = useState('Equipamento adicionado com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [isWarnModal, setIsWarnModal] = useState(false);

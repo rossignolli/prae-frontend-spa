@@ -18,7 +18,7 @@ export default function NewBrand() {
   const history = useHistory();
   const { user } = useAuth();
   const [modalTitle, setModalTitle] = useState('Sucesso');
-  const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
+  const [modalDescription, setModalDescription] = useState('Marca adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');

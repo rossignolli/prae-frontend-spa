@@ -79,7 +79,7 @@ export default function EquipamentsDetails() {
   const [preventives, setPreventives] = useState<Preventive[]>();
   const [url, setUrl] = useState('');
   const [modalTitle, setModalTitle] = useState('Sucesso');
-  const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
+  const [modalDescription, setModalDescription] = useState('Equipamento adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
@@ -130,6 +130,19 @@ export default function EquipamentsDetails() {
     }
 
     setIsConfirmationMonitorModalOpen(true);
+  }
+
+  function newAction() {
+    if (!equipament?.monitor) {
+      setModalTitle('Ops... Erro.');
+      setModalDescription('Somente equipamento monitorados podem receber ações.');
+      setModalType('error');
+      setButtonsOption(false);
+      setIsNewTConfirmationModalOpen(true);
+      return;
+    }
+
+    history.push(`actions/new/${equipament?.category.id}/${equipament?.id}`);
   }
 
   async function handleStarMonitoringEquipament(date: string) {
@@ -212,7 +225,7 @@ export default function EquipamentsDetails() {
             </a>
           </Button>
 
-          <Button customColor="#FF787A" onClick={() => history.push(`actions/new/${equipament?.category.id}/${equipament?.id}`)}>
+          <Button customColor="#FF787A" onClick={newAction}>
             Iniciar Ação
           </Button>
         </S.ButtonContainer>

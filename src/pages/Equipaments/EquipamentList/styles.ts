@@ -63,10 +63,15 @@ export const CircleWarning = styled.div`
 export const EmptyState = styled.div`
   ${({ theme }) => css`
     display: flex;
-    height: 80vh;
+
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 2rem;
+
+    h2 {
+      text-align: center;
+    }
   `}
 `;
 
