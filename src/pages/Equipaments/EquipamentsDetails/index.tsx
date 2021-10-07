@@ -15,6 +15,9 @@ import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { Link, useHistory } from 'react-router-dom';
 import SelectDateMonitorModal from '../../../components/Modals/SelectDateMonitorModal';
 import { ptBR } from 'date-fns/locale';
+import { DescriptionEmpty, EmptyState, TitleEmpty } from '../EquipamentList/styles';
+import { FiTool } from 'react-icons/fi';
+import EmptySpace from '../../../components/EmptyStatus';
 
 interface EditCategoryParams {
   id: string;
@@ -91,25 +94,43 @@ export default function EquipamentsDetails() {
 
   useEffect(() => {
     api.get(`/equipaments/details/${id}`).then(response => {
-      response.data.images.map((image: Images) => {
-        imagesToShow.push({
-          original: image.path,
-          originalWidth: 250,
-          originalHeight: 250,
-          thumbnail: image.path,
-        });
-      });
-      setImagesToShow(imagesToShow);
       setEquipament(response.data);
-      api.get(`equipaments/qrcode/${equipament?.id}`, { responseType: 'blob' }).then(response => {
+
+      api.get(`/preventives/equipament/${id}`).then(response => {
+        setPreventives(response.data);
+      });
+
+      api.get(`equipaments/qrcode/${id}`, { responseType: 'blob' }).then(response => {
         setUrl(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
       });
-    });
 
-    api.get(`/preventives/equipament/${id}`).then(response => {
-      setPreventives(response.data);
+      console.log(response.data.images.length);
+
+      if (response.data.images.length === 0) {
+        imagesToShow.push({
+          original: 'https://static-prae.s3.us-east-2.amazonaws.com/Others/no-image.png',
+          originalWidth: 360,
+          originalHeight: 360,
+          thumbnail: 'https://static-prae.s3.us-east-2.amazonaws.com/Others/no-image.png',
+        });
+
+        setImagesToShow(imagesToShow);
+
+        return;
+      }
+
+      response.data.images.map((image: Images) => {
+        console.log(image.id);
+        imagesToShow.push({
+          original: image.path,
+          originalWidth: 360,
+          originalHeight: 360,
+          thumbnail: image.path,
+        });
+        setImagesToShow(imagesToShow);
+      });
     });
-  }, [equipament?.id, id, imagesToShow]);
+  }, [id, imagesToShow]);
 
   function handleCloseConfirmationModalMonitoring() {
     setIsConfirmationMonitorModalOpen(false);
@@ -172,14 +193,16 @@ export default function EquipamentsDetails() {
     setIsNewTConfirmationModalOpen(true);
   }
 
+  if (!equipament) {
+    return <EmptySpace />;
+  }
+
   return (
     <GlobalDashContainer>
       <NavigationBar />
       <S.ContainerEquipaments>
         <S.HeaderEquipament>
-          <S.GalleryEquipament>
-            <ImageGallery items={imagesToShow} />
-          </S.GalleryEquipament>
+          <S.GalleryEquipament>{imagesToShow && <ImageGallery items={imagesToShow} />}</S.GalleryEquipament>
           <S.EquipamentDetails>
             <S.EquipamentTitle>{equipament?.name}</S.EquipamentTitle>
             <S.EquipamentDescription>{equipament?.description ? equipament.description : `Sem descrição`}</S.EquipamentDescription>
@@ -188,10 +211,12 @@ export default function EquipamentsDetails() {
                 <h1>{equipament?.brand.name}</h1>
                 <span>Marca</span>
               </S.ResumeInfo>
-              <S.ResumeInfo>
-                <h1>{equipament?.daysWithoutCorrective}</h1>
-                <span>dias sem corretivas</span>
-              </S.ResumeInfo>
+              {equipament?.daysWithoutCorrective !== 0 && (
+                <S.ResumeInfo>
+                  <h1>{equipament?.daysWithoutCorrective}</h1>
+                  <span>dias sem corretivas</span>
+                </S.ResumeInfo>
+              )}
               <S.ResumeInfo>
                 <h1>{equipament?.maintenanceTotal}</h1>
                 <span>manutenções executadas</span>
@@ -224,41 +249,51 @@ export default function EquipamentsDetails() {
               QR CODE
             </a>
           </Button>
-
           <Button customColor="#FF787A" onClick={newAction}>
             Iniciar Ação
           </Button>
         </S.ButtonContainer>
       </S.ContainerEquipaments>
       <S.ContainerEquipaments>
-        <Header title="Preventivas" description="Listagem completa de todas as preventivas executadas no equipamento" />
-        <StyledTable>
-          <table>
-            <thead>
-              <tr>
-                <th>Data de execução</th>
-                <th>Tipo</th>
-                <th>Realizado por</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {preventives?.map(preventive => (
-                <tr key={preventive.id}>
-                  <td>{preventives && format(parseISO(preventive.created_at), " dd 'de' MMMM'", { locale: ptBR })}</td>
-                  <td>{preventive.isCorrective ? 'Corretiva' : 'Preventiva'}</td>
-                  <td>{preventive.equipament.technician.name}</td>
-                  <td>
-                    <Link to={`preventive/${preventive.id}`}>Ver detalhes</Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <section>
-            <span>Manutenções executadas nesse equipamento</span>
-          </section>
-        </StyledTable>
+        {preventives && preventives.length > 0 ? (
+          <>
+            <Header title="Preventivas" description="Listagem completa de todas as preventivas executadas no equipamento" />
+            <StyledTable>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Data de execução</th>
+                    <th>Tipo</th>
+                    <th>Realizado por</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {preventives?.map(preventive => (
+                    <tr key={preventive.id}>
+                      <td>{preventives && format(parseISO(preventive.created_at), " dd 'de' MMMM'", { locale: ptBR })}</td>
+                      <td>{preventive.isCorrective ? 'Corretiva' : 'Preventiva'}</td>
+                      <td>{preventive.equipament.technician.name}</td>
+                      <td>
+                        <Link to={`preventive/${preventive.id}`}>Ver detalhes</Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <section>
+                <span>Manutenções executadas nesse equipamento</span>
+              </section>
+            </StyledTable>
+          </>
+        ) : (
+          <EmptyState>
+            <FiTool size={62} color={`#8257e5`} />
+            <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
+            <DescriptionEmpty>Não existem manutenções cadastrados no sistemas.</DescriptionEmpty>
+            <Button onClick={newAction}>Adicionar Manutenção</Button>
+          </EmptyState>
+        )}
       </S.ContainerEquipaments>
       <SelectDateMonitorModal
         title={modalTitle}

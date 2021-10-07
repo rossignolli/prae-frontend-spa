@@ -54,6 +54,11 @@ input{
 
 }
 
+
+.image-gallery-image img {
+  max-width: 300px;
+}
+
 }
 .react-modal-content {
 

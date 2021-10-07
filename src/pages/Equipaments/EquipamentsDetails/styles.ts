@@ -7,6 +7,7 @@ export const Container = styled.div`
 
 export const ResumeEquipament = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
 `;
 
@@ -14,7 +15,7 @@ export const CardInfoHightlight = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     border-radius: 15px;
 
@@ -38,7 +39,7 @@ export const ContainerEquipaments = styled.div`
     display: flex;
     padding: ${theme.spacings.medium};
     flex-direction: column;
-    margin: 16px;
+    margin: ${theme.spacings.small};
     background-color: #ffffff;
     border-radius: 15px;
   `}
@@ -136,7 +137,7 @@ export const CardEquipament = styled.div`
 export const ResumeContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     margin-top: ${theme.spacings.xsmall};
   `}
 `;
@@ -144,9 +145,12 @@ export const ResumeContainer = styled.div`
 export const ButtonContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 
     button + button {
       padding: ${theme.spacings.xsmall};
+      margin: ${theme.spacings.xxsmall};
       margin-left: ${theme.spacings.xsmall};
     }
   `}

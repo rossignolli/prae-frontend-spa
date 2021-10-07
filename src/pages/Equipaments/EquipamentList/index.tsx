@@ -20,6 +20,8 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
 import { useMediaQuery } from 'react-responsive';
+import EmptySpace from '../../../components/EmptyStatus';
+
 interface Categories {
   id: string;
   name: string;
@@ -129,95 +131,7 @@ export default function EquipamentList() {
         <NavigationBar />
         <SkeletonTheme color="#FFFF" highlightColor="#e6e1e139" />
         {!category ? (
-          <>
-            <ActionHolderContainer>
-              <Skeleton duration={0.5} width={140} count={3} height={40} style={{ borderRadius: `15px`, marginRight: `10px` }} />
-            </ActionHolderContainer>
-            <StyledTable>
-              <>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Nome</th>
-                      <th>Categoria</th>
-                      <th>Criado por</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                      <td>
-                        <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <section>
-                  <span>Categorias cadastradas na base de dados</span>
-                </section>
-              </>
-            </StyledTable>
-          </>
+          <EmptySpace />
         ) : (
           <>
             <ActionHolderContainer>
