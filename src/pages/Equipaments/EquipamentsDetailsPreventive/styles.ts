@@ -187,6 +187,10 @@ export const HeaderTitle = styled.span`
     margin-bottom: ${theme.spacings.xsmall};
     margin-top: ${theme.spacings.xsmall};
 
+    a {
+      text-decoration: none;
+    }
+
     color: ${theme.colors.bodyText};
 
     b {

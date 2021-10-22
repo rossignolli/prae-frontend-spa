@@ -1,47 +1,17 @@
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import NavigationBar from '../../../components/Navbar';
 import * as S from '../EquipamentsDetailsPreventive/styles';
-import { useAuth } from '../../../hooks/AuthContext';
-import ImageGallery from 'react-image-gallery';
 import '../../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
 import { StyledTable } from '../../../components/StyledTable/styles';
 import Button from '../../../components/Button';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import api from '../../../services/api';
-import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
-import { useHistory } from 'react-router-dom';
-import SelectDateMonitorModal from '../../../components/Modals/SelectDateMonitorModal';
-import Header from '../../../components/Header';
+import { Link, useHistory } from 'react-router-dom';
+import { ActionHolderContainer } from '../../Categories/EditCategory/styles';
 
-interface EditCategoryParams {
+interface DetailsPreventive {
   id: string;
-}
-
-interface Images {
-  id: string;
-  path: string;
-}
-
-interface Preventive {
-  id: string;
-  name: string;
-  created_at: string;
-  description: string;
-  updated_at: Date;
-  brand: {
-    name: string;
-  };
-  images: Images[];
-  isCorrective: boolean;
-  technician: {
-    name: string;
-  };
-  equipament: {
-    technician: {
-      name: string;
-    };
-  };
 }
 
 interface Jobs {
@@ -59,48 +29,21 @@ interface Jobs {
   };
 }
 
-interface Equipament {
-  id: string;
-  name: string;
-  created_at: Date;
-  description: string;
-  monitor: boolean;
-  dateOfExpiration: string;
-  updated_at: Date;
-  brand: {
-    name: string;
-  };
-  images: Images[];
-}
-
 export default function EquipamentsDetailsPreventive() {
-  const [equipament, setEquipament] = useState<Equipament>();
   const [jobs, setJobs] = useState<Jobs[]>();
-  const [modalTitle, setModalTitle] = useState('Sucesso');
-  const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
-  const [butonsOption, setButtonsOption] = useState(false);
-  const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
-  const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
+  const [url, setUrl] = useState('');
 
-  const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
-  const { id } = useParams<EditCategoryParams>();
+  const { id } = useParams<DetailsPreventive>();
   const history = useHistory();
-  const { user } = useAuth();
-  const reducer = (accumulator: any, curr: any) => accumulator.supply.pricePerJob + curr;
 
   useEffect(() => {
     api.get(`/preventives/details/${id}`).then(response => {
       setJobs(response.data);
     });
+    api.get(`preventives/report/${id}`, { responseType: 'blob' }).then(response => {
+      setUrl(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
+    });
   }, [id]);
-
-  function handleCloseConfirmationModalMonitoring() {
-    setIsConfirmationMonitorModalOpen(false);
-  }
-
-  function handleCloseConfirmationModal() {
-    setIsNewTConfirmationModalOpen(false);
-  }
 
   return (
     <GlobalDashContainer>
@@ -110,6 +53,9 @@ export default function EquipamentsDetailsPreventive() {
           <Button minimal onClick={() => history.goBack()}>
             Voltar
           </Button>
+          <Link to={{ pathname: url }} target="_blank">
+            <Button>Baixar Extrato</Button>
+          </Link>
           <b>Ação</b> #{jobs && jobs[0].id} - <b>{jobs && jobs[0].preventive.isCorrective ? `Corretiva` : `Preventiva`}</b>
         </S.HeaderTitle>
         <StyledTable>

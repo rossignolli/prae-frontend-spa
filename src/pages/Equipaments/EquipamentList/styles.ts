@@ -24,6 +24,11 @@ export const ActionHolderContainer = styled.div`
       padding: ${theme.spacings.xsmall};
       margin: ${theme.spacings.xsmall};
     }
+
+    a {
+      margin: ${theme.spacings.xsmall};
+      text-decoration: none;
+    }
   `}
 `;
 

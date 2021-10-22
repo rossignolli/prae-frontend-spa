@@ -38,7 +38,7 @@ interface Supplies {
 export default function JobList() {
   const [category, setCategory] = useState<Supplies[] | undefined>();
   const [categoryDefault, setCategoryDefault] = useState<Supplies[]>();
-
+  const [url, setUrl] = useState('');
   const [modalTitle, setModalTitle] = useState('');
   const [modalDescription, setModalDescription] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -61,6 +61,10 @@ export default function JobList() {
     api.get(`/jobs`).then(response => {
       setCategory(response.data);
       setCategoryDefault(response.data);
+    });
+
+    api.get(`jobs/report`, { responseType: 'blob' }).then(response => {
+      setUrl(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
     });
   }, []);
 
@@ -125,7 +129,9 @@ export default function JobList() {
               <Button minimal customColor="#FFFFFF" onClick={() => history.push('dashboard')}>
                 Voltar
               </Button>
-              <Button customColor="#FFFFFF">Gerar Relatório</Button>
+              <Link to={{ pathname: url }} target="_blank">
+                <Button customColor="#FFFFFF">Gerar Relatório</Button>
+              </Link>
               <Button onClick={() => history.push(`/job/new`)}>Adicionar Procedimento</Button>
             </S.ActionHolderContainer>
             <StyledTable>

@@ -40,7 +40,7 @@ export default function UserList() {
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('warning');
   const [currentPage, setCurrentPage] = useState(1);
   const [issuesPerPage, setIssuesPerPage] = useState(8);
-
+  const [url, setUrl] = useState('');
   const IndexOfLastPost = currentPage * issuesPerPage;
   const indexfFirstPost = IndexOfLastPost - issuesPerPage;
 
@@ -52,6 +52,10 @@ export default function UserList() {
     api.get(`/users`).then(response => {
       setCategory(response.data);
       setCategoryDefault(response.data);
+    });
+
+    api.get(`users/report`, { responseType: 'blob' }).then(response => {
+      setUrl(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
     });
   }, []);
 
@@ -195,7 +199,6 @@ export default function UserList() {
                 </section>
               </>
             </StyledTable>
-            <div>testes</div>
           </>
         ) : (
           <>
@@ -204,7 +207,9 @@ export default function UserList() {
               <Button minimal customColor="#FFFFFF" onClick={() => history.push(`dashboard`)}>
                 Voltar
               </Button>
-              <Button customColor="#FFFFFF">Gerar Relatório</Button>
+              <Link to={{ pathname: url }} target="_blank">
+                <Button customColor="#FFFFFF">Gerar Relatório</Button>
+              </Link>
             </S.ActionHolderContainer>
             <StyledTable>
               {category.length > 0 ? (

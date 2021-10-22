@@ -58,7 +58,7 @@ export const StyledTable = styled.div`
       font-size: 16px;
       padding: 12px 24px;
       vertical-align: middle;
-      text-align: center;
+      text-align: left;
 
       ${media.lessThan('medium')`
       padding: 2px 6px;

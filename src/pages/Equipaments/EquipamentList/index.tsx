@@ -56,6 +56,7 @@ export default function EquipamentList() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [butonsOption, setButtonsOption] = useState(true);
   const [input, setInput] = useState('');
+  const [url, setUrl] = useState('');
   const history = useHistory();
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('warning');
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,6 +75,10 @@ export default function EquipamentList() {
     api.get(`/equipaments`).then(response => {
       setCategory(response.data);
       setCategoryDefault(response.data);
+    });
+
+    api.get(`equipaments/report`, { responseType: 'blob' }).then(response => {
+      setUrl(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
     });
   }, []);
 
@@ -139,7 +144,9 @@ export default function EquipamentList() {
               <Button minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
                 Voltar
               </Button>
-              <Button customColor="#FFFFFF">Gerar Relatório</Button>
+              <Link to={{ pathname: url }} target="_blank">
+                <Button customColor="#FFFFFF">Gerar Relatório</Button>
+              </Link>
               <Button onClick={() => history.push(`/equipaments/new`)}>Adicionar Equipamento</Button>
             </ActionHolderContainer>
             <StyledTable>

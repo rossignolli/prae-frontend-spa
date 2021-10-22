@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import NavigationBar from '../../../components/Navbar';
 import * as S from './styles';
@@ -12,36 +13,11 @@ import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useHistory } from 'react-router-dom';
 import { AiFillCheckCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import InputSelectField from '../../../components/SelectField';
+import { ThreeDots } from 'react-loading-icons';
 
 interface EditCategoryParams {
   id: string;
   equipamentId: string;
-}
-
-interface Images {
-  id: string;
-  path: string;
-}
-
-interface Preventive {
-  id: string;
-  name: string;
-  created_at: string;
-  description: string;
-  updated_at: Date;
-  brand: {
-    name: string;
-  };
-  images: Images[];
-  isCorrective: boolean;
-  technician: {
-    name: string;
-  };
-  equipament: {
-    technician: {
-      name: string;
-    };
-  };
 }
 
 interface JobsType {
@@ -70,15 +46,15 @@ export default function EquipamentsPreventiveExecute() {
 
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
-  const [butonsOption, setButtonsOption] = useState(false);
-  const [isCritical, setCritical] = useState(false);
+  const [butonsOption] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  const [isCritical, setCritical] = useState({ value: true, label: 'Corretiva' });
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
   const { id, equipamentId } = useParams<EditCategoryParams>();
   const history = useHistory();
   const { user } = useAuth();
-
-  console.log(equipamentId);
 
   useEffect(() => {
     api.get(`/jobs/details/categories/${id}`).then(response => {
@@ -109,14 +85,14 @@ export default function EquipamentsPreventiveExecute() {
     setTotal(total + parseFloat(job.supply.pricePerJob));
   }
 
-  console.log(jobsExecution);
-
   async function ApplyMaintenance() {
+    setLoading(true);
     if (!jobsExecution.length) {
       setIsNewTConfirmationModalOpen(true);
       setModalType('error');
       setModalTitle('Erro');
       setModalDescription('Nenhuma ação adicionada.');
+      setLoading(false);
       return;
     }
 
@@ -128,10 +104,13 @@ export default function EquipamentsPreventiveExecute() {
 
     const data = {
       equipament_id: equipamentId,
-      isCorrective: isCritical,
+      // @ts-ignore
+      isCorrective: isCritical.value === 'true',
       technician_id: user.id,
       jobs: jobs,
     };
+
+    console.log(data);
 
     const response = await api.post('preventives', data);
 
@@ -146,8 +125,7 @@ export default function EquipamentsPreventiveExecute() {
     setIsNewTConfirmationModalOpen(true);
     setModalType('sucess');
     setModalDescription('Manutenção adicionada com sucesso.');
-
-    console.log(response);
+    setLoading(false);
   }
 
   return (
@@ -228,7 +206,7 @@ export default function EquipamentsPreventiveExecute() {
             onClick={() => {
               ApplyMaintenance();
             }}>
-            Confirmar e Aplicar
+            {isLoading ? <ThreeDots style={{ width: `42px` }} /> : `Confirmar e Aplicar`}
           </Button>
         </S.ResumeActions>
       </S.ContainerEquipaments>

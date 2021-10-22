@@ -197,6 +197,8 @@ export default function EquipamentsDetails() {
     return <EmptySpace />;
   }
 
+  console.log(preventives);
+
   return (
     <GlobalDashContainer>
       <NavigationBar />

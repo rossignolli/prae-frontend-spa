@@ -43,6 +43,7 @@ export default function Category() {
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('warning');
   const [currentPage, setCurrentPage] = useState(1);
   const [issuesPerPage] = useState(8);
+  const [url, setUrl] = useState('');
   const IndexOfLastPost = currentPage * issuesPerPage;
   const indexfFirstPost = IndexOfLastPost - issuesPerPage;
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
@@ -53,6 +54,9 @@ export default function Category() {
     api.get(`/categories`).then(response => {
       setCategory(response.data);
       setCategoryDefault(response.data);
+    });
+    api.get(`categories/report`, { responseType: 'blob' }).then(response => {
+      setUrl(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
     });
   }, []);
 
@@ -117,7 +121,9 @@ export default function Category() {
               <Button minimal customColor="#FFFFFF" onClick={() => history.push(`dashboard`)}>
                 Voltar
               </Button>
-              <Button customColor="#FFFFFF">Gerar Relatório</Button>
+              <Link to={{ pathname: url }} target="_blank">
+                <Button customColor="#FFFFFF">Gerar Relatório</Button>
+              </Link>
               <Button onClick={() => history.push(`/category/new`)}>Adicionar Categoria</Button>
             </S.ActionHolderContainer>
             <StyledTable>

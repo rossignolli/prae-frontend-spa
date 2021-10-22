@@ -13,6 +13,7 @@ import api from '../../../services/api';
 import { useAuth } from '../../../hooks/AuthContext';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useHistory } from 'react-router';
+import { ThreeDots } from 'react-loading-icons';
 
 interface PreviewImage {
   name: string;
@@ -219,7 +220,7 @@ export default function NewEquipament() {
               <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
                 Voltar
               </Button>
-              <Button type="submit">Adicionar</Button>
+              <Button type="submit">{isSubmitting ? <ThreeDots style={{ width: `42px` }} /> : `Adicionar`}</Button>
             </S.ButtonHolder>
           </form>
           <ConfirmationModal

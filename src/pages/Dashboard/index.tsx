@@ -8,6 +8,7 @@ import { FiMonitor, FiUsers } from 'react-icons/fi';
 import { MdLibraryBooks } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 interface HomeData {
   equipamentsTotal: number;
@@ -82,6 +83,39 @@ export default function Dashboard() {
       },
     },
   };
+
+  if (!homeData) {
+    return (
+      <GlobalDashContainer>
+        <SkeletonTheme color="#FFFF" highlightColor="#e6e1e139" />
+        <NavigationBar />
+        <S.ContainerDash>
+          <S.EquipamentsContainer>
+            <S.TitleSection>Vencimentos</S.TitleSection>
+            <S.SubTitleSection>Esses equipamentos precisarão de atenção em breve</S.SubTitleSection>
+            <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+            <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+            <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+            <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+            <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+            <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+            <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+          </S.EquipamentsContainer>
+          <S.DataCardsContainer>
+            <S.ChartContainer>
+              <S.TitleSection>Visão Geral da Organização</S.TitleSection>
+              <S.SubTitleSection>Resumo da situação da organização</S.SubTitleSection>
+              <Skeleton circle duration={0.5} height={400} style={{ borderRadius: `50%`, marginTop: `15px` }} />
+            </S.ChartContainer>
+            <S.TitleSection>Estatísticas de Entidades</S.TitleSection>
+            <S.SubTitleSection>Esses equipamentos precisarão de atenção em breve</S.SubTitleSection>
+            <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+            <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+          </S.DataCardsContainer>
+        </S.ContainerDash>
+      </GlobalDashContainer>
+    );
+  }
 
   return (
     <GlobalDashContainer>
