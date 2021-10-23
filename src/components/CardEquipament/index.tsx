@@ -1,9 +1,5 @@
 import * as S from './styles';
-import { FiTool } from 'react-icons/fi';
-import { IconType } from 'react-icons';
 import { CircleWarning, CircleExpired, CircleOK } from '../../pages/Equipaments/EquipamentList/styles';
-import { AiOutlineArrowRight } from 'react-icons/ai';
-import { BsThreeDotsVertical } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
 interface DataCardsProps {
@@ -37,7 +33,7 @@ export default function CardEquipament({ title, subtitle, status, id }: DataCard
               ) : (
                 <>
                   <CircleWarning />
-                  Vencendo
+                  Expirando
                 </>
               )}
             </>

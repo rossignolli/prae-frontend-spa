@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import manProfile from '../../../assets/temp_assets/man-profile.png';
@@ -9,26 +10,18 @@ import { GlobalDashContainer } from '../../../components/Container/styles';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { StyledTable } from '../../../components/StyledTable/styles';
 import * as S from './styles';
-import { isPast, parseISO } from 'date-fns';
+import { isPast, parseISO, differenceInDays } from 'date-fns';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { ActionHolderContainer, DescriptionEmpty, EmptyState, TitleEmpty } from './styles';
 import Button from '../../../components/Button';
 import { FiFileText } from 'react-icons/fi';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
 import { useMediaQuery } from 'react-responsive';
 import EmptySpace from '../../../components/EmptyStatus';
-
-interface Categories {
-  id: string;
-  name: string;
-  created_at: Date;
-  description: string;
-  updated_at: Date;
-}
 
 interface Equipament {
   id: string;
@@ -37,6 +30,10 @@ interface Equipament {
   description: string;
   monitor: boolean;
   dateOfExpiration: string;
+  status: string;
+  category: {
+    name: string;
+  };
   updated_at: Date;
   brand: {
     name: string;
@@ -167,24 +164,30 @@ export default function EquipamentList() {
                           <td>
                             <Link to={`equipaments/details/${category.id}`}>{category.name}</Link>
                           </td>
-                          {!isMobile && <td>{category?.description ? category.description : `Sem categoria`}</td>}
+                          {!isMobile && <td>{category?.category.name ? category.category.name : `Sem categoria`}</td>}
                           <td>
-                            {category.dateOfExpiration ? (
-                              isPast(parseISO(category.dateOfExpiration)) ? (
-                                <>
-                                  <S.CircleExpired />
-                                  Expirado
-                                </>
-                              ) : (
-                                <>
-                                  <S.CircleOK />
-                                  Operando
-                                </>
-                              )
-                            ) : (
+                            {category.status === 'operational' && (
+                              <>
+                                <S.CircleOK />
+                                Operacional
+                              </>
+                            )}
+                            {category.status === 'noMonitor' && (
+                              <>
+                                <S.CircleDisable />
+                                Não monitorado
+                              </>
+                            )}
+                            {category.status === 'expiring' && (
                               <>
                                 <S.CircleWarning />
-                                Não monitorado
+                                Expirando
+                              </>
+                            )}
+                            {category.status === 'expired' && (
+                              <>
+                                <S.CircleExpired />
+                                Expirado
                               </>
                             )}
                           </td>
@@ -219,7 +222,7 @@ export default function EquipamentList() {
                   <FiFileText size={82} color={`#8257e5`} />
                   <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
                   <DescriptionEmpty>
-                    {input ? `Nao encontramos nenhuma marca relacionada com a sua busca` : `Não existem equipamentos cadastrados no sistemas.`}
+                    {input ? `Nao encontramos nenhum equipamento relacionada com a sua busca` : `Não existem equipamentos cadastrados no sistemas.`}
                   </DescriptionEmpty>
                   <Button onClick={() => history.push(`/equipaments/new`)}>Adicionar Equipamento</Button>
                 </EmptyState>

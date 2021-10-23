@@ -96,7 +96,7 @@ export default function SkeletonDummy() {
             </tbody>
           </table>
           <section>
-            <span>Suprimentos cadastradas na base de dados</span>
+            <Skeleton duration={0.5} height={20} style={{ borderRadius: `15px` }} />
           </section>
         </>
       </StyledTable>

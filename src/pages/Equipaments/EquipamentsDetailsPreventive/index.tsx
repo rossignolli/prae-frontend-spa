@@ -8,8 +8,6 @@ import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import api from '../../../services/api';
 import { Link, useHistory } from 'react-router-dom';
-import { ActionHolderContainer } from '../../Categories/EditCategory/styles';
-
 interface DetailsPreventive {
   id: string;
 }

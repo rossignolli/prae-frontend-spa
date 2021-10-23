@@ -47,8 +47,11 @@ export default function Dashboard() {
     homeData?.percentage.notBeingMonitored !== null ? homeData?.percentage.notBeingMonitored : 1,
   ];
   const options = {
-    labels: ['Em dia', 'Vencidos', 'Vencendo', 'Não Monitorados'],
+    labels: ['Operando', 'Expirados', 'Expirando', 'Não Monitorados'],
     colors: ['#04D361', '#FF6347', '#FFB167', '#3CD3C1'],
+    tooltip: {
+      enabled: false,
+    },
     responsive: [
       {
         breakpoint: 1600,
@@ -105,7 +108,9 @@ export default function Dashboard() {
             <S.ChartContainer>
               <S.TitleSection>Visão Geral da Organização</S.TitleSection>
               <S.SubTitleSection>Resumo da situação da organização</S.SubTitleSection>
-              <Skeleton circle duration={0.5} height={400} style={{ borderRadius: `50%`, marginTop: `15px` }} />
+              <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+              <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
+              <Skeleton duration={0.5} height={80} style={{ borderRadius: `15px`, marginTop: `15px` }} />
             </S.ChartContainer>
             <S.TitleSection>Estatísticas de Entidades</S.TitleSection>
             <S.SubTitleSection>Esses equipamentos precisarão de atenção em breve</S.SubTitleSection>

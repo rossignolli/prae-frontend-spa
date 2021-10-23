@@ -54,6 +54,8 @@ input{
 
 }
 
+
+
 .alert-enter {
   opacity: 0;
   transform: scale(0.9);

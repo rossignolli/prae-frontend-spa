@@ -7,7 +7,6 @@ import InputTextField from '../../../components/TextField';
 import { ThreeDots } from 'react-loading-icons';
 import * as S from '../../Categories/NewCategory/styles';
 import * as Yup from 'yup';
-
 import { useFormik } from 'formik';
 import api from '../../../services/api';
 import { useAuth } from '../../../hooks/AuthContext';

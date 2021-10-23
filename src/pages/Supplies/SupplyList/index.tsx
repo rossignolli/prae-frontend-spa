@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import manProfile from '../../../assets/temp_assets/man-profile.png';
 import NavigationBar from '../../../components/Navbar';
-
 import api from '../../../services/api';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import { BsThreeDotsVertical } from 'react-icons/bs';
@@ -15,7 +14,7 @@ import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 
 import Button from '../../../components/Button';
 import { FiFolder } from 'react-icons/fi';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
 import { useMediaQuery } from 'react-responsive';
@@ -148,7 +147,7 @@ export default function Supply() {
                       {currentCategories?.map(category => (
                         <tr key={category.id}>
                           <td>{category.name}</td>
-                          <td>{category.pricePerJob}</td>
+                          <td>R$ {category.pricePerJob}</td>
                           <td>
                             {!isMobile && <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="Portrait User" />}
                             {!isMobile && category.technician.name}

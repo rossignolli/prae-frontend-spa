@@ -65,6 +65,17 @@ export const CircleWarning = styled.div`
   `}
 `;
 
+export const CircleDisable = styled.div`
+  ${({ theme }) => css`
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: ${theme.colors.grayBorder};
+    margin-right: ${theme.spacings.xsmall};
+  `}
+`;
+
 export const EmptyState = styled.div`
   ${({ theme }) => css`
     display: flex;

@@ -153,6 +153,12 @@ export const ButtonContainer = styled.div`
       margin: ${theme.spacings.xxsmall};
       margin-left: ${theme.spacings.xsmall};
     }
+    a {
+      padding: ${theme.spacings.xsmall};
+      margin: ${theme.spacings.xxsmall};
+      margin-left: ${theme.spacings.xsmall};
+      text-decoration: none;
+    }
   `}
 `;
 

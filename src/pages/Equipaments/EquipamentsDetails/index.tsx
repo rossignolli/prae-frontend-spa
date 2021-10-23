@@ -81,6 +81,7 @@ export default function EquipamentsDetails() {
   const [equipament, setEquipament] = useState<Equipament>();
   const [preventives, setPreventives] = useState<Preventive[]>();
   const [url, setUrl] = useState('');
+  const [url2, setUrl2] = useState('');
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [modalDescription, setModalDescription] = useState('Equipamento adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
@@ -102,6 +103,10 @@ export default function EquipamentsDetails() {
 
       api.get(`equipaments/qrcode/${id}`, { responseType: 'blob' }).then(response => {
         setUrl(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
+      });
+
+      api.get(`equipaments/report/${id}`, { responseType: 'blob' }).then(response => {
+        setUrl2(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
       });
 
       console.log(response.data.images.length);
@@ -242,15 +247,15 @@ export default function EquipamentsDetails() {
               Voltar
             </Button>
           </div>
-          <Button customColor="#24A3FF">Relatório</Button>
+          <Link to={{ pathname: url2 }} target="_blank">
+            <Button customColor="#24A3FF">Relatório</Button>
+          </Link>
           <Button customColor="#28C76F" onClick={handleOpenMonitoringModal}>
             Monitorar
           </Button>
-          <Button>
-            <a href={url} target="_blank" rel="noreferrer">
-              QR CODE
-            </a>
-          </Button>
+          <Link to={{ pathname: url }} target="_blank">
+            <Button>QR CODE</Button>
+          </Link>
           <Button customColor="#FF787A" onClick={newAction}>
             Iniciar Ação
           </Button>
