@@ -34,7 +34,7 @@ export default function NewBrand() {
       description: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(6, 'Nome de categoria precisa ter ao menos 6 caracteres').required('*Nome da categoria é requerido.'),
+      name: Yup.string().required('*Nome da marca é requerido.'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.post('brands', {

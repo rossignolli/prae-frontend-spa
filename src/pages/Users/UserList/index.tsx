@@ -20,6 +20,7 @@ interface Supplies {
   name: string;
   email: string;
   avatar: string;
+  isActive: boolean;
 }
 
 export default function UserList() {
@@ -87,18 +88,34 @@ export default function UserList() {
                   <table>
                     <thead>
                       <tr>
-                        <th>E-mail</th>
-                        {!isMobile && <th>Nome</th>}
+                        <th>Nome</th>
+                        {!isMobile && <th>E-mail</th>}
+                        {!isMobile && <th>Status</th>}
                       </tr>
                     </thead>
                     <tbody>
                       {currentCategories?.map(category => (
                         <tr key={category.id}>
-                          <td>{category.email}</td>
                           {!isMobile && (
-                            <td>
+                            <td style={{ textAlign: 'left' }}>
                               <img src={category.avatar ? category.avatar : manProfile} alt="Portrait User" />
                               {category.name}
+                            </td>
+                          )}
+                          <td style={{ textAlign: 'left' }}>{category.email}</td>
+                          {!isMobile && (
+                            <td>
+                              {category.isActive ? (
+                                <>
+                                  <S.CircleOK />
+                                  Ativo
+                                </>
+                              ) : (
+                                <>
+                                  <S.CircleDisable />
+                                  Inativo
+                                </>
+                              )}
                             </td>
                           )}
                         </tr>

@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import manProfile from '../../../assets/temp_assets/man-profile.png';
 import NavigationBar from '../../../components/Navbar';
-
-// import { useAuth } from '../../hooks/AuthContext';
 import api from '../../../services/api';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { StyledTable } from '../../../components/StyledTable/styles';
 import * as S from './styles';
-import { isPast, parseISO, differenceInDays } from 'date-fns';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
@@ -161,10 +157,10 @@ export default function EquipamentList() {
                     <tbody>
                       {currentCategories?.map(category => (
                         <tr key={category.id}>
-                          <td>
+                          <td style={{ textAlign: 'left' }}>
                             <Link to={`equipaments/details/${category.id}`}>{category.name}</Link>
                           </td>
-                          {!isMobile && <td>{category?.category.name ? category.category.name : `Sem categoria`}</td>}
+                          {!isMobile && <td style={{ textAlign: 'left' }}>{category?.category.name ? category.category.name : `Sem categoria`}</td>}
                           <td>
                             {category.status === 'operational' && (
                               <>
@@ -191,7 +187,7 @@ export default function EquipamentList() {
                               </>
                             )}
                           </td>
-                          <td>
+                          <td style={{ textAlign: 'right' }}>
                             {!isMobile && <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="Portrait User" />}
                             {!isMobile && category.technician.name}
                             <Menu

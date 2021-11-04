@@ -151,7 +151,12 @@ export default function JobList() {
                         <tr key={job.id}>
                           <td>{job.name}</td>
                           <td>{job.category.name}</td>
-                          <td>R$ {job.supply.pricePerJob}</td>
+                          <td>
+                            {new Intl.NumberFormat('pt-BR', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            }).format(parseFloat(job.supply.pricePerJob))}
+                          </td>
                           <td>
                             {!isMobile && <img src={job.technician.avatar ? job.technician.avatar : manProfile} alt="Portrait User" />}
                             {!isMobile && job.technician.name}

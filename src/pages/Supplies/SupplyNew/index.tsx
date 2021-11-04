@@ -12,6 +12,8 @@ import api from '../../../services/api';
 import { useAuth } from '../../../hooks/AuthContext';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useState } from 'react';
+import CurrencyInput from 'react-currency-input-field';
+import InputCurrencyField from '../../../components/CurrencyField';
 
 export default function NewCategory() {
   const history = useHistory();
@@ -27,14 +29,13 @@ export default function NewCategory() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting, setFieldValue } = useFormik({
     initialValues: {
       name: '',
       pricePerJob: '',
     },
     validationSchema: Yup.object({
       name: Yup.string().min(6, 'Nome do suprimento precisa ter ao menos 6 caracteres').required('*Nome do suprimento é requerido.'),
-      pricePerJob: Yup.string().required('*Preco do suprimento é requerido.'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.post('supplies', {
@@ -42,6 +43,7 @@ export default function NewCategory() {
         technician_id: user.id,
       });
 
+      console.log(values.pricePerJob);
       if (response.status !== 200) {
         setModalTitle('Ops... Algo deu errado.');
         setModalDescription('Tente novamente mais tarde');
@@ -70,16 +72,17 @@ export default function NewCategory() {
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            <InputTextField
+
+            <InputCurrencyField
               name="pricePerJob"
-              type="number"
               label="Preço do suprimento"
               value={values.pricePerJob}
-              placeholder={'Ex: 20.50'}
+              placeholder={'Ex: 20,50'}
               errorMesage={touched.pricePerJob && errors.pricePerJob ? errors.pricePerJob : false}
               onBlur={handleBlur}
-              onChange={handleChange}
+              setFieldValue={setFieldValue}
             />
+
             <S.ActionHolderContainer>
               <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
                 Voltar

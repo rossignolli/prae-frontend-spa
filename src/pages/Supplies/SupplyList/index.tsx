@@ -147,7 +147,12 @@ export default function Supply() {
                       {currentCategories?.map(category => (
                         <tr key={category.id}>
                           <td>{category.name}</td>
-                          <td>R$ {category.pricePerJob}</td>
+                          <td>
+                            {new Intl.NumberFormat('pt-BR', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            }).format(parseFloat(category.pricePerJob))}
+                          </td>
                           <td>
                             {!isMobile && <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="Portrait User" />}
                             {!isMobile && category.technician.name}

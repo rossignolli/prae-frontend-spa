@@ -228,7 +228,7 @@ export default function Category() {
                         <tbody>
                           {currentCategories?.map(category => (
                             <tr key={category.id}>
-                              <td>{category.name}</td>
+                              <td style={{ textAlign: 'left' }}>{category.name}</td>
                               <td>
                                 <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="" />
                                 {category.technician.name}

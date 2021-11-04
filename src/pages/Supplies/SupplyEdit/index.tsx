@@ -33,7 +33,7 @@ export default function SupplyEdit() {
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [category, setcategory] = useState<Categories>();
 
-  const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
+  const [modalDescription, setModalDescription] = useState('Suprimento adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');

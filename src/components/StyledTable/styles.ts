@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
 import media from 'styled-media-query';
 
+export type TableProps = {
+  alignment: string;
+  customColor: string;
+};
+
 export const StyledTable = styled.div`
   ${({ theme }) => css`
     background-color: #e5e5e5;
@@ -58,7 +63,7 @@ export const StyledTable = styled.div`
       font-size: 16px;
       padding: 12px 24px;
       vertical-align: middle;
-      text-align: left;
+      text-align: center;
 
       ${media.lessThan('medium')`
       padding: 2px 6px;

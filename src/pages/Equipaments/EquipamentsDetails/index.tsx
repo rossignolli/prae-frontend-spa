@@ -250,9 +250,11 @@ export default function EquipamentsDetails() {
           <Link to={{ pathname: url2 }} target="_blank">
             <Button customColor="#24A3FF">Relatório</Button>
           </Link>
-          <Button customColor="#28C76F" onClick={handleOpenMonitoringModal}>
-            Monitorar
-          </Button>
+          {!equipament?.monitor && (
+            <Button customColor="#28C76F" onClick={handleOpenMonitoringModal}>
+              Monitorar
+            </Button>
+          )}
           <Link to={{ pathname: url }} target="_blank">
             <Button>QR CODE</Button>
           </Link>
@@ -280,7 +282,7 @@ export default function EquipamentsDetails() {
                     <tr key={preventive.id}>
                       <td>{preventives && format(parseISO(preventive.created_at), " dd 'de' MMMM'", { locale: ptBR })}</td>
                       <td>{preventive.isCorrective ? 'Corretiva' : 'Preventiva'}</td>
-                      <td>{preventive.equipament.technician.name}</td>
+                      <td>{preventive.technician.name}</td>
                       <td>
                         <Link to={`preventive/${preventive.id}`}>Ver detalhes</Link>
                       </td>

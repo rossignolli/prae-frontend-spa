@@ -30,11 +30,11 @@ export default function SelectDateMonitorModal({ isOpen, onRequestCancel, onRequ
           <p>Data selecionada: {startDate ? format(startDate, 'dd MMM yyyy', { locale: ptBR }) : 'none'}.</p>
         </S.ButtonHolder>
         <S.ButtonHolder>
-          <Button type="button" customColor="#E1F5EC" onClick={() => onRequestConfirmation(formatISO(startDate))}>
-            Confirmar Data
-          </Button>
           <Button type="button" customColor="#F5E9EC" onClick={onRequestCancel}>
             Cancelar
+          </Button>
+          <Button type="button" customColor="#E1F5EC" onClick={() => onRequestConfirmation(formatISO(startDate))}>
+            Confirmar Data
           </Button>
         </S.ButtonHolder>
       </S.ContainerModal>

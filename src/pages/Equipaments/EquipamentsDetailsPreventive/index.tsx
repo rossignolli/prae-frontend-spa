@@ -17,14 +17,9 @@ interface Jobs {
   preventive: {
     isCorrective: boolean;
   };
-  job: {
-    description: string;
-    name: string;
-    supply: {
-      name: string;
-      pricePerJob: string;
-    };
-  };
+  job_name: string;
+  supply_name: string;
+  supply_price: string;
 }
 
 export default function EquipamentsDetailsPreventive() {
@@ -68,9 +63,9 @@ export default function EquipamentsDetailsPreventive() {
             <tbody>
               {jobs?.map(job => (
                 <tr key={job.id}>
-                  <td>{job.job.name}</td>
-                  <td>{job.job.supply.name}</td>
-                  <td>R$: {job.job.supply.pricePerJob}</td>
+                  <td>{job.job_name}</td>
+                  <td>{job.supply_name}</td>
+                  <td>R$: {job.supply_price}</td>
                 </tr>
               ))}
             </tbody>
@@ -81,10 +76,10 @@ export default function EquipamentsDetailsPreventive() {
         </StyledTable>
         <S.HeaderTitle>
           <b>Custo total dos procedimentos</b> R$:{' '}
-          {jobs
+          {/* {jobs
             ?.map(item => parseFloat(item.job.supply.pricePerJob))
             .reduce((prev, next) => prev + next)
-            ?.toFixed(2)}
+            ?.toFixed(2)} */}
         </S.HeaderTitle>
       </S.ContainerEquipaments>
     </GlobalDashContainer>

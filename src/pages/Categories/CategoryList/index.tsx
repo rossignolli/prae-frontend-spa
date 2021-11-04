@@ -141,7 +141,7 @@ export default function Category() {
                       {currentCategories?.map(category => (
                         <tr key={category.id}>
                           <td>{category.name}</td>
-                          {!isMobile && <td>{category.description}</td>}
+                          {!isMobile && <td>{category.description ? category.description : 'Sem descrição'}</td>}
                           <td>
                             {!isMobile && <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="Portrait User" />}
                             {!isMobile && category.technician.name}
