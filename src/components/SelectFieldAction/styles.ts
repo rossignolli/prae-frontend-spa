@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const ContainerInput = styled.div``;
 
@@ -17,7 +17,7 @@ export const Input = styled.input<InputProps>`
   border: 1px solid #e1e1e5;
   transition: border 0.2s ease-in;
 
-  ${(props) =>
+  ${props =>
     props.isOpen &&
     css`
       border: 2px solid #8257e5;
@@ -26,7 +26,7 @@ export const Input = styled.input<InputProps>`
 
 export const LabelForm = styled.label`
   display: flex;
-  color: #000000;
+  color: #8257e5;
   margin: 10px;
   font-size: 16px;
   font-weight: bold;

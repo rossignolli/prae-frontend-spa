@@ -16,6 +16,8 @@ import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
 import { MdLibraryBooks } from 'react-icons/md';
 import { TransitionGroup } from 'react-transition-group';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 
 interface Categories {
   id: string;
@@ -66,9 +68,11 @@ export default function Category() {
     setIsNewTConfirmationModalOpen(true);
     setButtonsOption(true);
   }
+
   async function handleConfimedDeletedAction() {
     try {
       await api.delete(`brands/${selectedCategory}`);
+
       if (category) {
         setCategory(
           category.filter(value => {
@@ -76,12 +80,20 @@ export default function Category() {
           })
         );
       }
+
       setIsNewTConfirmationModalOpen(false);
-    } catch {
-      setModalTitle('Ops... Algo deu errado.');
-      setModalDescription('Tente novamente mais tarde');
-      setModalType('error');
-      setButtonsOption(false);
+      toast.success('Deletada com sucesso.');
+    } catch (e: unknown) {
+      const error = e as AxiosError;
+
+      if (error.response) {
+        if (error.response.status === 401) {
+          setModalTitle('Marca em uso');
+          setModalDescription('Remova os equipamentos que estão utilizando essa marca antes de remover.');
+          setModalType('info');
+          setButtonsOption(false);
+        }
+      }
     }
   }
 
@@ -198,7 +210,7 @@ export default function Category() {
                       </tbody>
                     </table>
                     <section>
-                      <span>Categorias cadastradas na base de dados</span>
+                      <span>Marcas cadastradas na base de dados</span>
                     </section>
                   </>
                 </StyledTable>
@@ -223,15 +235,19 @@ export default function Category() {
                           <tr>
                             <th>Nome</th>
                             <th>Criado por</th>
+                            <th>Ações</th>
                           </tr>
                         </thead>
                         <tbody>
                           {currentCategories?.map(category => (
                             <tr key={category.id}>
                               <td style={{ textAlign: 'left' }}>{category.name}</td>
-                              <td>
+                              <td style={{ textAlign: 'left' }}>
                                 <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="" />
                                 {category.technician.name}
+                              </td>
+                              <td style={{ textAlign: 'center' }}>
+                                {' '}
                                 <Menu
                                   menuButton={
                                     <MenuButton>

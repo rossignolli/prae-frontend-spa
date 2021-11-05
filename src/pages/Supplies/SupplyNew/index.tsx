@@ -12,7 +12,6 @@ import api from '../../../services/api';
 import { useAuth } from '../../../hooks/AuthContext';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useState } from 'react';
-import CurrencyInput from 'react-currency-input-field';
 import InputCurrencyField from '../../../components/CurrencyField';
 
 export default function NewCategory() {
@@ -35,7 +34,7 @@ export default function NewCategory() {
       pricePerJob: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(6, 'Nome do suprimento precisa ter ao menos 6 caracteres').required('*Nome do suprimento é requerido.'),
+      name: Yup.string().min(2, 'Nome do suprimento precisa ter ao menos 2 caracteres').required('*Nome do suprimento é requerido.'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.post('supplies', {
@@ -43,7 +42,6 @@ export default function NewCategory() {
         technician_id: user.id,
       });
 
-      console.log(values.pricePerJob);
       if (response.status !== 200) {
         setModalTitle('Ops... Algo deu errado.');
         setModalDescription('Tente novamente mais tarde');

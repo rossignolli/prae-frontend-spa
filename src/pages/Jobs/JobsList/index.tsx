@@ -24,6 +24,7 @@ interface Supplies {
   id: string;
   name: string;
   supply: {
+    name: string;
     pricePerJob: string;
   };
   category: {
@@ -143,29 +144,41 @@ export default function JobList() {
                         <th>Nome</th>
                         <th>Categoria</th>
                         <th>Preço</th>
-                        {!isMobile ? <th>Criado por</th> : <th>Ação</th>}
+                        {!isMobile && <th>Criado por</th>}
+                        <th>Suprimento</th>
+                        <th>Ação</th>
                       </tr>
                     </thead>
                     <tbody>
                       {currentCategories?.map(job => (
                         <tr key={job.id}>
-                          <td>{job.name}</td>
-                          <td>{job.category.name}</td>
-                          <td>
+                          <td style={{ textAlign: 'left' }}>{job.name}</td>
+                          <td style={{ textAlign: 'left' }}>{job.category.name}</td>
+                          <td style={{ textAlign: 'left' }}>
                             {new Intl.NumberFormat('pt-BR', {
                               style: 'currency',
                               currency: 'BRL',
                             }).format(parseFloat(job.supply.pricePerJob))}
                           </td>
-                          <td>
+                          <td style={{ textAlign: 'left' }}>
                             {!isMobile && <img src={job.technician.avatar ? job.technician.avatar : manProfile} alt="Portrait User" />}
                             {!isMobile && job.technician.name}
+                          </td>
+                          <td style={{ textAlign: 'left' }}>{job.supply.name}</td>
+                          <td style={{ textAlign: 'center' }}>
                             <Menu
                               menuButton={
                                 <MenuButton>
                                   <BsThreeDotsVertical />
                                 </MenuButton>
                               }>
+                              <MenuItem
+                                onClick={() => {
+                                  handleDeleteAction();
+                                  setSelectedCategory(job.id);
+                                }}>
+                                <Link to={`job/edit/${job.id}`}>Editar</Link>
+                              </MenuItem>
                               <MenuItem
                                 onClick={() => {
                                   handleDeleteAction();

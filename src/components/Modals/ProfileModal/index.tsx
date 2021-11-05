@@ -39,11 +39,8 @@ export default function ProfileModal({ isOpen, onRequestCancel, onRequestConfirm
   const [editor, setEditor] = useState<AvatarEditor>();
   const [name, setName] = useState('');
   const [error, setError] = useState(false);
-
   const [images, setImages] = useState<File[]>([]);
-  const [fileBlob, setFileBlob] = useState<File>();
   const [loading, setLoading] = useState(false);
-
   const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
   const [scale, setScale] = useState(1.2);
   const [rotation, setRotation] = useState(0);
@@ -184,7 +181,7 @@ export default function ProfileModal({ isOpen, onRequestCancel, onRequestConfirm
           )}
           <S.Userdiv>
             {!previewImages.length && <img src={user.avatar ? user.avatar : manProfile} alt="" />}
-            {!previewImages.length && <InputImageFile name="file" label="Critico" title={'Escolher arquivo'} onChange={handleSelectImages} />}
+            {!previewImages.length && <InputImageFile name="file" accept="image/*" label="Critico" title={'Escolher arquivo'} onChange={handleSelectImages} />}
           </S.Userdiv>
           <InputTextField name="name" label="Nome do perfil" value={name} placeholder={''} onBlur={() => null} onChange={e => setName(e.target.value)} />
         </S.ModalContainer>

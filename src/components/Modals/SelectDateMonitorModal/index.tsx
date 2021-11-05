@@ -25,7 +25,7 @@ export default function SelectDateMonitorModal({ isOpen, onRequestCancel, onRequ
     <Modal isOpen={isOpen} onRequestClose={onRequestCancel} overlayClassName="react-modal-overlay" className="react-modal-content" ariaHideApp={false}>
       <S.ContainerModal>
         <Header title="Defina a data" description="Selecione a data em que ações deveram ser iniciadas" />
-        <DatePickerCalendar locale={ptBR} date={startDate} onDateChange={date => setStartDate(date)} />
+        <DatePickerCalendar locale={ptBR} date={startDate} onDateChange={date => setStartDate(date)} minimumDate={new Date(Date.now())} />
         <S.ButtonHolder>
           <p>Data selecionada: {startDate ? format(startDate, 'dd MMM yyyy', { locale: ptBR }) : 'none'}.</p>
         </S.ButtonHolder>

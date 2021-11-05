@@ -11,7 +11,8 @@ import * as S from '../../Equipaments/EquipamentList/styles';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Button from '../../../components/Button';
 import { FiFolder } from 'react-icons/fi';
 import { SkeletonTheme } from 'react-loading-skeleton';
@@ -19,6 +20,7 @@ import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
 import { useMediaQuery } from 'react-responsive';
 import EmptySpace from '../../../components/EmptyStatus';
+import { AxiosError } from 'axios';
 interface Supplies {
   id: string;
   name: string;
@@ -75,6 +77,7 @@ export default function Supply() {
   async function handleConfimedDeletedAction() {
     try {
       await api.delete(`supplies/${selectedCategory}`);
+
       if (category) {
         setCategory(
           category.filter(value => {
@@ -82,12 +85,20 @@ export default function Supply() {
           })
         );
       }
+
       setIsNewTConfirmationModalOpen(false);
-    } catch {
-      setModalTitle('Ops... Algo deu errado.');
-      setModalDescription('Tente novamente mais tarde');
-      setModalType('error');
-      setButtonsOption(false);
+      toast.success('Deletado com sucesso.');
+    } catch (e: unknown) {
+      const error = e as AxiosError;
+
+      if (error.response) {
+        if (error.response.status === 401) {
+          setModalTitle('Suprimento em uso');
+          setModalDescription('Remova os procedimentos que estão utilizando esse suprimento antes de remover.');
+          setModalType('info');
+          setButtonsOption(false);
+        }
+      }
     }
   }
 
@@ -126,6 +137,7 @@ export default function Supply() {
               <Button minimal customColor="#FFFFFF" onClick={() => history.push(`dashboard`)}>
                 Voltar
               </Button>
+
               <Link to={{ pathname: url }} target="_blank">
                 <Button customColor="#FFFFFF">Gerar Relatório</Button>
               </Link>
@@ -141,6 +153,7 @@ export default function Supply() {
                         <th>Nome</th>
                         <th>Preço</th>
                         {!isMobile ? <th>Criado por</th> : <th>Ação</th>}
+                        {<th>Ação</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -153,9 +166,11 @@ export default function Supply() {
                               currency: 'BRL',
                             }).format(parseFloat(category.pricePerJob))}
                           </td>
-                          <td>
+                          <td style={{ textAlign: 'center' }}>
                             {!isMobile && <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="Portrait User" />}
                             {!isMobile && category.technician.name}
+                          </td>
+                          <td>
                             <Menu
                               menuButton={
                                 <MenuButton>

@@ -110,8 +110,6 @@ export default function EquipamentsPreventiveExecute() {
       jobs: jobs,
     };
 
-    console.log(data);
-
     const response = await api.post('preventives', data);
 
     if (response.status !== 200) {
@@ -140,6 +138,7 @@ export default function EquipamentsPreventiveExecute() {
           label="Essa ação é preventiva ou corretiva?"
           placeholder={'Selecione o tipo da ação'}
           options={criticaloptions}
+          defaultValue={{ value: 'false', label: 'Preventiva' }}
           value={isCritical}
           errorMesage={false}
           onChange={(value: any) => setCritical(value)}

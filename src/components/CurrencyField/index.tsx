@@ -37,9 +37,6 @@ export default function InputCurrencyField({
     <S.ContainerInput isFocused={isFocused} hasError={errorMesage ? true : false}>
       {label && <S.LabelForm htmlFor={name}>{label}</S.LabelForm>}
       <CurrencyInput
-        placeholder="Ex: R$ 20,40"
-        decimalsLimit={2}
-        fixedDecimalLength={2}
         onValueChange={(value, name) => {
           if (value) {
             setFieldValue('pricePerJob', value);
@@ -49,6 +46,8 @@ export default function InputCurrencyField({
         prefix={'R$'}
         value={value}
         intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
+        fixedDecimalLength={2}
+        decimalScale={2}
         onBlur={e => {
           if (onBlur) {
             onBlur(e);

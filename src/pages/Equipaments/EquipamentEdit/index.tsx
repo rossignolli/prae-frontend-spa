@@ -14,6 +14,7 @@ import { useAuth } from '../../../hooks/AuthContext';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useHistory } from 'react-router';
 import { ThreeDots } from 'react-loading-icons';
+import { useParams } from 'react-router-dom';
 
 interface PreviewImage {
   name: string;
@@ -41,11 +42,15 @@ interface Option {
   label: string;
 }
 
-export default function NewEquipament() {
-  const { user } = useAuth();
+interface EditCategoryParams {
+  id: string;
+}
 
+export default function EquipamentEdit() {
+  const { user } = useAuth();
   const [brands, setBrands] = useState<Option[]>([]);
   const [categories, setCategories] = useState<Option[]>([]);
+  const [equipament, setEquipament] = useState([]);
   const history = useHistory();
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [modalDescription, setModalDescription] = useState('Equipamento adicionado com sucesso.');
@@ -53,6 +58,7 @@ export default function NewEquipament() {
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [isWarnModal, setIsWarnModal] = useState(false);
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
+  const { id } = useParams<EditCategoryParams>();
 
   const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
     initialValues: {
@@ -123,6 +129,12 @@ export default function NewEquipament() {
     });
   }, []);
 
+  useEffect(() => {
+    api.get(`/equipaments/edit/${id}`).then(response => {
+      setEquipament(response.data);
+    });
+  }, [id]);
+
   function handleCloseConfirmationModal() {
     setIsNewTConfirmationModalOpen(false);
     history.goBack();
@@ -162,9 +174,9 @@ export default function NewEquipament() {
       <S.ContainerNewEquipament>
         <NavigationBar />
         <S.NewEquipamentsContent>
-          <h1>Adicionar Equipamento</h1>
+          <h1>Editar Equipamento</h1>
           <p>
-            Insira os dados do equipamento que será adicionado na base de dados de monitoramento. Todo equipamento por padrão é adicionado com monitoramento
+            Edição os dados do equipamento que será adicionado na base de dados de monitoramento. Todo equipamento por padrão é adicionado com monitoramento
             desligado!!!
           </p>
           <form onSubmit={handleSubmit}>

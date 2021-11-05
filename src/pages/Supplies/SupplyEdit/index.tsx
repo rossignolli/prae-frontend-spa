@@ -7,12 +7,15 @@ import InputTextField from '../../../components/TextField';
 import { ThreeDots } from 'react-loading-icons';
 import * as S from '../../Categories/EditCategory/styles';
 import * as Yup from 'yup';
-
+import * as StylesINput from '../../../components/TextField/styles';
 import { useFormik } from 'formik';
 import api from '../../../services/api';
 import { useAuth } from '../../../hooks/AuthContext';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useEffect, useState } from 'react';
+import InputCurrencyField from '../../../components/CurrencyField';
+import Skeleton from 'react-loading-skeleton';
+import { AxiosError } from 'axios';
 
 interface Categories {
   id: string;
@@ -32,7 +35,6 @@ export default function SupplyEdit() {
   const { user } = useAuth();
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [category, setcategory] = useState<Categories>();
-
   const [modalDescription, setModalDescription] = useState('Suprimento adicionada com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
@@ -54,20 +56,23 @@ export default function SupplyEdit() {
       name: Yup.string().min(6, 'Nome de categoria precisa ter ao menos 6 caracteres').required('*Nome da categoria é requerido.'),
     }),
     onSubmit: async (values, e) => {
-      const response = await api.put(`supplies/${id}`, {
-        ...values,
-        technician_id: user.id,
-      });
+      try {
+        await api.put(`supplies/${id}`, {
+          ...values,
+          technician_id: user.id,
+        });
+      } catch (e: unknown) {
+        const error = e as AxiosError;
 
-      if (response.status !== 200) {
-        setModalTitle('Ops... Algo deu errado.');
-        setModalDescription('Tente novamente mais tarde');
-        setModalType('error');
-        setButtonsOption(false);
-        setIsNewTConfirmationModalOpen(true);
-        return;
+        if (error.response) {
+          if (error.response.status === 400) {
+            setModalTitle('Ops... Algo deu errado.');
+            setModalDescription('Tente novamente mais tarde');
+            setModalType('error');
+            setButtonsOption(false);
+          }
+        }
       }
-      setIsNewTConfirmationModalOpen(true);
     },
   });
 
@@ -79,8 +84,8 @@ export default function SupplyEdit() {
 
   useEffect(() => {
     if (category) {
-      setFieldValue('name', category?.name);
-      setFieldValue('pricePerJob', category?.pricePerJob);
+      setFieldValue('name', category.name);
+      setFieldValue('pricePerJob', category.pricePerJob);
     }
   }, [category, category?.pricePerJob, category?.name, id, setFieldValue]);
 
@@ -89,35 +94,48 @@ export default function SupplyEdit() {
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>
-          <Header title="Editar Suprimento" description="" />
-          <form onSubmit={handleSubmit}>
-            <InputTextField
-              name="name"
-              label="Nome da categoria"
-              value={values.name}
-              placeholder={'Ex: Macbook Air'}
-              errorMesage={touched.name && errors.name ? errors.name : false}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <InputTextField
-              name="pricePerJob"
-              label="Descrição da categoria"
-              value={values.pricePerJob}
-              placeholder={'Ex: Computadores de executivos'}
-              errorMesage={touched.pricePerJob && errors.pricePerJob ? errors.pricePerJob : false}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <S.ActionHolderContainer>
-              <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
-                Voltar
-              </Button>
-              <Button type="submit" onClick={() => handleSubmit()}>
-                {isSubmitting ? <ThreeDots style={{ width: `42px` }} /> : `Salvar`}
-              </Button>
-            </S.ActionHolderContainer>
-          </form>
+          {category ? (
+            <>
+              <Header title="Editar Suprimento" description="" />
+              <form onSubmit={handleSubmit}>
+                <InputTextField
+                  name="name"
+                  label="Nome do suprimento"
+                  value={values.name}
+                  placeholder={'Ex: Macbook Air'}
+                  errorMesage={touched.name && errors.name ? errors.name : false}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                <InputCurrencyField
+                  name="pricePerJob"
+                  label="Preço do suprimento"
+                  value={values.pricePerJob}
+                  placeholder={'Ex: 20,50'}
+                  errorMesage={touched.pricePerJob && errors.pricePerJob ? errors.pricePerJob : false}
+                  onBlur={handleBlur}
+                  setFieldValue={setFieldValue}
+                />
+
+                <S.ActionHolderContainer>
+                  <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
+                    Voltar
+                  </Button>
+                  <Button type="submit" onClick={() => handleSubmit()}>
+                    {isSubmitting ? <ThreeDots style={{ width: `42px` }} /> : `Salvar`}
+                  </Button>
+                </S.ActionHolderContainer>
+              </form>
+            </>
+          ) : (
+            <>
+              <Header title="Editar Suprimento" description="" />
+              <StylesINput.LabelForm>Nome do suprimento</StylesINput.LabelForm>
+              <Skeleton duration={0.5} height={58} style={{ borderRadius: `15px` }} />
+              <StylesINput.LabelForm>Preço do suprimento</StylesINput.LabelForm>
+              <Skeleton duration={0.5} height={58} style={{ borderRadius: `15px` }} />
+            </>
+          )}
         </S.ContainerInputs>
       </S.Container>
       <ConfirmationModal

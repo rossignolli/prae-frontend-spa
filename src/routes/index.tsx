@@ -13,6 +13,7 @@ import ForgotPassword from '../pages/Users/RecoverPasswordEmail';
 // * EQUIPAMENTS ROUTES */
 import Equipaments from '../pages/Equipaments/EquipamentList';
 import EquipamentsDetails from '../pages/Equipaments/EquipamentsDetails';
+import EquipamentEdit from '../pages/Equipaments/EquipamentEdit';
 import EquipamentsDetailsPreventive from '../pages/Equipaments/EquipamentsDetailsPreventive';
 import EquipamentsDetailsPreventiveAction from '../pages/Equipaments/EquipamentsActionExecute';
 import NewEquipaments from '../pages/Equipaments/NewEquipament';
@@ -53,6 +54,7 @@ export default function Supplies() {
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/equipaments" exact component={Equipaments} isPrivate />
       <Route path="/equipaments/new" component={NewEquipaments} isPrivate />
+      <Route path="/equipaments/edit/:id" component={EquipamentEdit} isPrivate />
       <Route path="/equipaments/details/:id" exact component={EquipamentsDetails} isPrivate />
       <Route path="/equipaments/details/preventive/:id" exact component={EquipamentsDetailsPreventive} isPrivate />
       <Route path="/equipaments/details/actions/new/:id/:equipamentId" exact component={EquipamentsDetailsPreventiveAction} isPrivate />

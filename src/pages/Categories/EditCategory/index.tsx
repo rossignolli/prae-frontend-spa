@@ -7,12 +7,13 @@ import InputTextField from '../../../components/TextField';
 import { ThreeDots } from 'react-loading-icons';
 import * as S from './styles';
 import * as Yup from 'yup';
-
+import * as StylesINput from '../../../components/TextField/styles';
 import { useFormik } from 'formik';
 import api from '../../../services/api';
 import { useAuth } from '../../../hooks/AuthContext';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 interface Categories {
   id: string;
@@ -32,7 +33,7 @@ export default function CategoryEdit() {
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [category, setcategory] = useState<Categories>();
 
-  const [modalDescription, setModalDescription] = useState('Categoria adicionada com sucesso.');
+  const [modalDescription, setModalDescription] = useState('Informações atualizadas com sucesso.');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
@@ -88,35 +89,47 @@ export default function CategoryEdit() {
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>
-          <Header title="Editar Categoria " description="" />
-          <form onSubmit={handleSubmit}>
-            <InputTextField
-              name="name"
-              label="Nome da categoria"
-              value={values.name}
-              placeholder={'Ex: Macbook Air'}
-              errorMesage={touched.name && errors.name ? errors.name : false}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <InputTextField
-              name="description"
-              label="Descrição da categoria"
-              value={values.description}
-              placeholder={'Ex: Computadores de executivos'}
-              errorMesage={touched.description && errors.description ? errors.description : false}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <S.ActionHolderContainer>
-              <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
-                Voltar
-              </Button>
-              <Button type="submit" onClick={() => handleSubmit()}>
-                {isSubmitting ? <ThreeDots style={{ width: `42px` }} /> : `Salvar`}
-              </Button>
-            </S.ActionHolderContainer>
-          </form>
+          {category ? (
+            <>
+              <Header title="Editar Categoria " description="" />
+              <form onSubmit={handleSubmit}>
+                <InputTextField
+                  name="name"
+                  label="Nome da categoria"
+                  value={values.name}
+                  placeholder={'Ex: Macbook Air'}
+                  errorMesage={touched.name && errors.name ? errors.name : false}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                <InputTextField
+                  name="description"
+                  label="Descrição da categoria"
+                  value={values.description}
+                  placeholder={'Ex: Computadores de executivos'}
+                  errorMesage={touched.description && errors.description ? errors.description : false}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                <S.ActionHolderContainer>
+                  <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
+                    Voltar
+                  </Button>
+                  <Button type="submit" onClick={() => handleSubmit()}>
+                    {isSubmitting ? <ThreeDots style={{ width: `42px` }} /> : `Salvar`}
+                  </Button>
+                </S.ActionHolderContainer>
+              </form>
+            </>
+          ) : (
+            <>
+              <Header title="Editar Categoria" description="" />
+              <StylesINput.LabelForm>Nome da categoria</StylesINput.LabelForm>
+              <Skeleton duration={0.5} height={58} style={{ borderRadius: `15px` }} />
+              <StylesINput.LabelForm>Descrição da categoria</StylesINput.LabelForm>
+              <Skeleton duration={0.5} height={58} style={{ borderRadius: `15px` }} />
+            </>
+          )}
         </S.ContainerInputs>
       </S.Container>
       <ConfirmationModal

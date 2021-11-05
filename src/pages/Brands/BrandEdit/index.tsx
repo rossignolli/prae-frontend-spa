@@ -7,12 +7,13 @@ import InputTextField from '../../../components/TextField';
 import { ThreeDots } from 'react-loading-icons';
 import * as S from '../../Categories/EditCategory/styles';
 import * as Yup from 'yup';
-
+import * as StylesINput from '../../../components/TextField/styles';
 import { useFormik } from 'formik';
 import api from '../../../services/api';
 import { useAuth } from '../../../hooks/AuthContext';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 interface Categories {
   id: string;
@@ -50,7 +51,7 @@ export default function CategoryEdit() {
       description: category?.description,
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(1, 'Nome de categoria precisa ter ao menos 6 caracteres').required('*Nome da categoria é requerido.'),
+      name: Yup.string().min(2, 'Nome da marca precisa ter ao menos 2 caracteres').required('*Nome da marca é requerido.'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.put(`brands/${id}`, {
@@ -88,35 +89,47 @@ export default function CategoryEdit() {
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>
-          <Header title="Editar Marca" description="" />
-          <form onSubmit={handleSubmit}>
-            <InputTextField
-              name="name"
-              label="Nome da categoria"
-              value={values.name}
-              placeholder={'Ex: Macbook Air'}
-              errorMesage={touched.name && errors.name ? errors.name : false}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <InputTextField
-              name="description"
-              label="Descrição da categoria"
-              value={values.description}
-              placeholder={'Ex: Computadores de executivos'}
-              errorMesage={touched.description && errors.description ? errors.description : false}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <S.ActionHolderContainer>
-              <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
-                Voltar
-              </Button>
-              <Button type="submit" onClick={() => handleSubmit()}>
-                {isSubmitting ? <ThreeDots style={{ width: `42px` }} /> : `Salvar`}
-              </Button>
-            </S.ActionHolderContainer>
-          </form>
+          {category ? (
+            <>
+              <Header title="Editar Marca" description="" />
+              <form onSubmit={handleSubmit}>
+                <InputTextField
+                  name="name"
+                  label="Nome da marca"
+                  value={values.name}
+                  placeholder={'Ex: Macbook Air'}
+                  errorMesage={touched.name && errors.name ? errors.name : false}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                <InputTextField
+                  name="description"
+                  label="Descrição da marca"
+                  value={values.description}
+                  placeholder={'Ex: Computadores de executivos'}
+                  errorMesage={touched.description && errors.description ? errors.description : false}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                <S.ActionHolderContainer>
+                  <Button type="button" minimal customColor="#FFFFFF" onClick={() => history.goBack()}>
+                    Voltar
+                  </Button>
+                  <Button type="submit" onClick={() => handleSubmit()}>
+                    {isSubmitting ? <ThreeDots style={{ width: `42px` }} /> : `Salvar`}
+                  </Button>
+                </S.ActionHolderContainer>
+              </form>
+            </>
+          ) : (
+            <>
+              <Header title="Editar Marca" description="" />
+              <StylesINput.LabelForm>Nome da marca</StylesINput.LabelForm>
+              <Skeleton duration={0.5} height={58} style={{ borderRadius: `15px` }} />
+              <StylesINput.LabelForm>Descrição da marca</StylesINput.LabelForm>
+              <Skeleton duration={0.5} height={58} style={{ borderRadius: `15px` }} />
+            </>
+          )}
         </S.ContainerInputs>
       </S.Container>
       <ConfirmationModal

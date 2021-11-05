@@ -49,6 +49,7 @@ export default function RecoverPasswordPage() {
         .then(response => {
           if (response.status === 200) {
             setIsNewTConfirmationModalOpen(true);
+            history.push('/');
           } else {
             setModalType(`error`);
             setIsNewTConfirmationModalOpen(true);

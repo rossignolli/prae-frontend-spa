@@ -196,6 +196,9 @@ export default function EquipamentList() {
                                   <BsThreeDotsVertical />
                                 </MenuButton>
                               }>
+                              <MenuItem>
+                                <Link to={`equipaments/edit/${category.id}`}>Editar</Link>
+                              </MenuItem>
                               <MenuItem
                                 onClick={() => {
                                   handleDeleteAction();

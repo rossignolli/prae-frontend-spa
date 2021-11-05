@@ -2,8 +2,6 @@ import * as S from './styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import logo from '../../../assets/temp_assets/logo.svg';
-
-import { useAuth } from '../../../hooks/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import InputTextField from '../../../components/TextField';
 import Button from '../../../components/Button';
@@ -33,7 +31,7 @@ export default function SignUpPage() {
       name: Yup.string().required('E-mail requerido'),
       email: Yup.string().email('E-mail inserido inválido.').required('E-mail requerido'),
       emailConfirmation: Yup.string().oneOf([Yup.ref('email'), null], 'Emails não conferem '),
-      password: Yup.string().required('Senha requerida'),
+      password: Yup.string().min(6, 'Senha deve ter pelo menos 6 caracteres').required('Senha requerida'),
       passwordValidation: Yup.string().oneOf([Yup.ref('password'), null], 'Senhas não conferem'),
     }),
     onSubmit: async values => {

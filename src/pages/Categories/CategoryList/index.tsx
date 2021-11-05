@@ -17,6 +17,8 @@ import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
 import { useMediaQuery } from 'react-responsive';
 import EmptySpace from '../../../components/EmptyStatus';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 
 interface Categories {
   id: string;
@@ -70,6 +72,7 @@ export default function Category() {
   async function handleConfimedDeletedAction() {
     try {
       await api.delete(`categories/${selectedCategory}`);
+
       if (category) {
         setCategory(
           category.filter(value => {
@@ -77,12 +80,20 @@ export default function Category() {
           })
         );
       }
+
       setIsNewTConfirmationModalOpen(false);
-    } catch {
-      setModalTitle('Ops... Algo deu errado.');
-      setModalDescription('Tente novamente mais tarde');
-      setModalType('error');
-      setButtonsOption(false);
+      toast.success('Deletado com sucesso.');
+    } catch (e: unknown) {
+      const error = e as AxiosError;
+
+      if (error.response) {
+        if (error.response.status === 401) {
+          setModalTitle('Categoria em uso');
+          setModalDescription('Remova os procedimentos e os equipamentos que estão utilizando essa categoria antes de remover.');
+          setModalType('info');
+          setButtonsOption(false);
+        }
+      }
     }
   }
 
@@ -135,17 +146,19 @@ export default function Category() {
                         <th>Nome</th>
                         {!isMobile && <th>Descrição</th>}
                         {!isMobile ? <th>Criado por</th> : <th>Ação</th>}
+                        <th>Ação</th>
                       </tr>
                     </thead>
                     <tbody>
                       {currentCategories?.map(category => (
                         <tr key={category.id}>
-                          <td>{category.name}</td>
-                          {!isMobile && <td>{category.description ? category.description : 'Sem descrição'}</td>}
-                          <td>
+                          <td style={{ textAlign: 'left' }}>{category.name}</td>
+                          {!isMobile && <td style={{ textAlign: 'left' }}>{category.description ? category.description : 'Sem descrição'}</td>}
+                          <td style={{ textAlign: 'left' }}>
                             {!isMobile && <img src={category.technician.avatar ? category.technician.avatar : manProfile} alt="Portrait User" />}
                             {!isMobile && category.technician.name}
-
+                          </td>
+                          <td>
                             <Menu
                               menuButton={
                                 <MenuButton>

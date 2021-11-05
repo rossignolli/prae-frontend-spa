@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const ContainerInput = styled.div``;
 
@@ -16,8 +16,9 @@ export const Input = styled.input<InputProps>`
   padding: 10px;
   border: 1px solid #e1e1e5;
   transition: border 0.2s ease-in;
+  cursor: none;
 
-  ${(props) =>
+  ${props =>
     props.isFocused &&
     css`
       border: 2px solid #8257e5;
@@ -26,12 +27,11 @@ export const Input = styled.input<InputProps>`
 
 export const LabelForm = styled.label`
   display: flex;
-  color: #000000;
+  color: #8257e5;
   margin: 10px;
   font-size: 16px;
   font-weight: bold;
 `;
-
 
 export const ErrorContainer = styled.div`
   ${({ theme }) => css`
@@ -39,4 +39,4 @@ export const ErrorContainer = styled.div`
     color: #ff1e1e;
     padding: ${theme.spacings.xsmall} 0 ${theme.spacings.xsmall};
   `}
-  `;
+`;
