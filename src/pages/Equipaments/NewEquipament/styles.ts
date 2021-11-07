@@ -111,5 +111,13 @@ export const ImageContainer = styled.div`
       object-fit: cover;
       border-radius: ${theme.border.radius};
     }
+
+    span {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      cursor: pointer;
+    }
   `}
 `;

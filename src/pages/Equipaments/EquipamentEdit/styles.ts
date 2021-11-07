@@ -94,6 +94,14 @@ export const NumberContainer = styled.div`
   }
 `;
 
+export const ExpirationDate = styled.span`
+  ${({ theme }) => css`
+    color: black;
+    display: block;
+    margin-bottom: ${theme.spacings.xsmall};
+  `}
+`;
+
 export const ImageContainer = styled.div`
   ${({ theme }) => css`
     text-decoration: none;
@@ -110,6 +118,14 @@ export const ImageContainer = styled.div`
       height: 96px;
       object-fit: cover;
       border-radius: ${theme.border.radius};
+    }
+
+    span {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      cursor: pointer;
     }
   `}
 `;

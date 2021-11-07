@@ -18,6 +18,8 @@ import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
 import { useMediaQuery } from 'react-responsive';
 import EmptySpace from '../../../components/EmptyStatus';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 interface Equipament {
   id: string;
@@ -81,14 +83,20 @@ export default function EquipamentList() {
     setIsNewTConfirmationModalOpen(true);
   }
   async function handleConfimedDeletedAction() {
-    const response = await api.delete(`equipaments/${selectedCategory}`);
+    try {
+      await api.delete(`equipaments/${selectedCategory}`);
+      toast.success('Equipamento deletado com sucesso!');
+    } catch (e: unknown) {
+      const error = e as AxiosError;
 
-    if (response.status !== 200) {
-      setModalTitle('Ops... Algo deu errado.');
-      setModalDescription('Tente novamente mais tarde');
-      setModalType('error');
-      setButtonsOption(false);
-      return;
+      if (error.response) {
+        if (error.response.status === 400) {
+          setModalTitle('Ops... Algo deu errado.');
+          setModalDescription('Tente novamente mais tarde');
+          setModalType('error');
+          setButtonsOption(false);
+        }
+      }
     }
 
     if (category) {

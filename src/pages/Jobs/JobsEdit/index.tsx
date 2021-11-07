@@ -70,7 +70,7 @@ export default function JobEdit() {
 
   function handleCloseConfirmationModal() {
     setIsNewTConfirmationModalOpen(false);
-    // history.goBack();
+    history.goBack();
   }
 
   const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
@@ -85,8 +85,8 @@ export default function JobEdit() {
     onSubmit: async (values, e) => {
       const response = await api.put(`jobs/${id}`, {
         name: values.name,
-        supply: values.supplies,
-        category: values.categories,
+        supply_id: values.supplies,
+        category_id: values.categories,
       });
 
       if (response.status !== 200) {

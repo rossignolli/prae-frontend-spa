@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import NavigationBar from '../../../components/Navbar';
@@ -87,8 +88,6 @@ export default function NewEquipament() {
 
       const response = await api.post('equipaments', data);
 
-      console.log(response.status);
-
       if (response.status !== 200) {
         setModalTitle('Ops... Algo deu errado.');
         setModalDescription('Tente novamente mais tarde');
@@ -157,6 +156,11 @@ export default function NewEquipament() {
     setPreviewImages(selectedImagesPreview);
   }
 
+  function handleRemoveImage(image: PreviewImage) {
+    setPreviewImages(previewImages.map(image => image).filter(img => img.url !== image.url));
+    setImages(images.map(image => image).filter(img => img.name !== image.name));
+  }
+
   return (
     <GlobalDashContainer>
       <S.ContainerNewEquipament>
@@ -207,12 +211,8 @@ export default function NewEquipament() {
               {previewImages.map(image => {
                 return (
                   <div key={image.url}>
-                    <span
-                      className="remove-image"
-                      onClick={() => {
-                        console.log(`you may remove this image later.`);
-                      }}></span>
-                    <img src={image.url} alt={'Your uploaded file'} className="new-image" />
+                    <span className="remove-image" onClick={() => handleRemoveImage(image)} />
+                    <img src={image.url} alt={'Your  file'} className="new-image" />
                   </div>
                 );
               })}

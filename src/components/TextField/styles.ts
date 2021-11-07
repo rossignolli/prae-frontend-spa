@@ -41,6 +41,11 @@ export const LabelForm = styled.label`
   margin: 10px;
   font-size: 16px;
   font-weight: bold;
+
+  b {
+    color: black;
+    margin-left: 8px;
+  }
 `;
 
 export const ErrorContainer = styled.div`
