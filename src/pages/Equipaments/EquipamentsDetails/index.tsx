@@ -17,7 +17,6 @@ import SelectDateMonitorModal from '../../../components/Modals/SelectDateMonitor
 import { ptBR } from 'date-fns/locale';
 import { DescriptionEmpty, EmptyState, TitleEmpty } from '../EquipamentList/styles';
 import { FiTool } from 'react-icons/fi';
-import EmptySpace from '../../../components/EmptyStatus';
 import Skeleton from 'react-loading-skeleton';
 
 interface EditCategoryParams {

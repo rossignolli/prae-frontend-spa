@@ -5,6 +5,8 @@
   "dependencies": {
     "@material-ui/pickers": "^3.2.10",
     "@react-pdf/renderer": "^2.0.19",
+    "@sentry/react": "^6.14.1",
+    "@sentry/tracing": "^6.14.1",
     "@szhsin/react-menu": "^1.11.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
