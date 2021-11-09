@@ -35,7 +35,7 @@ export default function SupplyEdit() {
   const { user } = useAuth();
   const [modalTitle, setModalTitle] = useState('Sucesso');
   const [category, setcategory] = useState<Categories>();
-  const [modalDescription, setModalDescription] = useState('Suprimento adicionada com sucesso.');
+  const [modalDescription, setModalDescription] = useState('Informações atualizadas com sucesso');
   const [butonsOption, setButtonsOption] = useState(false);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
@@ -61,6 +61,7 @@ export default function SupplyEdit() {
           ...values,
           technician_id: user.id,
         });
+        setIsNewTConfirmationModalOpen(true);
       } catch (e: unknown) {
         const error = e as AxiosError;
 

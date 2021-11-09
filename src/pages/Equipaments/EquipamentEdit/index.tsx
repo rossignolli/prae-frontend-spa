@@ -1,8 +1,6 @@
 /* eslint-disable array-callback-return */
-import React, { ChangeEvent, useEffect, useState } from 'react';
-
+import { ChangeEvent, useEffect, useState } from 'react';
 import NavigationBar from '../../../components/Navbar';
-import * as Yup from 'yup';
 import * as S from './styles';
 import InputTextField from '../../../components/TextField';
 import InputSelectField from '../../../components/SelectField';
@@ -22,6 +20,7 @@ import SelectDateMonitorModal from '../../../components/Modals/SelectDateMonitor
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { AxiosError } from 'axios';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 interface PreviewImage {
   name: string;
   url: string;
@@ -298,18 +297,34 @@ export default function EquipamentEdit() {
 
                 <StylesINput.LabelForm>
                   Data de vencimento de manutenções:
-                  <b>{equipament?.dateOfExpiration && newExpiratiaonDate && format(parseISO(newExpiratiaonDate), 'dd MMMM yyyy', { locale: ptBR })}</b>
+                  <b>
+                    {equipament?.dateOfExpiration
+                      ? newExpiratiaonDate && format(parseISO(newExpiratiaonDate), 'dd MMMM yyyy', { locale: ptBR })
+                      : 'Não monitorado.'}
+                  </b>
                 </StylesINput.LabelForm>
-                <S.ExpirationDate></S.ExpirationDate>
-                <Button type="button" onClick={handleOpenMonitoringModal}>
-                  Alterar data de vencimento
-                </Button>
+                {equipament.monitor ? (
+                  <Button type="button" onClick={handleOpenMonitoringModal}>
+                    Alterar data de vencimento
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    customColor="#ffd4d4"
+                    onClick={() => {
+                      history.push(`/equipaments/details/${id}`);
+                    }}>
+                    Iniciar Monitoramento
+                  </Button>
+                )}
 
                 <S.ImageContainer>
                   {previewImages.map(image => {
                     return (
                       <div key={image.path}>
-                        <span className="remove-image" onClick={() => handleRemovePreviousImage(image)}></span>
+                        <span className="remove-image" onClick={() => handleRemovePreviousImage(image)}>
+                          <AiOutlineCloseCircle size={20} color="#FFFF" />
+                        </span>
                         <img src={image.path} alt={'Your uploaded file'} className="new-image" />
                       </div>
                     );
@@ -318,7 +333,9 @@ export default function EquipamentEdit() {
                   {previewNewImages.map(image => {
                     return (
                       <div key={image.name}>
-                        <span className="remove-image" onClick={() => handleRemoveNewImage(image)}></span>
+                        <span className="remove-image" onClick={() => handleRemoveNewImage(image)}>
+                          <AiOutlineCloseCircle size={20} color="#FFFF" />
+                        </span>
                         <img src={image.url} alt={'Your uploaded file'} className="new-image" />
                       </div>
                     );

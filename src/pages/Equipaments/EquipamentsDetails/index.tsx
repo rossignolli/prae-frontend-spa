@@ -18,6 +18,7 @@ import { ptBR } from 'date-fns/locale';
 import { DescriptionEmpty, EmptyState, TitleEmpty } from '../EquipamentList/styles';
 import { FiTool } from 'react-icons/fi';
 import EmptySpace from '../../../components/EmptyStatus';
+import Skeleton from 'react-loading-skeleton';
 
 interface EditCategoryParams {
   id: string;
@@ -109,8 +110,6 @@ export default function EquipamentsDetails() {
         setUrl2(window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
       });
 
-      console.log(response.data.images.length);
-
       if (response.data.images.length === 0) {
         imagesToShow.push({
           original: 'https://static-prae.s3.us-east-2.amazonaws.com/Others/no-image.png',
@@ -199,10 +198,21 @@ export default function EquipamentsDetails() {
   }
 
   if (!equipament) {
-    return <EmptySpace />;
+    return (
+      <>
+        <GlobalDashContainer>
+          <NavigationBar />
+          <S.ContainerEquipaments>
+            <Skeleton duration={0.5} height={500} style={{ borderRadius: `15px` }} />
+            <Skeleton duration={0.5} height={40} style={{ borderRadius: `15px`, marginTop: '16px' }} />
+          </S.ContainerEquipaments>
+          <S.ContainerEquipaments>
+            <Skeleton duration={0.5} height={300} style={{ borderRadius: `15px` }} />
+          </S.ContainerEquipaments>
+        </GlobalDashContainer>
+      </>
+    );
   }
-
-  console.log(preventives);
 
   return (
     <GlobalDashContainer>
@@ -212,7 +222,7 @@ export default function EquipamentsDetails() {
           <S.GalleryEquipament>{imagesToShow && <ImageGallery items={imagesToShow} />}</S.GalleryEquipament>
           <S.EquipamentDetails>
             <S.EquipamentTitle>{equipament?.name}</S.EquipamentTitle>
-            <S.EquipamentDescription>{equipament?.description ? equipament.description : `Sem descrição`}</S.EquipamentDescription>
+            <S.EquipamentDescription>{equipament?.description ? equipament.description : 'Sem descrição'}</S.EquipamentDescription>
             <S.ResumeEquipament>
               <S.ResumeInfo>
                 <h1>{equipament?.brand.name}</h1>
@@ -296,12 +306,18 @@ export default function EquipamentsDetails() {
             </StyledTable>
           </>
         ) : (
-          <EmptyState>
-            <FiTool size={62} color={`#8257e5`} />
-            <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
-            <DescriptionEmpty>Não existem manutenções cadastrados no sistemas.</DescriptionEmpty>
-            <Button onClick={newAction}>Adicionar Manutenção</Button>
-          </EmptyState>
+          <>
+            {!preventives ? (
+              <Skeleton duration={0.5} height={300} style={{ borderRadius: `15px` }} />
+            ) : (
+              <EmptyState>
+                <FiTool size={62} color={`#8257e5`} />
+                <TitleEmpty>Nada para mostrar aqui.</TitleEmpty>
+                <DescriptionEmpty>Não existem manutenções cadastrados no sistemas.</DescriptionEmpty>
+                <Button onClick={newAction}>Adicionar Manutenção</Button>
+              </EmptyState>
+            )}
+          </>
         )}
       </S.ContainerEquipaments>
       <SelectDateMonitorModal

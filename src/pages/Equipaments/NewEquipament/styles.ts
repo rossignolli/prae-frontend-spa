@@ -116,7 +116,8 @@ export const ImageContainer = styled.div`
       position: absolute;
       width: 20px;
       height: 20px;
-      background-color: red;
+      border-radius: 8px;
+      background-color: ${theme.colors.red};
       cursor: pointer;
     }
   `}

@@ -15,6 +15,7 @@ import { useAuth } from '../../../hooks/AuthContext';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useHistory } from 'react-router';
 import { ThreeDots } from 'react-loading-icons';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 interface PreviewImage {
   name: string;
@@ -147,13 +148,13 @@ export default function NewEquipament() {
 
     event.target.value = '';
 
-    setImages(selectedImages);
+    setImages([...images, ...selectedImages]);
 
     const selectedImagesPreview = selectedImages.map(image => {
       return { name: image.name, url: URL.createObjectURL(image) };
     });
 
-    setPreviewImages(selectedImagesPreview);
+    setPreviewImages([...previewImages, ...selectedImagesPreview]);
   }
 
   function handleRemoveImage(image: PreviewImage) {
@@ -211,7 +212,9 @@ export default function NewEquipament() {
               {previewImages.map(image => {
                 return (
                   <div key={image.url}>
-                    <span className="remove-image" onClick={() => handleRemoveImage(image)} />
+                    <span className="remove-image" onClick={() => handleRemoveImage(image)}>
+                      <AiOutlineCloseCircle size={20} color="#FFFF" />
+                    </span>
                     <img src={image.url} alt={'Your  file'} className="new-image" />
                   </div>
                 );
