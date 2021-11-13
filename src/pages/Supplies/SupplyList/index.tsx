@@ -37,7 +37,6 @@ interface Supplies {
 export default function Supply() {
   const [category, setCategory] = useState<Supplies[] | undefined>();
   const [categoryDefault, setCategoryDefault] = useState<Supplies[]>();
-
   const [modalTitle, setModalTitle] = useState('');
   const [modalDescription, setModalDescription] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -51,10 +50,9 @@ export default function Supply() {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const IndexOfLastPost = currentPage * issuesPerPage;
   const indexfFirstPost = IndexOfLastPost - issuesPerPage;
-
   const currentCategories = category?.slice(indexfFirstPost, IndexOfLastPost);
-
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     api.get(`/supplies`).then(response => {
@@ -76,6 +74,7 @@ export default function Supply() {
   }
   async function handleConfimedDeletedAction() {
     try {
+      setIsLoading(true);
       await api.delete(`supplies/${selectedCategory}`);
 
       if (category) {
@@ -85,8 +84,8 @@ export default function Supply() {
           })
         );
       }
-
       setIsNewTConfirmationModalOpen(false);
+      setIsLoading(false);
       toast.success('Deletado com sucesso.');
     } catch (e: unknown) {
       const error = e as AxiosError;
@@ -99,6 +98,8 @@ export default function Supply() {
           setButtonsOption(false);
         }
       }
+
+      toast.error('Algo deu errado, tente novamente mais tarde');
     }
   }
 
@@ -222,6 +223,7 @@ export default function Supply() {
         onRequestConfirmation={() => handleConfimedDeletedAction()}
         onRequestCancel={() => handleCloseConfirmationModal()}
         buttons={butonsOption}
+        isLoading={isLoading}
       />
     </GlobalDashContainer>
   );

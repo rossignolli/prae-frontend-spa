@@ -16,7 +16,6 @@ export const Input = styled.input<InputProps>`
   padding: 10px;
   border: 1px solid #e1e1e5;
   transition: border 0.2s ease-in;
-  cursor: none;
 
   ${props =>
     props.isFocused &&

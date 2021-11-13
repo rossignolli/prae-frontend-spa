@@ -16,6 +16,7 @@ import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useHistory } from 'react-router';
 import { ThreeDots } from 'react-loading-icons';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { uuid4 } from '@sentry/utils';
 
 interface PreviewImage {
   name: string;
@@ -138,8 +139,17 @@ export default function NewEquipament() {
     const selectedImages = Array.from(event.target.files);
 
     if (selectedImages.length > 4) {
-      setModalTitle('Ops... Algo deu errado.');
-      setModalDescription('Apenas 4 imagens são permitidas por equipamento.');
+      setModalTitle('Limite excedido!');
+      setModalDescription('Apenas 4 imagens podem ser selecionadas por vez');
+      setModalType('error');
+      setButtonsOption(false);
+      setIsWarnModal(true);
+      return;
+    }
+
+    if (images.length > 3) {
+      setModalTitle('Limite excedido!');
+      setModalDescription('Equipamento já possui o número máximo de imagens permitidas.');
       setModalType('error');
       setButtonsOption(false);
       setIsWarnModal(true);
@@ -151,7 +161,7 @@ export default function NewEquipament() {
     setImages([...images, ...selectedImages]);
 
     const selectedImagesPreview = selectedImages.map(image => {
-      return { name: image.name, url: URL.createObjectURL(image) };
+      return { name: `${image.name}-${uuid4()}`, url: URL.createObjectURL(image) };
     });
 
     setPreviewImages([...previewImages, ...selectedImagesPreview]);
@@ -211,7 +221,7 @@ export default function NewEquipament() {
             <S.ImageContainer>
               {previewImages.map(image => {
                 return (
-                  <div key={image.url}>
+                  <div key={image.name}>
                     <span className="remove-image" onClick={() => handleRemoveImage(image)}>
                       <AiOutlineCloseCircle size={20} color="#FFFF" />
                     </span>
@@ -219,6 +229,7 @@ export default function NewEquipament() {
                   </div>
                 );
               })}
+              Q
             </S.ImageContainer>
             <InputImageFile name="file" label="Critico" title={`Adiciona imagens ao equipamento`} onChange={handleSelectImages} />
             <S.ButtonHolder>

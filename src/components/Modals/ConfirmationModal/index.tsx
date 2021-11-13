@@ -5,6 +5,7 @@ import Sucess from '../../../assets/svgs/sucess_modal_type.svg';
 import Warning from '../../../assets/svgs/warning_modal_type.svg';
 import Error from '../../../assets/svgs/error_modal_type.svg';
 import Info from '../../../assets/svgs/info_modal_type.svg';
+import { ThreeDots } from 'react-loading-icons';
 
 interface NewTranctionModalProps {
   isOpen: boolean;
@@ -14,6 +15,7 @@ interface NewTranctionModalProps {
   description?: string;
   type?: 'warning' | 'error' | 'sucess' | 'info';
   buttons?: boolean;
+  isLoading?: boolean;
 }
 
 export default function ConfirmationModal({
@@ -22,6 +24,7 @@ export default function ConfirmationModal({
   description,
   type = 'warning',
   buttons = false,
+  isLoading = false,
   onRequestCancel,
   onRequestConfirmation,
 }: NewTranctionModalProps) {
@@ -43,7 +46,7 @@ export default function ConfirmationModal({
                 Cancelar
               </Button>
               <Button type="button" customColor="#E1F5EC" onClick={onRequestConfirmation}>
-                Aceitar
+                {isLoading ? <ThreeDots style={{ width: `42px` }} /> : ` Aceitar`}
               </Button>
             </>
           ) : (

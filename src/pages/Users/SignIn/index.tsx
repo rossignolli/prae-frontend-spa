@@ -92,7 +92,9 @@ export default function SigninPage() {
             <S.SignUpHintContainer>
               <span>Não possui conta?</span>
               <Link to={'/signup'}>
-                <h1>Solicitar Conta</h1>
+                <Button minimal type="submit">
+                  Solicitar Conta
+                </Button>
               </Link>
             </S.SignUpHintContainer>
           )}

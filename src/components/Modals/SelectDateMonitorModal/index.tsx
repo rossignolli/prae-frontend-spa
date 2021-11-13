@@ -7,6 +7,7 @@ import { DatePickerCalendar } from 'react-nice-dates';
 import 'react-nice-dates/build/style.css';
 import Button from '../../Button';
 import Header from '../../Header';
+import { ThreeDots } from 'react-loading-icons';
 
 interface NewTranctionModalProps {
   isOpen: boolean;
@@ -15,10 +16,11 @@ interface NewTranctionModalProps {
   title?: string;
   description?: string;
   type?: 'warning' | 'error' | 'sucess' | 'info';
-  buttons?: boolean;
+  isLoading?: boolean;
+  initialDate?: Date;
 }
 
-export default function SelectDateMonitorModal({ isOpen, onRequestCancel, onRequestConfirmation }: NewTranctionModalProps) {
+export default function SelectDateMonitorModal({ isOpen, onRequestCancel, onRequestConfirmation, isLoading }: NewTranctionModalProps) {
   const [startDate, setStartDate] = useState<any>(new Date());
 
   return (
@@ -34,7 +36,7 @@ export default function SelectDateMonitorModal({ isOpen, onRequestCancel, onRequ
             Cancelar
           </Button>
           <Button type="button" customColor="#E1F5EC" onClick={() => onRequestConfirmation(formatISO(startDate))}>
-            Confirmar Data
+            {isLoading ? <ThreeDots style={{ width: `42px` }} /> : ` Confirmar Data`}
           </Button>
         </S.ButtonHolder>
       </S.ContainerModal>

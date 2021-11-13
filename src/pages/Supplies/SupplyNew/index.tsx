@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import Button from '../../../components/Button';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import Header from '../../../components/Header';
@@ -28,7 +28,7 @@ export default function NewCategory() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting, setFieldValue } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting, setFieldValue, dirty } = useFormik({
     initialValues: {
       name: '',
       pricePerJob: '',
@@ -56,6 +56,7 @@ export default function NewCategory() {
 
   return (
     <GlobalDashContainer>
+      <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." when={dirty} />
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>
@@ -70,7 +71,6 @@ export default function NewCategory() {
               onBlur={handleBlur}
               onChange={handleChange}
             />
-
             <InputCurrencyField
               name="pricePerJob"
               label="Preço do suprimento"

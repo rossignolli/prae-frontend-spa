@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import Button from '../../../components/Button';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import Header from '../../../components/Header';
@@ -34,7 +34,11 @@ export default function NewCategory() {
       description: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(6, 'Nome de categoria precisa ter ao menos 6 caracteres').required('*Nome da categoria é requerido.'),
+      name: Yup.string()
+        .min(6, 'Nome de categoria precisa ter ao menos 6 caracteres')
+        .max(100, 'Limite de caracteres atingido.')
+        .required('*Nome da categoria é requerido.'),
+      description: Yup.string().max(200, 'Limite de caracteres atingido.'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.post('categories', {

@@ -9,11 +9,10 @@ import InputImageFile from '../../../components/ImageField';
 import Button from '../../../components/Button';
 import { useFormik } from 'formik';
 import api from '../../../services/api';
-import { useAuth } from '../../../hooks/AuthContext';
 import ConfirmationModal from '../../../components/Modals/ConfirmationModal';
 import { useHistory } from 'react-router';
 import { ThreeDots } from 'react-loading-icons';
-import { useParams } from 'react-router-dom';
+import { Prompt, useParams } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import * as StylesINput from '../../../components/TextField/styles';
 import SelectDateMonitorModal from '../../../components/Modals/SelectDateMonitorModal';
@@ -81,7 +80,6 @@ interface Equipament {
 }
 
 export default function EquipamentEdit() {
-  const { user } = useAuth();
   const [brands, setBrands] = useState<Option[]>([]);
   const [categories, setCategories] = useState<Option[]>([]);
   const [equipament, setEquipament] = useState<Equipament>();
@@ -246,6 +244,7 @@ export default function EquipamentEdit() {
   return (
     <GlobalDashContainer>
       <S.ContainerNewEquipament>
+        <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." />
         <NavigationBar />
         <S.NewEquipamentsContent>
           {equipament ? (
@@ -372,7 +371,6 @@ export default function EquipamentEdit() {
                 isOpen={isConfirmationMonitorModalOpen}
                 onRequestCancel={() => handleCloseConfirmationModalMonitoring()}
                 onRequestConfirmation={date => handleStarMonitoringEquipament(date)}
-                buttons={butonsOption}
               />
             </>
           ) : (
@@ -380,7 +378,7 @@ export default function EquipamentEdit() {
               <h1>Editar Equipamento</h1>
               <p>
                 Edição os dados do equipamento que será adicionado na base de dados de monitoramento. Todo equipamento por padrão é adicionado com monitoramento
-                desligado!!!2
+                desligado!!!
               </p>
               <StylesINput.LabelForm>Modelo</StylesINput.LabelForm>
               <Skeleton duration={0.5} height={58} style={{ borderRadius: `15px` }} />

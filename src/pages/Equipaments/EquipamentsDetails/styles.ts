@@ -151,13 +151,15 @@ export const ButtonContainer = styled.div`
     button + button {
       padding: ${theme.spacings.xsmall};
       margin: ${theme.spacings.xxsmall};
-      margin-left: ${theme.spacings.xsmall};
+      margin-right: ${theme.spacings.xsmall};
+    }
+    span {
+      color: #ffff;
     }
     a {
-      padding: ${theme.spacings.xsmall};
-      margin: ${theme.spacings.xxsmall};
-      margin-left: ${theme.spacings.xsmall};
       text-decoration: none;
+      margin-right: ${theme.spacings.xsmall};
+      margin-bottom: 10px;
     }
   `}
 `;

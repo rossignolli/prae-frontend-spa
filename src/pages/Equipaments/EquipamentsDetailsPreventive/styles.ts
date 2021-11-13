@@ -191,12 +191,12 @@ export const HeaderTitle = styled.span`
       text-decoration: none;
     }
 
-    color: ${theme.colors.bodyText};
+    color: ${theme.colors.black};
+    font-weight: ${theme.font.bold};
 
     b {
       margin-left: ${theme.spacings.xsmall};
-      color: ${theme.colors.primary};
-      font-weight: ${theme.font.bold};
+      color: ${theme.colors.bodyText};
     }
   `}
 `;

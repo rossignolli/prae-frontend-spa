@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Prompt, useHistory } from 'react-router-dom';
 import manProfile from '../../../assets/temp_assets/man-profile.png';
 import NavigationBar from '../../../components/Navbar';
 import api from '../../../services/api';
@@ -159,6 +159,7 @@ export default function EquipamentList() {
                         <th>Nome</th>
                         {!isMobile && <th>Categoria</th>}
                         <th>Status</th>
+
                         {!isMobile ? <th>Criado por</th> : <th>Ação</th>}
                       </tr>
                     </thead>

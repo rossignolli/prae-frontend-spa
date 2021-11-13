@@ -25,11 +25,11 @@ export default function InputImageFile({ name, label, title, placeholder, onChan
       <S.LabelForm htmlFor={name}>
         <FiPlus size={24} color="#8257e5" />
       </S.LabelForm>
-
       <S.Input
         id={name}
         multiple
         type="file"
+        accept="image/png, image/gif, image/jpeg"
         isFocused={isFocused}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}

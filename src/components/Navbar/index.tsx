@@ -10,6 +10,7 @@ import { Container, ImgLogo, Navbar, NavigationBarHeader, StyledNavLink, TitleMe
 import { useState } from 'react';
 import { MdExitToApp, MdLibraryBooks, MdModeEdit } from 'react-icons/md';
 import ProfileModal from '../Modals/ProfileModal';
+import { Link } from 'react-router-dom';
 
 export default function NavigationBar() {
   const { user, signOut } = useAuth();
@@ -48,9 +49,11 @@ export default function NavigationBar() {
           )}
 
           <NavigationBarHeader>
-            <ImgLogo>
-              <img src={logosvg} alt="Prae - Preventivas" />
-            </ImgLogo>
+            <Link to={'/dashboard'}>
+              <ImgLogo>
+                <img src={logosvg} alt="Prae - Preventivas" />
+              </ImgLogo>
+            </Link>
             <MenuHolder isOpen={isCollapsed}>
               <Userdiv>
                 <img src={user.avatar ? user.avatar : manProfile} alt="" />

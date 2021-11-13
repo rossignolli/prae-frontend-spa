@@ -20,6 +20,7 @@ import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
 import { useMediaQuery } from 'react-responsive';
 import EmptySpace from '../../../components/EmptyStatus';
+import { toast } from 'react-toastify';
 interface Supplies {
   id: string;
   name: string;
@@ -49,12 +50,10 @@ export default function JobList() {
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('warning');
   const [currentPage, setCurrentPage] = useState(1);
   const [issuesPerPage, setIssuesPerPage] = useState(8);
-
+  const [isLoading, setIsLoading] = useState(false);
   const IndexOfLastPost = currentPage * issuesPerPage;
   const indexfFirstPost = IndexOfLastPost - issuesPerPage;
-
   const currentCategories = category?.slice(indexfFirstPost, IndexOfLastPost);
-
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
@@ -78,6 +77,7 @@ export default function JobList() {
   }
   async function handleConfimedDeletedAction() {
     try {
+      setIsLoading(true);
       await api.delete(`jobs/${selectedCategory}`);
       if (category) {
         setCategory(
@@ -87,6 +87,7 @@ export default function JobList() {
         );
       }
       setIsNewTConfirmationModalOpen(false);
+      toast.success('Deletado com sucesso.');
     } catch {
       setModalTitle('Ops... Algo deu errado.');
       setModalDescription('Tente novamente mais tarde');
@@ -203,7 +204,7 @@ export default function JobList() {
                   <S.DescriptionEmpty>
                     {input ? 'Nao encontramos nenhum suprimentos relacionada com a sua busca' : 'Não existe procedimentos cadastradas no sistemas.'}
                   </S.DescriptionEmpty>
-                  <Button onClick={() => history.push(`/jobs/new`)}>Adicionar Procedimento</Button>
+                  <Button onClick={() => history.push(`/job/new`)}>Adicionar Procedimento</Button>
                 </S.EmptyState>
               )}
             </StyledTable>
@@ -221,6 +222,7 @@ export default function JobList() {
         onRequestConfirmation={() => handleConfimedDeletedAction()}
         onRequestCancel={() => handleCloseConfirmationModal()}
         buttons={butonsOption}
+        isLoading={isLoading}
       />
     </GlobalDashContainer>
   );

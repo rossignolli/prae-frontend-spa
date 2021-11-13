@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable array-callback-return */
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import NavigationBar from '../../../components/Navbar';
@@ -89,7 +90,7 @@ export default function EquipamentsDetails() {
   const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'warning' | 'error' | 'sucess' | 'info' | undefined>('sucess');
   const [imagesToShow, setImagesToShow] = useState<ImagesGalery[]>([]);
-
+  const [isLoading, setLoading] = useState(false);
   const { id } = useParams<EditCategoryParams>();
   const history = useHistory();
 
@@ -144,23 +145,14 @@ export default function EquipamentsDetails() {
   }
 
   function handleOpenMonitoringModal() {
-    if (equipament?.monitor) {
-      setModalTitle('Aviso');
-      setModalDescription('Esse equipamento já está sendo monitorado.');
-      setModalType('warning');
-      setButtonsOption(false);
-      setIsNewTConfirmationModalOpen(true);
-      return;
-    }
-
     setIsConfirmationMonitorModalOpen(true);
   }
 
   function newAction() {
     if (!equipament?.monitor) {
-      setModalTitle('Ops... Erro.');
+      setModalTitle('Atenção');
       setModalDescription('Somente equipamento monitorados podem receber ações.');
-      setModalType('error');
+      setModalType('info');
       setButtonsOption(false);
       setIsNewTConfirmationModalOpen(true);
       return;
@@ -173,6 +165,7 @@ export default function EquipamentsDetails() {
     const MonitoringDate = {
       date,
     };
+    setLoading(true);
     const response = await api.post(`preventives/monitor/${id}`, MonitoringDate);
 
     if (response.status !== 200) {
@@ -235,7 +228,7 @@ export default function EquipamentsDetails() {
               )}
               <S.ResumeInfo>
                 <h1>{equipament?.maintenanceTotal}</h1>
-                <span>manutenções executadas</span>
+                <span>Manutenções Executadas</span>
               </S.ResumeInfo>
             </S.ResumeEquipament>
             <S.ResumeContainer>
@@ -252,24 +245,27 @@ export default function EquipamentsDetails() {
         </S.HeaderEquipament>
         <S.ButtonContainer>
           <div style={{ flex: '1' }}>
-            <Button minimal onClick={() => history.goBack()}>
-              Voltar
-            </Button>
+            <Button onClick={() => history.goBack()}>Voltar</Button>
           </div>
+          <Link to={`/equipaments/edit/${equipament.id}`}>
+            <Button>Editar</Button>
+          </Link>
           <Link to={{ pathname: url2 }} target="_blank">
-            <Button customColor="#24A3FF">Relatório</Button>
+            <Button>Relatório</Button>
           </Link>
           {!equipament?.monitor && (
-            <Button customColor="#28C76F" onClick={handleOpenMonitoringModal}>
-              Monitorar
-            </Button>
+            <a>
+              <Button onClick={handleOpenMonitoringModal}>Monitorar</Button>
+            </a>
           )}
           <Link to={{ pathname: url }} target="_blank">
             <Button>QR CODE</Button>
           </Link>
-          <Button customColor="#FF787A" onClick={newAction}>
-            Iniciar Ação
-          </Button>
+          <a>
+            <Button customColor="#FF787A" onClick={newAction}>
+              Iniciar Ação
+            </Button>
+          </a>
         </S.ButtonContainer>
       </S.ContainerEquipaments>
       <S.ContainerEquipaments>
@@ -326,7 +322,7 @@ export default function EquipamentsDetails() {
         isOpen={isConfirmationMonitorModalOpen}
         onRequestCancel={() => handleCloseConfirmationModalMonitoring()}
         onRequestConfirmation={date => handleStarMonitoringEquipament(date)}
-        buttons={butonsOption}
+        isLoading={isLoading}
       />
       <ConfirmationModal
         title={modalTitle}

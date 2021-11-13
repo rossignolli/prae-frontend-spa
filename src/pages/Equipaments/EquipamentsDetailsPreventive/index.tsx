@@ -8,6 +8,7 @@ import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import api from '../../../services/api';
 import { Link, useHistory } from 'react-router-dom';
+import EmptySpace from '../../../components/EmptyStatus';
 interface DetailsPreventive {
   id: string;
 }
@@ -42,45 +43,51 @@ export default function EquipamentsDetailsPreventive() {
     <GlobalDashContainer>
       <NavigationBar />
       <S.ContainerEquipaments>
-        <S.HeaderTitle>
-          <Button minimal onClick={() => history.goBack()}>
-            Voltar
-          </Button>
-          <Link to={{ pathname: url }} target="_blank">
-            <Button>Baixar Extrato</Button>
-          </Link>
-          <b>Ação</b> #{jobs && jobs[0].id} - <b>{jobs && jobs[0].preventive.isCorrective ? `Corretiva` : `Preventiva`}</b>
-        </S.HeaderTitle>
-        <StyledTable>
-          <table>
-            <thead>
-              <tr>
-                <th>Procedimento</th>
-                <th>Suprimento</th>
-                <th>Custo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobs?.map(job => (
-                <tr key={job.id}>
-                  <td>{job.job_name}</td>
-                  <td>{job.supply_name}</td>
-                  <td>R$: {job.supply_price}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <section>
-            <span>Detalhes da Ações</span>
-          </section>
-        </StyledTable>
-        <S.HeaderTitle>
-          <b>Custo total dos procedimentos</b> R$:{' '}
-          {/* {jobs
-            ?.map(item => parseFloat(item.job.supply.pricePerJob))
-            .reduce((prev, next) => prev + next)
-            ?.toFixed(2)} */}
-        </S.HeaderTitle>
+        {!jobs && <EmptySpace />}
+        {jobs && (
+          <>
+            <S.HeaderTitle>
+              <Button minimal onClick={() => history.goBack()}>
+                Voltar
+              </Button>
+              <Link to={{ pathname: url }} target="_blank">
+                <Button>Baixar Extrato</Button>
+              </Link>
+              <b>Ação #{jobs && jobs[0].id}</b> <b>Tipo:</b> {jobs && jobs[0].preventive.isCorrective ? `Corretiva` : `Preventiva`}
+            </S.HeaderTitle>
+
+            <StyledTable>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Procedimento</th>
+                    <th>Suprimento</th>
+                    <th>Custo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {jobs?.map(job => (
+                    <tr key={job.id}>
+                      <td>{job.job_name}</td>
+                      <td>{job.supply_name}</td>
+                      <td>R$: {job.supply_price}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <section>
+                <span>Detalhes da Ações</span>
+              </section>
+            </StyledTable>
+            <S.HeaderTitle>
+              <b>Custo total dos procedimentos:</b> R$:{' '}
+              {jobs
+                ?.map(item => parseFloat(item.supply_price))
+                .reduce((prev, next) => prev + next)
+                ?.toFixed(2)}
+            </S.HeaderTitle>
+          </>
+        )}
       </S.ContainerEquipaments>
     </GlobalDashContainer>
   );

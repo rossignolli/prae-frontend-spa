@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { Prompt, useHistory, useParams } from 'react-router-dom';
 import Button from '../../../components/Button';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import Header from '../../../components/Header';
@@ -51,7 +51,11 @@ export default function CategoryEdit() {
       description: category?.description,
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(6, 'Nome de categoria precisa ter ao menos 6 caracteres').required('*Nome da categoria é requerido.'),
+      name: Yup.string()
+        .min(6, 'Nome de categoria precisa ter ao menos 6 caracteres')
+        .max(100, 'Limite de caracteres atingido.')
+        .required('*Nome da categoria é requerido.'),
+      description: Yup.string().max(200, 'Limite de caracteres atingido.'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.put(`categories/${id}`, {
@@ -86,6 +90,7 @@ export default function CategoryEdit() {
 
   return (
     <GlobalDashContainer>
+      <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." />
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>

@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { useHistory, useParams } from 'react-router-dom';
+import { Prompt, useHistory, useParams } from 'react-router-dom';
 import Button from '../../../components/Button';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import Header from '../../../components/Header';
@@ -73,11 +73,12 @@ export default function JobEdit() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting, dirty } = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      name: job?.name,
-      categories: '',
-      supplies: '',
+      name: job?.name ? job.name : '',
+      categories: job?.category ? job.category : '',
+      supplies: job?.supply ? job.supply : '',
     },
     validationSchema: Yup.object({
       name: Yup.string().min(6, 'Nome do procedimento precisa ter ao menos 6 caracteres').required('*Nome do procedimento é requerido.'),
@@ -126,16 +127,9 @@ export default function JobEdit() {
     });
   }, [id]);
 
-  useEffect(() => {
-    if (job) {
-      setFieldValue('name', job.name);
-      setFieldValue('supplies', job.supply.id);
-      setFieldValue('categories', job.category.id);
-    }
-  }, [id, setFieldValue, job]);
-
   return (
     <GlobalDashContainer>
+      <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." when={dirty} />
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>

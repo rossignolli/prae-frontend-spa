@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { Prompt, useHistory, useParams } from 'react-router-dom';
 import Button from '../../../components/Button';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import Header from '../../../components/Header';
@@ -47,11 +47,13 @@ export default function SupplyEdit() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting, dirty } = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      name: category?.name,
-      pricePerJob: category?.pricePerJob,
+      name: category?.name ? category.name : '',
+      pricePerJob: category?.pricePerJob ? category.pricePerJob : 0,
     },
+
     validationSchema: Yup.object({
       name: Yup.string().min(6, 'Nome de categoria precisa ter ao menos 6 caracteres').required('*Nome da categoria é requerido.'),
     }),
@@ -83,15 +85,9 @@ export default function SupplyEdit() {
     });
   }, [id]);
 
-  useEffect(() => {
-    if (category) {
-      setFieldValue('name', category.name);
-      setFieldValue('pricePerJob', category.pricePerJob);
-    }
-  }, [category, category?.pricePerJob, category?.name, id, setFieldValue]);
-
   return (
     <GlobalDashContainer>
+      <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." when={dirty} />
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>
