@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, Prompt, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import manProfile from '../../../assets/temp_assets/man-profile.png';
 import NavigationBar from '../../../components/Navbar';
 import api from '../../../services/api';
@@ -58,12 +58,10 @@ export default function EquipamentList() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [issuesPerPage, setIssuesPerPage] = useState(8);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
-
+  const [isLoading, setIsLoading] = useState(false);
   const IndexOfLastPost = currentPage * issuesPerPage;
   const indexfFirstPost = IndexOfLastPost - issuesPerPage;
-
   const currentCategories = category?.slice(indexfFirstPost, IndexOfLastPost);
-
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
 
   useEffect(() => {
@@ -84,8 +82,10 @@ export default function EquipamentList() {
   }
   async function handleConfimedDeletedAction() {
     try {
+      setIsLoading(true);
       await api.delete(`equipaments/${selectedCategory}`);
       toast.success('Equipamento deletado com sucesso!');
+      setIsLoading(false);
     } catch (e: unknown) {
       const error = e as AxiosError;
 
@@ -250,6 +250,7 @@ export default function EquipamentList() {
         onRequestConfirmation={() => handleConfimedDeletedAction()}
         onRequestCancel={() => handleCloseConfirmationModal()}
         buttons={butonsOption}
+        isLoading={isLoading}
       />
     </GlobalDashContainer>
   );

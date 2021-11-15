@@ -73,7 +73,7 @@ export default function JobEdit() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting, dirty } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting, dirty, resetForm } = useFormik({
     enableReinitialize: true,
     initialValues: {
       name: job?.name ? job.name : '',
@@ -81,7 +81,10 @@ export default function JobEdit() {
       supplies: job?.supply ? job.supply : '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(6, 'Nome do procedimento precisa ter ao menos 6 caracteres').required('*Nome do procedimento é requerido.'),
+      name: Yup.string()
+        .min(6, 'Nome do procedimento precisa ter ao menos 6 caracteres')
+        .max(100, 'Nome do procedimento é muito grande')
+        .required('*Nome do procedimento é requerido.'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.put(`jobs/${id}`, {
@@ -89,6 +92,8 @@ export default function JobEdit() {
         supply_id: values.supplies,
         category_id: values.categories,
       });
+
+      resetForm();
 
       if (response.status !== 200) {
         setModalTitle('Ops... Algo deu errado.');

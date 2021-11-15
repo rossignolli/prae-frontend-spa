@@ -98,12 +98,13 @@ export default function EquipamentEdit() {
   const [isConfirmationMonitorModalOpen, setIsConfirmationMonitorModalOpen] = useState(false);
   const [images, setImages] = useState<File[]>([]);
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting, dirty, resetForm } = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      model: '',
-      brand: '',
-      categories: '',
-      descriptionEquipament: '',
+      model: equipament?.name ? equipament.name : '',
+      brand: equipament?.brand ? equipament.brand : '',
+      categories: equipament?.category ? equipament.category : '',
+      descriptionEquipament: equipament?.description ? equipament.description : '',
     },
 
     onSubmit: async (values, e) => {
@@ -126,6 +127,7 @@ export default function EquipamentEdit() {
 
       try {
         await api.put(`equipaments/${id}`, data);
+        resetForm();
         setIsNewTConfirmationModalOpen(true);
       } catch (e: unknown) {
         const error = e as AxiosError;
@@ -171,13 +173,6 @@ export default function EquipamentEdit() {
   }, [id]);
 
   useEffect(() => {
-    if (equipament) {
-      setFieldValue('model', equipament.name);
-      setFieldValue('descriptionEquipament', equipament.description);
-      setFieldValue('categories', equipament.category.id);
-      setFieldValue('brand', equipament.brand.id);
-    }
-
     if (equipament?.category) {
       setPreviewImages(equipament?.images);
     }
@@ -244,7 +239,7 @@ export default function EquipamentEdit() {
   return (
     <GlobalDashContainer>
       <S.ContainerNewEquipament>
-        <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." />
+        <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." when={dirty} />
         <NavigationBar />
         <S.NewEquipamentsContent>
           {equipament ? (

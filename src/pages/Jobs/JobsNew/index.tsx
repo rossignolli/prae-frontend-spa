@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import Button from '../../../components/Button';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import Header from '../../../components/Header';
@@ -69,20 +69,21 @@ export default function JobNew() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting, setFieldValue } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting, setFieldValue, resetForm, dirty } = useFormik({
     initialValues: {
       name: '',
       categories: '',
       supplies: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(6, 'Nome do procedimento precisa ter ao menos 6 caracteres').required('*Nome do procedimento é requerido.'),
-      categories: Yup.string().required('*É necessário selecionar uma marca cadastrada para o equipamento.'),
-      supplies: Yup.string().min(6, 'Modelo precisa ter ao menos 6 caracteres').required('*Modelo é requerido.'),
+      name: Yup.string()
+        .min(6, 'Nome do procedimento precisa ter ao menos 6 caracteres')
+        .max(100, 'Nome do procedimento é muito grande')
+        .required('*Nome do procedimento é requerido.'),
+      categories: Yup.string().required('*É necessário selecionar uma marca cadastrada para o procedimento.'),
+      supplies: Yup.string().min(6, 'Modelo precisa ter ao menos 6 caracteres').required('*É necessário selecionar um suprimento para o procedimento'),
     }),
     onSubmit: async (values, e) => {
-      console.log(values);
-
       const response = await api.post('jobs', {
         name: values.name,
         supply_id: values.supplies,
@@ -99,11 +100,13 @@ export default function JobNew() {
         return;
       }
       setIsNewTConfirmationModalOpen(true);
+      resetForm();
     },
   });
 
   return (
     <GlobalDashContainer>
+      <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." when={dirty} />
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>

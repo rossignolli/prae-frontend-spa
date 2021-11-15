@@ -229,7 +229,6 @@ export default function NewEquipament() {
                   </div>
                 );
               })}
-              Q
             </S.ImageContainer>
             <InputImageFile name="file" label="Critico" title={`Adiciona imagens ao equipamento`} onChange={handleSelectImages} />
             <S.ButtonHolder>

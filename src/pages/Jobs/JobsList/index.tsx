@@ -87,6 +87,7 @@ export default function JobList() {
         );
       }
       setIsNewTConfirmationModalOpen(false);
+      setIsLoading(false);
       toast.success('Deletado com sucesso.');
     } catch {
       setModalTitle('Ops... Algo deu errado.');

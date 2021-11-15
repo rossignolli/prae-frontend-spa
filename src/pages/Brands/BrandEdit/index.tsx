@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { Prompt, useHistory, useParams } from 'react-router-dom';
 import Button from '../../../components/Button';
 import { GlobalDashContainer } from '../../../components/Container/styles';
 import Header from '../../../components/Header';
@@ -45,13 +45,18 @@ export default function CategoryEdit() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting, dirty, resetForm } = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      name: category?.name,
-      description: category?.description,
+      name: category?.name ? category.name : '',
+      description: category?.description ? category.description : '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(2, 'Nome da marca precisa ter ao menos 2 caracteres').required('*Nome da marca é requerido.'),
+      name: Yup.string()
+        .max(200, 'Nome da marca é muito grande')
+        .min(2, 'Nome da marca precisa ter ao menos 2 caracteres')
+        .required('*Nome da marca é requerido.'),
+      description: Yup.string().max(200, 'Descrição é muito grande'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.put(`brands/${id}`, {
@@ -86,6 +91,7 @@ export default function CategoryEdit() {
 
   return (
     <GlobalDashContainer>
+      <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." when={dirty} />
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>

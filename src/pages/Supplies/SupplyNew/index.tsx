@@ -28,13 +28,16 @@ export default function NewCategory() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting, setFieldValue, dirty } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting, setFieldValue, dirty, resetForm } = useFormik({
     initialValues: {
       name: '',
       pricePerJob: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(2, 'Nome do suprimento precisa ter ao menos 2 caracteres').required('*Nome do suprimento é requerido.'),
+      name: Yup.string()
+        .min(2, 'Nome do suprimento precisa ter ao menos 2 caracteres')
+        .max(100, 'Nome do suprimento é muito grande')
+        .required('*Nome do suprimento é requerido.'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.post('supplies', {
@@ -51,6 +54,7 @@ export default function NewCategory() {
         return;
       }
       setIsNewTConfirmationModalOpen(true);
+      resetForm();
     },
   });
 

@@ -45,24 +45,24 @@ export default function CategoryEdit() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting, dirty, resetForm } = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      name: category?.name,
-      description: category?.description,
+      name: category?.name ? category.name : '',
+      description: category?.description ? category.description : '',
     },
     validationSchema: Yup.object({
       name: Yup.string()
         .min(6, 'Nome de categoria precisa ter ao menos 6 caracteres')
-        .max(100, 'Limite de caracteres atingido.')
+        .max(100, 'Nome da categoria é muito grande')
         .required('*Nome da categoria é requerido.'),
-      description: Yup.string().max(200, 'Limite de caracteres atingido.'),
+      description: Yup.string().max(200, 'Descrição é muito grande'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.put(`categories/${id}`, {
         ...values,
         technician_id: user.id,
       });
-
       if (response.status !== 200) {
         setModalTitle('Ops... Algo deu errado.');
         setModalDescription('Tente novamente mais tarde');
@@ -72,6 +72,7 @@ export default function CategoryEdit() {
         return;
       }
       setIsNewTConfirmationModalOpen(true);
+      resetForm();
     },
   });
 
@@ -81,16 +82,9 @@ export default function CategoryEdit() {
     });
   }, [id]);
 
-  useEffect(() => {
-    if (category) {
-      setFieldValue('name', category?.name);
-      setFieldValue('description', category?.description);
-    }
-  }, [category, category?.description, category?.name, id, setFieldValue]);
-
   return (
     <GlobalDashContainer>
-      <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." />
+      <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." when={dirty} />
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>

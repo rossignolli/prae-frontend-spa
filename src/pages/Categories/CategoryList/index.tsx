@@ -51,6 +51,7 @@ export default function Category() {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const currentCategories = category?.slice(indexfFirstPost, IndexOfLastPost);
   const [isNewTConfirmationModalOpen, setIsNewTConfirmationModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     api.get(`/categories`).then(response => {
@@ -71,6 +72,8 @@ export default function Category() {
   }
   async function handleConfimedDeletedAction() {
     try {
+      setIsLoading(true);
+
       await api.delete(`categories/${selectedCategory}`);
 
       if (category) {
@@ -82,6 +85,7 @@ export default function Category() {
       }
 
       setIsNewTConfirmationModalOpen(false);
+      setIsLoading(false);
       toast.success('Deletado com sucesso.');
     } catch (e: unknown) {
       const error = e as AxiosError;
@@ -210,6 +214,7 @@ export default function Category() {
         onRequestConfirmation={() => handleConfimedDeletedAction()}
         onRequestCancel={() => handleCloseConfirmationModal()}
         buttons={butonsOption}
+        isLoading={isLoading}
       />
     </GlobalDashContainer>
   );

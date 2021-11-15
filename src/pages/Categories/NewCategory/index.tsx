@@ -28,7 +28,7 @@ export default function NewCategory() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, isSubmitting, dirty, resetForm } = useFormik({
     initialValues: {
       name: '',
       description: '',
@@ -36,16 +36,15 @@ export default function NewCategory() {
     validationSchema: Yup.object({
       name: Yup.string()
         .min(6, 'Nome de categoria precisa ter ao menos 6 caracteres')
-        .max(100, 'Limite de caracteres atingido.')
+        .max(100, 'Nome da categoria é muito grande')
         .required('*Nome da categoria é requerido.'),
-      description: Yup.string().max(200, 'Limite de caracteres atingido.'),
+      description: Yup.string().max(200, 'Descrição é muito grande'),
     }),
     onSubmit: async (values, e) => {
       const response = await api.post('categories', {
         ...values,
         technician_id: user.id,
       });
-
       if (response.status !== 200) {
         setModalTitle('Ops... Algo deu errado.');
         setModalDescription('Tente novamente mais tarde');
@@ -55,11 +54,13 @@ export default function NewCategory() {
         return;
       }
       setIsNewTConfirmationModalOpen(true);
+      resetForm();
     },
   });
 
   return (
     <GlobalDashContainer>
+      <Prompt message="Tem certeza que deseja sair? Todas as alterações não salvas serão perdidas." when={dirty} />
       <NavigationBar />
       <S.Container>
         <S.ContainerInputs>

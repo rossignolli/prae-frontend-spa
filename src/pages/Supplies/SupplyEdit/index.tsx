@@ -47,7 +47,7 @@ export default function SupplyEdit() {
     history.goBack();
   }
 
-  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting, dirty } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur, setFieldValue, isSubmitting, dirty, resetForm } = useFormik({
     enableReinitialize: true,
     initialValues: {
       name: category?.name ? category.name : '',
@@ -55,7 +55,10 @@ export default function SupplyEdit() {
     },
 
     validationSchema: Yup.object({
-      name: Yup.string().min(6, 'Nome de categoria precisa ter ao menos 6 caracteres').required('*Nome da categoria é requerido.'),
+      name: Yup.string()
+        .min(6, 'Nome de categoria precisa ter ao menos 6 caracteres')
+        .max(100, 'Nome do suprimento é muito grande')
+        .required('*Nome da categoria é requerido.'),
     }),
     onSubmit: async (values, e) => {
       try {
@@ -64,6 +67,7 @@ export default function SupplyEdit() {
           technician_id: user.id,
         });
         setIsNewTConfirmationModalOpen(true);
+        resetForm();
       } catch (e: unknown) {
         const error = e as AxiosError;
 
@@ -75,6 +79,7 @@ export default function SupplyEdit() {
             setButtonsOption(false);
           }
         }
+        resetForm();
       }
     },
   });
