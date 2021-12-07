@@ -70,7 +70,12 @@ export default function EquipamentsDetailsPreventive() {
                     <tr key={job.id}>
                       <td>{job.job_name}</td>
                       <td>{job.supply_name}</td>
-                      <td>R$: {job.supply_price}</td>
+                      <td>
+                        {new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        }).format(parseFloat(job.supply_price))}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

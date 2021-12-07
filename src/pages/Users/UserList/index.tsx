@@ -14,6 +14,7 @@ import { SkeletonTheme } from 'react-loading-skeleton';
 import InputSearchBar from '../../../components/SearchBar';
 import Pagination from '../../../components/Pagination';
 import { useMediaQuery } from 'react-responsive';
+import { Helmet } from 'react-helmet';
 
 interface Supplies {
   id: string;
@@ -65,6 +66,13 @@ export default function UserList() {
 
   return (
     <GlobalDashContainer>
+      <Helmet>
+        <title>Prae - Técnicos</title>
+        <meta property="og:title" content="Prae - Gerencia seus assets com inteligência" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://cdn.discordapp.com/attachments/393816255993479179/887888085256388658/unknown.png" />
+        <meta property="og:url" content="https://prae.vigarani.dev/" />
+      </Helmet>
       <NavigationBar />
       <S.Container>
         <NavigationBar />

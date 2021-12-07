@@ -20,6 +20,7 @@ import { useMediaQuery } from 'react-responsive';
 import EmptySpace from '../../../components/EmptyStatus';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 interface Equipament {
   id: string;
@@ -132,6 +133,13 @@ export default function EquipamentList() {
 
   return (
     <GlobalDashContainer>
+      <Helmet>
+        <title>Prae - Equipamentos</title>
+        <meta property="og:title" content="Prae - Gerencia seus assets com inteligência" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://cdn.discordapp.com/attachments/393816255993479179/887888085256388658/unknown.png" />
+        <meta property="og:url" content="https://prae.vigarani.dev/" />
+      </Helmet>
       <NavigationBar />
       <S.Container>
         <NavigationBar />

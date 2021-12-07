@@ -18,6 +18,7 @@ import { MdLibraryBooks } from 'react-icons/md';
 import { TransitionGroup } from 'react-transition-group';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
+import { Helmet } from 'react-helmet';
 
 interface Categories {
   id: string;
@@ -124,6 +125,13 @@ export default function Category() {
     <>
       <TransitionGroup in={inProp} timeout={500} classNames="alert">
         <GlobalDashContainer>
+          <Helmet>
+            <title>Prae - Marcas</title>
+            <meta property="og:title" content="Prae - Gerencia seus assets com inteligência" />
+            <meta property="og:type" content="website" />
+            <meta property="og:image" content="https://cdn.discordapp.com/attachments/393816255993479179/887888085256388658/unknown.png" />
+            <meta property="og:url" content="https://prae.vigarani.dev/" />
+          </Helmet>
           <NavigationBar />
           <S.Container>
             <NavigationBar />

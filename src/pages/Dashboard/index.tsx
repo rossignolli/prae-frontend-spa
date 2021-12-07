@@ -9,6 +9,7 @@ import { MdLibraryBooks } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { Helmet } from 'react-helmet';
 
 interface HomeData {
   equipamentsTotal: number;
@@ -90,6 +91,13 @@ export default function Dashboard() {
   if (!homeData) {
     return (
       <GlobalDashContainer>
+        <Helmet>
+          <title>Prae - Dashboard</title>
+          <meta property="og:title" content="Prae - Gerencia seus assets com inteligência" />
+          <meta property="og:type" content="website" />
+          <meta property="og:image" content="https://cdn.discordapp.com/attachments/393816255993479179/887888085256388658/unknown.png" />
+          <meta property="og:url" content="https://prae.vigarani.dev/" />
+        </Helmet>
         <SkeletonTheme color="#FFFF" highlightColor="#e6e1e139" />
         <NavigationBar />
         <S.ContainerDash>
