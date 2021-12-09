@@ -73,6 +73,7 @@ export default function CategoryEdit() {
         return;
       }
       setIsNewTConfirmationModalOpen(true);
+      resetForm();
     },
   });
 
